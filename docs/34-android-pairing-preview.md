@@ -5,7 +5,15 @@
 ## 源码与构建
 
 - 修复提交：[3b205f5](https://github.com/NarIyirm/Web-AppToPrototype/commit/3b205f50a0c0b38656d2155714ee0b2b13ad693a)，已推送 GitHub main。
-- [EAS Android preview 构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/9f972a76-4401-46e6-8cae-054179aaad8c)：1.0.1（versionCode 3），应用标识 com.nariyirm.webapptofigma，复用既有远程 keystore，当前等待云构建完成。
+- [EAS Android preview 构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/9f972a76-4401-46e6-8cae-054179aaad8c)：1.0.1（versionCode 3），应用标识 com.nariyirm.webapptofigma，复用既有远程 keystore。云构建状态 FINISHED，完成时间为2026-10-22 02:31（Australia/Sydney）。
+
+## APK 与 Release
+
+用户要求用本次完成的 APK 替换既有 v0.1.1 Release 中的安卓附件。新包为 `WebAppToFigma-1.0.1-android-preview-3.apk`，173409833字节；[GitHub 下载](https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebAppToFigma-1.0.1-android-preview-3.apk)。旧构建2的 APK 及单独校验附件由新构建3替换，Release 说明及 SHA256SUMS.txt 同步更新。Windows、Mac 和 Figma 插件附件沿用原发布。
+
+APK SHA-256：`a4497db3cb0f3711429553284b1fc86bc2483b247743099924d787ee8a83b447`。
+
+已核对归档 CRC、实际 Manifest 版本1.0.1/3、最低API24、四种CPU架构及内置JS中的本次回执校验/确认代码。APK v2 签名区块内证书摘要与旧包一致，为 `4fc0cdb7e8c1b4bc0bdfc5d045ab90fecf635f13ad4af76fc7aba9da01e603fd`，可沿用旧版签名覆盖安装；未执行完整 APK 密码学签名验证或真机安装。详细核验及实际发布回读结果见[机器可读记录](verification/2026-10-22-android-preview-3.json)。
 
 ## 改动与验证
 

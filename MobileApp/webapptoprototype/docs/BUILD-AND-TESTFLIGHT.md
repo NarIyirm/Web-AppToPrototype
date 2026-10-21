@@ -1,6 +1,12 @@
 # WebAppToFigma 打包与 TestFlight
 
-更新：2026-10-21（Australia/Sydney）。移动端命令均在 `E:\WebToPrototype\MobileApp\webapptoprototype` 执行。
+更新：2026-10-22（Australia/Sydney）。移动端命令均在 `E:\WebToPrototype\MobileApp\webapptoprototype` 执行。
+
+## Android preview 配对回执修复（2026-10-22）
+
+Android preview **1.0.1（3）** 已成功完成云构建，构建ID为 `9f972a76-4401-46e6-8cae-054179aaad8c`，源码提交 `3b205f5`。用户要求替换既有 [v0.1.1 Release](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1) 中的安卓附件；[下载本次 APK](https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebAppToFigma-1.0.1-android-preview-3.apk)。本次修复回执时间校验、会话确认及失败撤销，增加具体错误码，仍使用安卓原生固定证书 HTTPS。
+
+APK 实际版本、归档CRC、修复代码及与旧包的签名证书一致性已核对。完整配套逻辑需电脑端运行本次源码；本次没有重打桌面附件。真机安装及这次安卓故障是否解决仍待复测，详见[本次构建与发布记录](../../../docs/34-android-pairing-preview.md)。下文的 Android 1.0.1（2）为上一轮发布记录。
 
 ## 当前发布：1.0.1
 

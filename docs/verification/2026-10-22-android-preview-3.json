@@ -1,0 +1,125 @@
+{
+  "recordedAt": "2026-10-21T15:33:49.705607+00:00",
+  "buildId": "9f972a76-4401-46e6-8cae-054179aaad8c",
+  "buildStatus": "FINISHED",
+  "sourceCommit": "3b205f50a0c0b38656d2155714ee0b2b13ad693a",
+  "profile": "preview",
+  "version": "1.0.1",
+  "buildNumber": "3",
+  "buildPage": "https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/9f972a76-4401-46e6-8cae-054179aaad8c",
+  "completedAt": "2026-10-21T15:31:05.345Z",
+  "artifactUrl": "https://expo.dev/artifacts/eas/3o4NOHwYrWNOylgByJFCXHaQ8_GibVFdLVc1XCuHrgo.apk",
+  "githubRelease": "https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1",
+  "githubDownloadUrl": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebAppToFigma-1.0.1-android-preview-3.apk",
+  "artifact": {
+    "path": "release/WebAppToFigma-1.0.1-android-preview-3.apk",
+    "bytes": 173409833,
+    "sha256": "a4497db3cb0f3711429553284b1fc86bc2483b247743099924d787ee8a83b447",
+    "manifest": {
+      "package": "com.nariyirm.webapptofigma",
+      "versionName": "1.0.1",
+      "versionCode": 3,
+      "minSdkVersion": 24,
+      "targetSdkVersion": 36
+    },
+    "archiveCRCVerified": true,
+    "fixMarkersVerified": [
+      "M_PAIR_RECEIPT_TOKEN",
+      "M_PAIR_RECEIPT_FORMAT",
+      "M_PAIR_RECEIPT_CLOCK",
+      "M_PAIR_RECEIPT_LIFETIME",
+      "M_PAIR_RECEIPT_CHUNK",
+      "M_PAIR_CONFIRMATION",
+      "localExpiresAt",
+      "serverTime",
+      "/mobile/session",
+      "/mobile/disconnect"
+    ],
+    "nativeArchitectures": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ],
+    "signingCertificateSha256": "4fc0cdb7e8c1b4bc0bdfc5d045ab90fecf635f13ad4af76fc7aba9da01e603fd",
+    "signingCertificateMatchesPrevious": true,
+    "fullCryptographicSignatureVerified": false,
+    "nativeDeviceExecutionTested": false
+  },
+  "validation": {
+    "desktopTestsPassed": 168,
+    "mobileTestsPassed": 72,
+    "desktopTypecheckAndBuildPassed": true,
+    "mobileLintAndTypecheckPassed": true
+  },
+  "desktopPackagedArtifactsUpdated": false,
+  "githubPublicationVerified": true,
+  "githubPublication": {
+    "verifiedAt": "2026-10-21T15:37:00.924219+00:00",
+    "tag": "v0.1.1",
+    "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1",
+    "removedAssets": [
+      "WebAppToFigma-1.0.1-android-preview-2.apk",
+      "WebAppToFigma-1.0.1-android-preview-2.apk.sha256"
+    ],
+    "unchangedAssetCount": 6,
+    "remoteChecksumFilesMatchLocal": true,
+    "releaseBodyMatchesPreparedNotes": true,
+    "assets": [
+      {
+        "name": "FigmaPlugin-desktop-0.1.1.zip",
+        "bytes": 202455,
+        "digest": "sha256:8891f6f24973b01aad9717c40a04c2395573cca1a48b43eadeda0fa8843a618e",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/FigmaPlugin-desktop-0.1.1.zip"
+      },
+      {
+        "name": "FigmaPlugin-desktop-0.1.1.zip.sha256",
+        "bytes": 96,
+        "digest": "sha256:39b335772dc6ac2f633807d7a0407380e253d36260ebb14481272ef89c67bb18",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/FigmaPlugin-desktop-0.1.1.zip.sha256"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "bytes": 458,
+        "digest": "sha256:20a1a47002ffd46e388bfb54c7eab6657dd6c95cc0caa087a0bbf41238f7803c",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/SHA256SUMS.txt"
+      },
+      {
+        "name": "WebAppToFigma-1.0.1-android-preview-3.apk",
+        "bytes": 173409833,
+        "digest": "sha256:a4497db3cb0f3711429553284b1fc86bc2483b247743099924d787ee8a83b447",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebAppToFigma-1.0.1-android-preview-3.apk"
+      },
+      {
+        "name": "WebAppToFigma-1.0.1-android-preview-3.apk.sha256",
+        "bytes": 109,
+        "digest": "sha256:2571bb0658c0389d6efc9ea283c900941420e2952cb035674dcf507160a0bc65",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebAppToFigma-1.0.1-android-preview-3.apk.sha256"
+      },
+      {
+        "name": "WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip",
+        "bytes": 136003438,
+        "digest": "sha256:17e9fd4ec04f42a1467af6be82ec901d369088b15c867e1669dba6fc62125e6c",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip"
+      },
+      {
+        "name": "WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip.sha256",
+        "bytes": 126,
+        "digest": "sha256:2c2ff0a4725c671022fd0b4d32f8db3998a73a677d558e63f6b4a5f0a503a1e1",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip.sha256"
+      },
+      {
+        "name": "WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip",
+        "bytes": 160499066,
+        "digest": "sha256:62835a262ac494c576c71f25a78929f9a02cb798aec61876f11167900a12abbc",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip"
+      },
+      {
+        "name": "WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip.sha256",
+        "bytes": 124,
+        "digest": "sha256:57225ea87003ec99647cb7da34a5eb62784eff785ecb653d105f945960cc64c2",
+        "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/download/v0.1.1/WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip.sha256"
+      }
+    ]
+  }
+}
