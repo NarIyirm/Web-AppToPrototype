@@ -41,7 +41,7 @@ public final class MobileScreenModule: Module {
   }
   public func definition() -> ModuleDefinition {
     Name("MobileScreen")
-    View(BroadcastPicker.self)
+    View(BroadcastPicker.self) {}
     OnCreate {
       DispatchQueue.main.async { Self.markHostVisible(UIApplication.shared.applicationState != .background) }
     }
