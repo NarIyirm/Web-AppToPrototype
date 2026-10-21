@@ -1,6 +1,6 @@
 # 仓库与本地文件维护
 
-2026-10-21，按用户要求清理后，将完整源码统一纳入私有仓库 [NarIyirm/Web-AppToPrototype](https://github.com/NarIyirm/Web-AppToPrototype)。根目录为 Git 工作区，主分支为 main。
+2026-10-21，按用户要求清理后，将完整源码统一纳入仓库 [NarIyirm/Web-AppToPrototype](https://github.com/NarIyirm/Web-AppToPrototype)。根目录为 Git 工作区，主分支为 main。用户随后将 GitHub 仓库切换为 public，2026-10-21 已读取远端确认。
 
 ## 源码目录与检查
 

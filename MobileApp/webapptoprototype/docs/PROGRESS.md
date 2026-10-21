@@ -1,5 +1,7 @@
 # 移动端进度
 
+2026-10-21 打包执行：用户授权 Windows/Mac 桌面包、Android preview APK 与 iOS production，并明确允许上传移动源码至现有 Expo 项目。应用名称 WebAppToFigma、新图标及 com.nariyirm.webapptofigma 平台标识在 app.config.ts 中配置；新增 eas.json，保留 owner/slug/projectId/app.json。Windows 打包 EXE 的30项工作流检查通过；Mac ARM64归档校验、6项Python与9项路径规则通过，不声称Mac本机运行或Apple公证完成。首次Android云编译暴露SDK57本地模块缺少defaultConfig版本字段，已修复并重试。iOS签名由用户在本机配置，production随后提交。最新状态见[打包与TestFlight](BUILD-AND-TESTFLIGHT.md)。此前“不触发构建”属于历史轮次限制，已被本次用户授权覆盖。
+
 2026-10-21 仓库整理：按用户确认，将桌面、Figma 插件和移动端作为一个完整仓库上传 NarIyirm/Web-AppToPrototype，使用根目录 Git/main；移动端原 Git 元数据及53份原暂存索引保存在 `.local-maintenance/mobile-git-before-monorepo`。旧安装包/重复解压目录/测试缓存已清理，最新发布包与历史证据保留本地。详见仓库清理说明；此前“尚未提交/独立仓库/保持原暂存”均为历史阶段记录，不再作为当前 Git 操作约束。
 
 更新时间：2026-10-20（Australia/Sydney）。当前阶段：业务alpha源码与桌面集成已实施，原生编译/安装及最终验收待用户执行。第1–5节保留规划轮历史，第7节为当前结果。

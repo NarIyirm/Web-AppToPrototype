@@ -30,3 +30,4 @@ evidence/
 *.jks
 *.mobileprovision
 *.tsbuildinfo
+credentials.json

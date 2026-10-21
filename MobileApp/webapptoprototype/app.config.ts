@@ -3,11 +3,26 @@ import type { ConfigContext } from 'expo/config';
 // Native capabilities are additive; preserve the user's app.json/EAS identity.
 export default ({ config }: ConfigContext) => ({
   ...config,
-  ios: { ...config.ios, infoPlist: { ...config.ios?.infoPlist,
+  name: 'WebAppToFigma',
+  icon: './assets/webapptofigma-icon.png',
+  ios: { ...config.ios,
+    bundleIdentifier: 'com.nariyirm.webapptofigma',
+    icon: './assets/webapptofigma-icon.png',
+    infoPlist: { ...config.ios?.infoPlist,
     NSLocalNetworkUsageDescription: '连接你确认配对的电脑，传输本机采集的界面素材。',
   } },
+  android: { ...config.android,
+    package: 'com.nariyirm.webapptofigma',
+    adaptiveIcon: {
+      foregroundImage: './assets/webapptofigma-icon.png',
+      backgroundColor: '#F4F7FC',
+    },
+  },
   plugins: [
-    ...(config.plugins ?? []),
+    ...(config.plugins ?? []).map((plugin) =>
+      Array.isArray(plugin) && plugin[0] === 'expo-splash-screen'
+        ? [plugin[0], { ...plugin[1], image: './assets/webapptofigma-icon.png', backgroundColor: '#F4F7FC' }]
+        : plugin),
     'expo-font',
     'expo-image',
     'expo-sharing',

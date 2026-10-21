@@ -6,5 +6,9 @@ group = 'expo.modules.mobilescreen'
 version = '0.1.0'
 android {
   namespace 'expo.modules.mobilescreen'
-  defaultConfig { minSdkVersion 23 }
+  defaultConfig {
+    minSdkVersion 23
+    versionCode 1
+    versionName project.version.toString()
+  }
 }

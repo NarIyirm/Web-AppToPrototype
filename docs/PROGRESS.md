@@ -1,5 +1,7 @@
 # 当前进度
 
+2026-10-21 本次打包：Windows x64与Mac ARM64最新ZIP已生成，路径见release/latest-*.json。Windows真实打包EXE的30项流程、Mac归档结构及准备脚本检查通过；移动应用命名WebAppToFigma，新logo与EAS profile已接入，用户已授权并执行云构建。手机包进度与ASC/TestFlight步骤见[移动构建说明](../MobileApp/webapptoprototype/docs/BUILD-AND-TESTFLIGHT.md)。真实Mac/手机/Figma结果仍需实际设备验证。
+
 2026-10-21 仓库整理：按用户确认，将桌面、Figma 插件和移动端作为一个完整仓库上传 NarIyirm/Web-AppToPrototype，使用根目录 Git/main；移动端原 Git 元数据及53份原暂存索引保存在 `.local-maintenance/mobile-git-before-monorepo`。旧安装包/重复解压目录/测试缓存已清理，最新发布包与历史证据保留本地。详见仓库清理说明；此前“尚未提交/独立仓库/保持原暂存”均为历史阶段记录，不再作为当前 Git 操作约束。
 
 ### 2026-10-21 / 二维整页与手机 App 转换

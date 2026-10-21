@@ -1,5 +1,7 @@
 # 续接说明
 
+2026-10-21 本次打包：Windows x64与Mac ARM64最新ZIP已生成，路径见release/latest-*.json。Windows真实打包EXE的30项流程、Mac归档结构及准备脚本检查通过；移动应用命名WebAppToFigma，新logo与EAS profile已接入，用户已授权并执行云构建。手机包进度与ASC/TestFlight步骤见[移动构建说明](../MobileApp/webapptoprototype/docs/BUILD-AND-TESTFLIGHT.md)。真实Mac/手机/Figma结果仍需实际设备验证。
+
 2026-10-21 仓库整理：按用户确认，将桌面、Figma 插件和移动端作为一个完整仓库上传 NarIyirm/Web-AppToPrototype，使用根目录 Git/main；移动端原 Git 元数据及53份原暂存索引保存在 `.local-maintenance/mobile-git-before-monorepo`。旧安装包/重复解压目录/测试缓存已清理，最新发布包与历史证据保留本地。详见仓库清理说明；此前“尚未提交/独立仓库/保持原暂存”均为历史阶段记录，不再作为当前 Git 操作约束。
 
 最新（2026-10-21）：用户截图反馈 iPhone 框选标题栏与状态栏重叠。移动端新增共用 SafeAreaSurface/SafeAreaModal，在每个页面/原生 Modal 内测量安全区，覆盖 Screen、网页工作台、诊断页及底部操作；新增 src/AGENTS.md/lint 防绕过约束。59测试、保持性和受控安全区事件下 RNWeb 九项检查通过，真实 iPhone/Android 复验待用户；详见移动 PROGRESS 第16节/USER-VERIFICATION 和 evidence/2026-10-21/MOB-safe-area。纯 JS，无需打包，未改变 app.json/EAS/暂存，未构建/提交/推送。

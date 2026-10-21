@@ -1,4 +1,6 @@
-# Web to Prototype · Mobile
+# WebAppToFigma · Mobile
+
+打包与 TestFlight 请读[构建说明](docs/BUILD-AND-TESTFLIGHT.md)。应用显示名、图标及平台标识由 app.config.ts 提供；owner、slug 和 Expo 项目关联继续复用。
 
 Expo 57.0.30 / React Native 0.86.3 / React 19.2.3。按用户要求从SDK58降级，手机采集网页和App画面，保存项目，再交电脑重建并导入Figma。
 
