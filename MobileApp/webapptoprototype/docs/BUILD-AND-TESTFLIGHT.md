@@ -27,7 +27,7 @@ npx eas-cli@latest build --platform android --profile preview
 
 preview 生成 release APK，包含 JS 与本地原生模块，可下载安装，无需 Expo Go 或 Metro。首次构建已由 EAS 生成远程 keystore；后续构建继续复用，勿更换签名。
 
-首次 Android 构建 1235cc07 因三个本地模块缺少 SDK57 插件要求的 defaultConfig.versionName 失败，已按已安装官方模块补齐版本字段。当前[Android preview 构建页](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/4b360f69-2605-4cf7-8042-62f9466fc228)。以页面最终状态为准；排队/进行中不表示已产出 APK。
+首次 Android 构建 1235cc07 因三个本地模块缺少 SDK57 插件要求的 defaultConfig.versionName 失败，已按已安装官方模块补齐版本字段。第二次 Android 构建 4b360f69 在录屏模块出现 Kotlin 帧列表泛型推断错误，已明确 Map 与空列表类型后重试。当前[Android preview 构建页](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/e7eeae3b-5195-41e8-bfa9-d58500b011d9)。本次重试已成功，APK 在根目录 `release/WebAppToFigma-1.0.0-android-preview-1.apk`，版本1.0.0、versionCode1。包内JS、三个本地模块、录屏服务、四种CPU架构与v2签名区块检查通过；真机安装/运行由用户验收。
 
 完成后在 Android 手机打开构建页下载 APK；按系统提示允许当前下载来源安装，然后打开 WebAppToFigma。测试截屏采集、OCR、系统授权、同 Wi-Fi 扫码传电脑。系统采集涉及原生模块，需实际安装后验证。
 
@@ -41,7 +41,9 @@ npx eas-cli@latest credentials:configure-build --platform ios --profile producti
 
 按提示选择正确的 Apple Developer 团队，允许为主应用和 CaptureBroadcast 扩展配置分发证书、描述文件及 App Groups。两者需要各自匹配的 provisioning profile。若账号有多个团队，先确认哪一个团队持有该 App，不随意选择。
 
-用户已于2026-10-21完成主应用和录屏扩展的签名配置，使用 Apple 团队 U57D6BB6H7。当前 [iOS production 构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/b81f8c83-9731-4e0f-9fc8-cb5ca1349f58)，版本1.0.0、构建号2，已提交云端；以最终状态为准。
+用户已于2026-10-21完成主应用和录屏扩展的签名配置，使用 Apple 团队 U57D6BB6H7。当前 [iOS production 构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/2112359e-5b35-46c6-8289-7e8669b5bcd7)，版本1.0.0、构建号3，已成功完成云构建。IPA 保存在根目录 `release/WebAppToFigma-1.0.0-ios-production-3.ipa`；主应用与扩展的ID/版本/描述文件/App Group/内置JS包核对通过，未执行真机安装。
+
+上次 iOS 构建 b81f8c83 的主应用编译发现 UIKit 视图注册缺少闭包，导致选择了 SwiftUI 重载；已按 SDK57 的 ViewFactories.swift 改为 `View(BroadcastPicker.self) {}` 后重试。录屏扩展在上次已编译和签名通过。
 
 配置完成后打包：
 
@@ -67,7 +69,7 @@ production 使用 App Store 分发签名，产物为真机 IPA。IPA 需要经�
 App 记录创建且 production 构建成功后，在移动端目录执行：
 
 ```powershell
-npx eas-cli@latest submit --platform ios --profile production
+npx eas-cli@latest submit --platform ios --profile production --id 2112359e-5b35-46c6-8289-7e8669b5bcd7
 ```
 
 选择本次成功的 production 构建，按提示关联正确 Apple 团队和刚创建的 App；可使用 EAS 支持的 App Store Connect API Key 方式认证。若有多个构建，按构建 ID 选择，避免上传旧版本。API 私钥和密码不提交 Git。
@@ -87,3 +89,9 @@ npx eas-cli@latest submit --platform ios --profile production
 根目录 `release/latest-windows.json` 与 `release/latest-macos-arm64.json` 指向本次 Windows x64 ZIP 和 Apple Silicon Mac ZIP。Windows 整包解压后运行 WebToPrototype.exe，也可运行 Install.cmd。Mac 整包解压，保留 macos-tools 与 Prepare Mac.command，按包内说明完成本机签名准备，再运行 WebToPrototype.app。
 
 Mac ZIP 已做结构、CPU、链接及文件摘要校验，但跨构建环境没有执行真实 Mac 应用；本包没有 Developer ID 签名/Apple 公证。详细说明见根 docs/22-macos-release-guide.md。Intel Mac 需另用根目录 `npm run package:mac:intel` 生成。
+
+## 本次最终结果
+
+Windows x64、Mac ARM64、iOS production 1.0.0（3）与 Android preview 1.0.0（1）均已生成。四类文件均在根 release 目录，SHA-256 校验文件随包保留。手机云构建均为 FINISHED；App Store Connect 上传与TestFlight分发由用户按上文执行，本轮没有自动提交或正式上架。
+
+详细实际检查见[打包结果记录](verification/2026-10-21-release-builds.json)，不把云编译/归档通过当作手机或Mac真机测试通过。

@@ -1,5 +1,7 @@
 # 续接说明
 
+2026-10-21 最终打包结果：Windows x64与Mac ARM64包生成；iOS production 1.0.0（3）构建2112359e、Android preview 1.0.0（1）构建e7eeae3b均FINISHED并下载至根release。Windows打包版30流程、Mac归档/6项Python/9项路径、移动59测试/契约/lint/类型、IPA双目标版本与AppGroup/分发profile、APK内置JS/3本地模块/4架构/签名区块检查通过。真实手机安装、Mac本机及本轮Figma未执行；未上传App Store Connect或发布TestFlight。新增构建说明与验证记录；首次native构建暴露的Gradle版本字段、Kotlin列表泛型、Swift UIKit View注册均已修复。
+
 2026-10-21 本次打包：Windows x64与Mac ARM64最新ZIP已生成，路径见release/latest-*.json。Windows真实打包EXE的30项流程、Mac归档结构及准备脚本检查通过；移动应用命名WebAppToFigma，新logo与EAS profile已接入，用户已授权并执行云构建。手机包进度与ASC/TestFlight步骤见[移动构建说明](../MobileApp/webapptoprototype/docs/BUILD-AND-TESTFLIGHT.md)。真实Mac/手机/Figma结果仍需实际设备验证。
 
 2026-10-21 仓库整理：按用户确认，将桌面、Figma 插件和移动端作为一个完整仓库上传 NarIyirm/Web-AppToPrototype，使用根目录 Git/main；移动端原 Git 元数据及53份原暂存索引保存在 `.local-maintenance/mobile-git-before-monorepo`。旧安装包/重复解压目录/测试缓存已清理，最新发布包与历史证据保留本地。详见仓库清理说明；此前“尚未提交/独立仓库/保持原暂存”均为历史阶段记录，不再作为当前 Git 操作约束。

@@ -1,0 +1,117 @@
+{
+  "recordedAt": "2026-10-21T06:41:59.686Z",
+  "appName": "WebAppToFigma",
+  "windows": {
+    "arch": "x64",
+    "zip": "E:\\WebToPrototype\\release\\WebToPrototype-0.1.0-win-x64-2026-10-21T05-55-22-372Z.zip",
+    "bytes": 160481202,
+    "sha256": "609aeee2b0e3beb933b8e55386579412bb14e6b5a0ddeae7e263274e3db6a89b",
+    "packagedFileHashesVerified": 172,
+    "packagedWorkflowChecksPassed": 30
+  },
+  "mac": {
+    "arch": "arm64",
+    "zip": "E:\\WebToPrototype\\release\\WebToPrototype-0.1.0-mac-arm64-2026-10-21T05-56-15-377Z.zip",
+    "bytes": 135993882,
+    "sha256": "c3d8975be99376267c8732ffa5c0675d7c0e8682f58bfd6ac74428696cfa4d37",
+    "inspection": {
+      "arch": "arm64",
+      "minimumMacOS": "13.0",
+      "entries": 632,
+      "filesVerified": 321,
+      "symlinksVerified": 14,
+      "machOCPUVerified": true,
+      "unixModesVerified": true,
+      "manifestVerified": true,
+      "macRuntimeTested": false,
+      "sourceFilesVerified": 39,
+      "signingTested": false,
+      "notarized": false
+    },
+    "pythonPackagingTestsPassed": 6,
+    "pathSelectionTestsPassed": 9,
+    "nativeMacExecutionTested": false,
+    "notarized": false
+  },
+  "mobile": [
+    {
+      "platform": "IOS",
+      "profile": "production",
+      "buildId": "2112359e-5b35-46c6-8289-7e8669b5bcd7",
+      "status": "FINISHED",
+      "version": "1.0.0",
+      "buildNumber": "3",
+      "applicationIdentifier": "com.nariyirm.webapptofigma",
+      "localArtifact": "E:\\WebToPrototype\\release\\WebAppToFigma-1.0.0-ios-production-3.ipa",
+      "bytes": 22670000,
+      "sha256": "861f517495be9b5b0e43d27f839e6c8b0e250393eb579474653b1e62e730c4a6",
+      "buildPage": "https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/2112359e-5b35-46c6-8289-7e8669b5bcd7"
+    },
+    {
+      "platform": "ANDROID",
+      "profile": "preview",
+      "buildId": "e7eeae3b-5195-41e8-bfa9-d58500b011d9",
+      "status": "FINISHED",
+      "version": "1.0.0",
+      "buildNumber": "1",
+      "applicationIdentifier": "com.nariyirm.webapptofigma",
+      "localArtifact": "E:\\WebToPrototype\\release\\WebAppToFigma-1.0.0-android-preview-1.apk",
+      "bytes": 173390753,
+      "sha256": "24e7c444524f479c1fb29f58e92987035c97e1e798ea09df2c0f56e7e9b5086b",
+      "buildPage": "https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/e7eeae3b-5195-41e8-bfa9-d58500b011d9"
+    }
+  ],
+  "iosInspection": {
+    "platform": "ios",
+    "version": "1.0.0",
+    "buildNumber": "3",
+    "bundleIdentifier": "com.nariyirm.webapptofigma",
+    "displayName": "WebAppToFigma",
+    "extensionIdentifier": "com.nariyirm.webapptofigma.capture-broadcast",
+    "mainAndExtensionVersionsMatch": true,
+    "appGroupMatchesProfiles": true,
+    "storeProfilesWithoutDeviceList": true,
+    "debuggingDisabledInProfiles": true,
+    "javascriptBundleIncluded": true,
+    "nativeDeviceExecutionTested": false
+  },
+  "androidInspection": {
+    "platform": "android",
+    "version": "1.0.0",
+    "versionCode": "1",
+    "manifestContainsExpectedPackageId": true,
+    "captureServiceDeclared": true,
+    "nativeModuleDescriptorsPresent": [
+      "mobilescreen/MobileScreenModule",
+      "mobiletransfer/MobileTransferModule",
+      "mobilevision/MobileVisionModule"
+    ],
+    "javascriptBundleIncluded": true,
+    "nativeArchitectures": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ],
+    "apkSigningBlocksPresent": [
+      "v2"
+    ],
+    "deviceInstallationTested": false
+  },
+  "realDeviceTestsCompleted": false,
+  "appStoreConnectSubmissionPerformed": false,
+  "failuresFixed": [
+    {
+      "buildId": "1235cc07-3787-4db1-aa98-0731eb7248ca",
+      "issue": "SDK57 Gradle module defaultConfig version metadata"
+    },
+    {
+      "buildId": "4b360f69-2605-4cf7-8042-62f9466fc228",
+      "issue": "Kotlin capture frame result type inference"
+    },
+    {
+      "buildId": "b81f8c83-9731-4e0f-9fc8-cb5ca1349f58",
+      "issue": "UIKit view registration closure required"
+    }
+  ]
+}

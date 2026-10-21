@@ -24,4 +24,4 @@ verify包含契约产物一致性、lint、严格类型与逻辑测试，可在�
 
 SDK切换后先关闭旧Metro，在本目录运行`npx expo start --clear`并重新打开客户端。`assets/kitchmemo-icon.png`为旧素材URL的兼容副本，与现有`assets/images/icon.png`完全相同；app.json图标配置继续保留。
 
-手机打包由用户现有GitHub→Expo流程处理，当前没有触发构建/发布。保留app.json的owner/projectId/图标/scheme；额外原生配置在app.config.ts、plugins和modules内。不运行reset-project搬走业务代码。
+手机已通过现有 Expo 项目完成 Android preview APK 与 iOS production IPA 云构建；本轮未上传 App Store Connect 或发布 TestFlight，操作见构建说明。保留app.json的owner/projectId/图标/scheme；额外原生配置在app.config.ts、plugins和modules内。不运行reset-project搬走业务代码。
