@@ -1,5 +1,7 @@
 # 当前进度
 
+2026-10-21 TestFlight最后一步已完成：用户完成1.0.1(5)出口合规问卷；重新读取Apple状态，processingState=VALID、internalState=IN_BETA_TESTING，内部测试已可安装/更新。externalState=READY_FOR_BETA_SUBMISSION，未提交外测审核或公开App Store审核。已更新发布记录和GitHub Release说明，不重新构建或上传同一包。
+
 2026-10-21 新版产物与 GitHub 发布完成：桌面0.1.1 Windows x64 / Mac ARM64、移动1.0.1 Android preview(2) / iOS production(5)全部生成并核验；GitHub Release v0.1.1已公开，9个附件的服务端SHA与本地一致。iOS构建87d30bc9、Android07508fea均FINISHED；iOS提交9ee8e95c已FINISHED，Apple处理VALID，但内外部TestFlight状态MISSING_EXPORT_COMPLIANCE，已提示用户在App 6825243915的1.0.1(5)完成问卷，不能宣称已可测试。桌面166测试/类型/构建、移动64测试/lint/类型、Windows真包30流程、Mac6归档/9路径与实际ZIP检查、IPA双目标/配置、APK实际Manifest/新UI/原生模块/同旧签名证书核验通过。未做Mac原生运行/Developer ID/公证或手机新包真机测试。记录见docs/33-release-0.1.1-mobile-1.0.1.md与docs/verification/2026-10-21-release-0.1.1.json；产物在根release，旧包保留。
 
 2026-10-21 新版发布已获授权：用户要求先同步 GitHub，再发布桌面及移动端，并选择自动上传 iOS 至现有 App Store Connect/TestFlight。桌面版本0.1.1，移动版本1.0.1；Windows包改读取根版本，Android preview自动递增构建号，iOS submit指定现有App 6825243915与团队U57D6BB6H7。此授权覆盖前一轮仅本地验证/暂不推送限制。类型/166桌面测试/构建、移动lint/类型/64测试已通过；正在同步源码和生成四平台产物，结果见docs/33-release-0.1.1-mobile-1.0.1.md。

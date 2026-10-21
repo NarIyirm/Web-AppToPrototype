@@ -2,7 +2,7 @@
 
 ## 当前：新版安装包已生成并上传
 
-桌面 0.1.1 与移动 1.0.1 已获授权发布。Windows/Mac/Android 从 [GitHub Releases](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1) 下载；iOS 1.0.1（5）已自动上传 App Store Connect，但目前需完成该构建的出口合规问卷后才能在 TestFlight 测试。源码与真实构建/检查结果见[发布记录](../../../docs/33-release-0.1.1-mobile-1.0.1.md)。下方 Expo Go 步骤仍可用于本地开发，不再代表禁止构建或推送的当前限制。
+桌面 0.1.1 与移动 1.0.1 已获授权发布。Windows/Mac/Android 从 [GitHub Releases](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1) 下载；iOS 1.0.1（5）已自动上传 App Store Connect，用户完成出口合规问卷后，已确认处于 IN_BETA_TESTING，可在 TestFlight 安装或更新。源码与真实构建/检查结果见[发布记录](../../../docs/33-release-0.1.1-mobile-1.0.1.md)。下方 Expo Go 步骤仍可用于本地开发，不再代表禁止构建或推送的当前限制。
 
 ## 当前：验证移动 App 新版 UI
 

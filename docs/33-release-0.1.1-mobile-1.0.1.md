@@ -22,7 +22,7 @@
 | Android preview | 1.0.1（2） | WebAppToFigma-1.0.1-android-preview-2.apk |
 | iOS production | 1.0.1（5） | WebAppToFigma-1.0.1-ios-production-5.ipa，已自动上传 App Store Connect |
 
-iOS [构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/87d30bc9-d6db-4740-8641-9abdebf1c236)、Android [构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/07508fea-dd79-4e5c-8deb-7938fc951e5a)均 FINISHED；iOS [提交](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/submissions/9ee8e95c-7ea0-4e24-acfe-ae63d56164a1) FINISHED。Apple processingState 为 VALID，当前内外部测试均为 MISSING_EXPORT_COMPLIANCE；需 App 管理者在 [TestFlight](https://appstoreconnect.apple.com/apps/6825243915/testflight/ios) 打开 1.0.1（5）完成出口合规问卷，才能开始测试。没有提交公开 App Store 审核。
+iOS [构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/87d30bc9-d6db-4740-8641-9abdebf1c236)、Android [构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/07508fea-dd79-4e5c-8deb-7938fc951e5a)均 FINISHED；iOS [提交](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/submissions/9ee8e95c-7ea0-4e24-acfe-ae63d56164a1) FINISHED。用户已完成出口合规问卷，Apple processingState 为 VALID，内部测试状态为 IN_BETA_TESTING，可在 [TestFlight](https://appstoreconnect.apple.com/apps/6825243915/testflight/ios) 安装或更新至 1.0.1（5）。外部状态为 READY_FOR_BETA_SUBMISSION，未提交外测审核或公开 App Store 审核。
 
 源码先同步 `78079d3`；桌面产物元数据进一步修正为 `9ef6075`。两者移动源码一致，移动云构建引用 `78079d3`，桌面发布标签固定到 `9ef6075`。源码/产物核验详见[机器可读记录](verification/2026-10-21-release-0.1.1.json)，其中保留 SHA-256。
 

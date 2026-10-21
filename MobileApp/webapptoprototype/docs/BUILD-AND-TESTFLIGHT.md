@@ -6,7 +6,7 @@
 
 用户已授权新版构建和 iOS 自动上传。iOS production 1.0.1（5）与 Android preview 1.0.1（2）均已成功，文件在根 `release/`；Android APK 与桌面 0.1.1 从 [GitHub Releases](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1) 下载。
 
-iOS build5 已自动上传至 App Store Connect，Apple 已处理成功，目前为“缺少出口合规信息”。请在 [TestFlight](https://appstoreconnect.apple.com/apps/6825243915/testflight/ios) 打开 **1.0.1（5）**，完成该构建的加密问卷；完成后再测试本次界面和系统录屏入口。不要重新提交已上传的同一构建。后续构建可复用 eas.json 中既有 ascAppId / appleTeamId 和 EAS 保存的 API key，真实密钥不入库。
+iOS build5 已自动上传至 App Store Connect。用户已完成该构建的出口合规问卷，Apple 已处理成功，内部测试状态为 IN_BETA_TESTING，可在 [TestFlight](https://appstoreconnect.apple.com/apps/6825243915/testflight/ios) 安装或更新至 **1.0.1（5）**，测试本次界面和系统录屏入口。未提交外测审核或公开 App Store 审核。不要重新提交已上传的同一构建。后续构建可复用 eas.json 中既有 ascAppId / appleTeamId 和 EAS 保存的 API key，真实密钥不入库。
 
 本次 EAS 自动提交的 `what-to-test` 字段因套餐限制被服务拒绝，移除该字段后按同一 build ID 独立提交成功，没有因此重建或重复上传。完整结果及摘要见[本次发布记录](../../../docs/33-release-0.1.1-mobile-1.0.1.md)。下文保留 1.0.0 的签名配置及历史排错过程。
 

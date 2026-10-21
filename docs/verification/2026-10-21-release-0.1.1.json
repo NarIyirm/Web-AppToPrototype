@@ -140,14 +140,15 @@
       "appVersion": "1.0.1",
       "buildNumber": "5",
       "processingState": "VALID",
-      "internalState": "MISSING_EXPORT_COMPLIANCE",
-      "externalState": "MISSING_EXPORT_COMPLIANCE",
+      "internalState": "IN_BETA_TESTING",
+      "externalState": "READY_FOR_BETA_SUBMISSION",
       "uploadedDate": "2026-10-21T23:17:14+11:00",
       "expired": false,
       "easSubmissionId": "9ee8e95c-7ea0-4e24-acfe-ae63d56164a1",
       "easBuildId": "87d30bc9-d6db-4740-8641-9abdebf1c236",
       "fingerprintHash": "ad9ad522e774e3ab0e1f8e93ca5918453b883548"
-    }
+    },
+    "testFlightVerifiedAt": "2026-10-21T12:27:28.7750011Z"
   },
   "limitations": [
     "Mac native execution, Developer ID signing and notarization not performed",
