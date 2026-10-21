@@ -1,0 +1,219 @@
+{
+  "recordedAt": "2026-10-21T12:23:14.473Z",
+  "desktopSourceCommit": "9ef6075",
+  "mobileSourceCommit": "78079d3",
+  "githubRelease": "https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1",
+  "artifacts": [
+    {
+      "platform": "windows",
+      "version": "0.1.1",
+      "architecture": "x64",
+      "path": "release/WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip",
+      "sha256": "62835a262ac494c576c71f25a78929f9a02cb798aec61876f11167900a12abbc",
+      "bytes": 160499066
+    },
+    {
+      "platform": "macos",
+      "version": "0.1.1",
+      "architecture": "arm64",
+      "path": "release/WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip",
+      "sha256": "17e9fd4ec04f42a1467af6be82ec901d369088b15c867e1669dba6fc62125e6c",
+      "bytes": 136003438
+    },
+    {
+      "platform": "android",
+      "version": "1.0.1",
+      "profile": "preview",
+      "buildNumber": "2",
+      "path": "release/WebAppToFigma-1.0.1-android-preview-2.apk",
+      "sha256": "4d7d68c802275db5c8eac46314a88b31df74606498c3da72f13835fe2b859d9b",
+      "bytes": 173406397,
+      "buildId": "07508fea-dd79-4e5c-8deb-7938fc951e5a",
+      "buildStatus": "FINISHED",
+      "sourceCommit": "78079d3f73f569a3131a04ece0240ae43cfb3137",
+      "inspection": {
+        "platform": "android",
+        "version": "1.0.1",
+        "buildNumber": "2",
+        "nativeDeviceExecutionTested": false,
+        "archiveCRCVerified": true,
+        "manifestVersionVerified": true,
+        "nativeCaptureServiceAndModulesVerified": true,
+        "nativeArchitectures": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "signingCertificateSHA256": [
+          "4fc0cdb7e8c1b4bc0bdfc5d045ab90fecf635f13ad4af76fc7aba9da01e603fd"
+        ],
+        "previousSigningCertificateMatches": true,
+        "apkCryptographicSignatureVerification": false,
+        "newUserInterfaceBundleVerified": true
+      }
+    },
+    {
+      "platform": "ios",
+      "version": "1.0.1",
+      "profile": "production",
+      "buildNumber": "5",
+      "path": "release/WebAppToFigma-1.0.1-ios-production-5.ipa",
+      "sha256": "5aed7f275f14df62f45fefd156101062bcf758ca6cbf075d3a9a2b4478eed95a",
+      "bytes": 22679154,
+      "buildId": "87d30bc9-d6db-4740-8641-9abdebf1c236",
+      "buildStatus": "FINISHED",
+      "sourceCommit": "78079d3f73f569a3131a04ece0240ae43cfb3137",
+      "inspection": {
+        "platform": "ios",
+        "version": "1.0.1",
+        "buildNumber": "5",
+        "nativeDeviceExecutionTested": false,
+        "archiveCRCVerified": true,
+        "mainAndExtensionVersionsMatch": true,
+        "storeProfilesAndAppGroupVerified": true,
+        "localNetworkConfigurationVerified": true,
+        "newUserInterfaceBundleVerified": true
+      }
+    },
+    {
+      "platform": "figma-plugin",
+      "desktopRelease": "0.1.1",
+      "path": "release/FigmaPlugin-desktop-0.1.1.zip",
+      "sha256": "8891f6f24973b01aad9717c40a04c2395573cca1a48b43eadeda0fa8843a618e",
+      "bytes": 202455
+    }
+  ],
+  "verification": {
+    "desktopTestsPassed": 166,
+    "mobileTestsPassed": 64,
+    "windowsPackagedWorkflowPassed": 30,
+    "macArchive": {
+      "arch": "arm64",
+      "minimumMacOS": "13.0",
+      "entries": 632,
+      "filesVerified": 321,
+      "symlinksVerified": 14,
+      "machOCPUVerified": true,
+      "unixModesVerified": true,
+      "manifestVerified": true,
+      "macRuntimeTested": false,
+      "sourceFilesVerified": 39,
+      "signingTested": false,
+      "notarized": false
+    },
+    "macPackageRulesPassed": 6,
+    "macPathSelectionPassed": 9,
+    "desktopInspection": {
+      "passed": true,
+      "checks": [
+        {
+          "platform": "windows",
+          "version": "0.1.1",
+          "sha256": "62835a262ac494c576c71f25a78929f9a02cb798aec61876f11167900a12abbc",
+          "archiveCRCVerified": true,
+          "packagedVersionVerified": true,
+          "criticalPayloadMatchesFinalBuild": true,
+          "editableMobileConverterIncluded": true
+        },
+        {
+          "platform": "mac-arm64",
+          "version": "0.1.1",
+          "sha256": "17e9fd4ec04f42a1467af6be82ec901d369088b15c867e1669dba6fc62125e6c",
+          "archiveCRCVerified": true,
+          "packagedVersionVerified": true,
+          "criticalPayloadMatchesFinalBuild": true,
+          "editableMobileConverterIncluded": true
+        }
+      ],
+      "macNativeRuntimeTested": false
+    },
+    "mobileUserInterfaceRoutesChecked": 7,
+    "mobileSafeAreaAndCropChecksPassed": 9
+  },
+  "iosSubmission": {
+    "id": "9ee8e95c-7ea0-4e24-acfe-ae63d56164a1",
+    "status": "FINISHED",
+    "ascAppId": "6825243915",
+    "url": "https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/submissions/9ee8e95c-7ea0-4e24-acfe-ae63d56164a1",
+    "testFlight": {
+      "appVersion": "1.0.1",
+      "buildNumber": "5",
+      "processingState": "VALID",
+      "internalState": "MISSING_EXPORT_COMPLIANCE",
+      "externalState": "MISSING_EXPORT_COMPLIANCE",
+      "uploadedDate": "2026-10-21T23:17:14+11:00",
+      "expired": false,
+      "easSubmissionId": "9ee8e95c-7ea0-4e24-acfe-ae63d56164a1",
+      "easBuildId": "87d30bc9-d6db-4740-8641-9abdebf1c236",
+      "fingerprintHash": "ad9ad522e774e3ab0e1f8e93ca5918453b883548"
+    }
+  },
+  "limitations": [
+    "Mac native execution, Developer ID signing and notarization not performed",
+    "Mobile on-device verification remains a separate user step",
+    "Screenshot reconstruction is an inference; complex artwork remains local images"
+  ],
+  "githubPublication": {
+    "url": "https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1",
+    "assets": [
+      {
+        "name": "FigmaPlugin-desktop-0.1.1.zip",
+        "sha256": "8891f6f24973b01aad9717c40a04c2395573cca1a48b43eadeda0fa8843a618e",
+        "bytes": 202455,
+        "matchesLocal": true
+      },
+      {
+        "name": "FigmaPlugin-desktop-0.1.1.zip.sha256",
+        "sha256": "39b335772dc6ac2f633807d7a0407380e253d36260ebb14481272ef89c67bb18",
+        "bytes": 96,
+        "matchesLocal": true
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "sha256": "a2ee23f646f6e852efa03ab29900134104631251ae3f5d08f69591a9ad95b5dc",
+        "bytes": 454,
+        "matchesLocal": true
+      },
+      {
+        "name": "WebAppToFigma-1.0.1-android-preview-2.apk",
+        "sha256": "4d7d68c802275db5c8eac46314a88b31df74606498c3da72f13835fe2b859d9b",
+        "bytes": 173406397,
+        "matchesLocal": true
+      },
+      {
+        "name": "WebAppToFigma-1.0.1-android-preview-2.apk.sha256",
+        "sha256": "526cc903b957d02e27000065ed10ab9c019e3df7983087222cacbb5f3bfade3e",
+        "bytes": 108,
+        "matchesLocal": true
+      },
+      {
+        "name": "WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip",
+        "sha256": "17e9fd4ec04f42a1467af6be82ec901d369088b15c867e1669dba6fc62125e6c",
+        "bytes": 136003438,
+        "matchesLocal": true
+      },
+      {
+        "name": "WebToPrototype-0.1.1-mac-arm64-2026-10-21T12-07-36-899Z.zip.sha256",
+        "sha256": "2c2ff0a4725c671022fd0b4d32f8db3998a73a677d558e63f6b4a5f0a503a1e1",
+        "bytes": 126,
+        "matchesLocal": true
+      },
+      {
+        "name": "WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip",
+        "sha256": "62835a262ac494c576c71f25a78929f9a02cb798aec61876f11167900a12abbc",
+        "bytes": 160499066,
+        "matchesLocal": true
+      },
+      {
+        "name": "WebToPrototype-0.1.1-win-x64-2026-10-21T12-06-38-794Z.zip.sha256",
+        "sha256": "57225ea87003ec99647cb7da34a5eb62784eff785ecb653d105f945960cc64c2",
+        "bytes": 124,
+        "matchesLocal": true
+      }
+    ],
+    "publishedAt": "2026-10-21T12:24:43Z",
+    "isDraft": false,
+    "tag": "v0.1.1"
+  }
+}

@@ -1,12 +1,14 @@
 # WebAppToFigma · Mobile
 
+当前版本 1.0.1，配套桌面 0.1.1。Android preview 从 [GitHub Releases](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1) 下载，iOS production 通过现有 TestFlight App 分发。实际构建与上传状态见[发布记录](../../docs/33-release-0.1.1-mobile-1.0.1.md)。
+
 打包与 TestFlight 请读[构建说明](docs/BUILD-AND-TESTFLIGHT.md)。应用显示名、图标及平台标识由 app.config.ts 提供；owner、slug 和 Expo 项目关联继续复用。
 
 Expo 57.0.30 / React Native 0.86.3 / React 19.2.3。按用户要求从SDK58降级，手机采集网页和App画面，保存项目，再交电脑重建并导入Figma。
 
-已实现业务alpha：项目与截图整理、裁切/旋转/像素遮挡、OCR校对、WebView视口/元素/矩形采集、原始素材包、扫码加密分块传输、桌面收件与2.0设计包兼容导入。Android系统共享与iOS ReplayKit广播扩展已接入源码，原生编译/安装及真实效果待用户验证。
+已实现：项目与截图整理、裁切/旋转/像素遮挡、OCR校对、WebView视口/元素/矩形/整页采集、原始素材包、扫码加密分块传输、桌面收件与2.0设计包兼容导入。Android系统共享与iOS ReplayKit广播扩展已接入独立安装包，真实设备的系统采集效果仍需设备验证。
 
-开发先读[AGENTS](AGENTS.md)、[HANDOFF](docs/HANDOFF.md)、[PROGRESS](docs/PROGRESS.md)。使用与反馈见[用户验证步骤](docs/USER-VERIFICATION.md)，完整范围见[ROADMAP](docs/ROADMAP.md)。视频挑帧、手机长页/多选及复杂重建等尚未完成，不能当作完整发布版。
+开发先读[AGENTS](AGENTS.md)、[HANDOFF](docs/HANDOFF.md)、[PROGRESS](docs/PROGRESS.md)。使用与反馈见[用户验证步骤](docs/USER-VERIFICATION.md)，完整范围见[ROADMAP](docs/ROADMAP.md)。视频挑帧、自动探索及复杂画面的完全重建不在当前支持范围。
 
 ## 开发命令
 

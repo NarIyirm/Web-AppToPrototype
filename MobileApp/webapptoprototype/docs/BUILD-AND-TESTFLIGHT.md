@@ -2,6 +2,14 @@
 
 更新：2026-10-21（Australia/Sydney）。移动端命令均在 `E:\WebToPrototype\MobileApp\webapptoprototype` 执行。
 
+## 当前发布：1.0.1
+
+用户已授权新版构建和 iOS 自动上传。iOS production 1.0.1（5）与 Android preview 1.0.1（2）均已成功，文件在根 `release/`；Android APK 与桌面 0.1.1 从 [GitHub Releases](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1) 下载。
+
+iOS build5 已自动上传至 App Store Connect，Apple 已处理成功，目前为“缺少出口合规信息”。请在 [TestFlight](https://appstoreconnect.apple.com/apps/6825243915/testflight/ios) 打开 **1.0.1（5）**，完成该构建的加密问卷；完成后再测试本次界面和系统录屏入口。不要重新提交已上传的同一构建。后续构建可复用 eas.json 中既有 ascAppId / appleTeamId 和 EAS 保存的 API key，真实密钥不入库。
+
+本次 EAS 自动提交的 `what-to-test` 字段因套餐限制被服务拒绝，移除该字段后按同一 build ID 独立提交成功，没有因此重建或重复上传。完整结果及摘要见[本次发布记录](../../../docs/33-release-0.1.1-mobile-1.0.1.md)。下文保留 1.0.0 的签名配置及历史排错过程。
+
 ## iPhone 扫码连接修复（2026-10-21）
 
 用户确认 WebAppToFigma 的本地网络访问已开启，但同一 Wi-Fi 下 Expo Go 能连接、独立包失败。检查实际 build3 IPA 已包含 NSLocalNetworkUsageDescription 和 NSAllowsLocalNetworking=true，因此不能把旧提示视为权限诊断。此前正式包优先使用原生固定证书 HTTPS，Expo Go 使用 v2 AES-GCM 加密局域网通道；原生失败原因还没有手机原始错误佐证。

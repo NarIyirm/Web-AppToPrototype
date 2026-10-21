@@ -1,8 +1,10 @@
 # WebToPrototype 项目方案与续接入口
 
+桌面 0.1.1 / 移动 1.0.1：[下载与发布说明](https://github.com/NarIyirm/Web-AppToPrototype/releases/tag/v0.1.1)。Windows x64、Mac ARM64 和 Android preview 提供发布附件；iOS 使用 TestFlight。具体构建与校验结果见[本次发布记录](docs/33-release-0.1.1-mobile-1.0.1.md)。
+
 当前仓库统一管理桌面端、Figma 插件和移动端，远程为 [NarIyirm/Web-AppToPrototype](https://github.com/NarIyirm/Web-AppToPrototype)。桌面与插件在项目根目录运行 `npm ci`、`npm run check`；移动端在 `MobileApp/webapptoprototype` 单独运行 `npm ci`、`npm run verify`。两套依赖各自锁定，移动端不属于根 npm workspaces。
 
-2026-10-21 已清理旧发布副本和测试缓存；最新发布包、真实采集及验收原始证据仅保留在本地，不随源码上传。目录与维护规则见[仓库与清理说明](docs/32-repository-and-cleanup.md)。下方阶段记录保留历史，功能现状以[桌面续接](docs/HANDOFF.md)与[移动续接](MobileApp/webapptoprototype/docs/HANDOFF.md)最新条目为准。
+2026-10-21 已清理旧发布副本和测试缓存；新版安装附件通过 GitHub Releases 分发，真实采集及验收原始证据仅保留在本地，不随源码上传。目录与维护规则见[仓库与清理说明](docs/32-repository-and-cleanup.md)。下方阶段记录保留历史，功能现状以[桌面续接](docs/HANDOFF.md)与[移动续接](MobileApp/webapptoprototype/docs/HANDOFF.md)最新条目为准。
 
 移动端新对话开发从[Expo项目文档入口](MobileApp/webapptoprototype/docs/README.md)开始；[移动HANDOFF](MobileApp/webapptoprototype/docs/HANDOFF.md)提供实际目录/当前失败/首批任务和可复制提示词。计划已基于用户初始化的Expo58独立仓库修订，本轮尚未实施移动业务。
 
@@ -10,7 +12,7 @@
 
 Mac开发候选（2026-10-20）：M系列.app ZIP已生成，141项自动测试/类型/构建、6项归档检查及相关Windows回归通过。Mac本机运行/签名、公证及Figma尚待验证。下载路径与SHA见release/latest-macos-arm64.json，首次运行见[Mac说明](docs/22-macos-release-guide.md)，实际证据见[Mac验证](docs/23-macos-verification.md)。现有Windows包与已接受范围保留。
 
-版本：桌面0.1.0候选（Windows / Apple Silicon Mac开发候选）｜更新：2026-10-20（Australia/Sydney）
+版本：桌面 0.1.1 / 移动 1.0.1｜更新：2026-10-21（Australia/Sydney）
 
 项目目录：`E:\WebToPrototype`
 

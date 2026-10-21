@@ -1,5 +1,7 @@
 # 续接说明
 
+2026-10-21 新版产物与 GitHub 发布完成：桌面0.1.1 Windows x64 / Mac ARM64、移动1.0.1 Android preview(2) / iOS production(5)全部生成并核验；GitHub Release v0.1.1已公开，9个附件的服务端SHA与本地一致。iOS构建87d30bc9、Android07508fea均FINISHED；iOS提交9ee8e95c已FINISHED，Apple处理VALID，但内外部TestFlight状态MISSING_EXPORT_COMPLIANCE，已提示用户在App 6825243915的1.0.1(5)完成问卷，不能宣称已可测试。桌面166测试/类型/构建、移动64测试/lint/类型、Windows真包30流程、Mac6归档/9路径与实际ZIP检查、IPA双目标/配置、APK实际Manifest/新UI/原生模块/同旧签名证书核验通过。未做Mac原生运行/Developer ID/公证或手机新包真机测试。记录见docs/33-release-0.1.1-mobile-1.0.1.md与docs/verification/2026-10-21-release-0.1.1.json；产物在根release，旧包保留。
+
 2026-10-21 新版发布已获授权：用户要求先同步 GitHub，再发布桌面及移动端，并选择自动上传 iOS 至现有 App Store Connect/TestFlight。桌面版本0.1.1，移动版本1.0.1；Windows包改读取根版本，Android preview自动递增构建号，iOS submit指定现有App 6825243915与团队U57D6BB6H7。此授权覆盖前一轮仅本地验证/暂不推送限制。类型/166桌面测试/构建、移动lint/类型/64测试已通过；正在同步源码和生成四平台产物，结果见docs/33-release-0.1.1-mobile-1.0.1.md。
 
 2026-10-21 移动 UI 本地待验收：用户已确认上一轮采集/拆层验证通过；本轮按用户要求统一蓝色/系统字体/原生符号、三入口说明、项目缩略图/勾选、设备状态与底部固定发送/进度，预览工具及帮助按需展开，保留全部既有传输/采集流程。新增键盘避让，沿用独立安全区与裁切弹窗。lint/类型/64业务测试、7页面多视口浅深色受控UI、9安全区/裁切回归、3采集控件检查及双平台本地JS导出通过；原生键盘/大字体/真实图标仍待手机验证。未留启动服务，用户自行 npm run start:go；未打安装包、云构建、提交或推送，必须等本轮确认。详见移动 DESIGN.md、docs/USER-VERIFICATION.md、docs/verification/2026-10-21-mobile-ui-local-check.json。
