@@ -18,7 +18,7 @@ npm run web
 
 verify包含契约产物一致性、lint、严格类型与逻辑测试，可在新克隆中运行。普通开发检查可用npm run check；协议修改后运行npm run contract:build和npm run contract:check，并同步版本化桌面消费副本。`npm run verify -- --check-initialization`仅用于核对首次提交前的历史初始化快照，不作为提交后的开发门槛。
 
-手机运行`npm run start:go`。当前Expo Go可导入截图、采集网页，并通过同一Wi-Fi扫码发送到电脑；无需手动分享ZIP。OCR、系统录制和原生证书固定路径需要包含本地模块的独立安装包。
+手机运行`npm run start:go`。当前Expo Go可导入截图、采集网页，并通过同一Wi-Fi扫码发送到电脑；无需手动分享ZIP。OCR 和系统录制需要包含本地模块的独立安装包。iPhone 独立安装包与 Expo Go 优先使用同一条 v2 加密局域网通道；Android 独立包及旧版二维码保留原生证书固定通道。
 
 主入口为“添加画面 / 我的项目 / 发送到电脑”。电脑在`E:\WebToPrototype`运行`npm start`，打开“手机收件箱→生成手机配对码”。手机扫码、确认电脑名，再在电脑允许连接；勾选画面发送后，电脑收件箱会自动刷新，点击“转换并打开”继续。
 

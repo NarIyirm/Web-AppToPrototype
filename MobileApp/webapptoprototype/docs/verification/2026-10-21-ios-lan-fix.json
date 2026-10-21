@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-21T10:45:53.572Z",
+  "issue": "Expo Go pairs successfully; standalone iOS fails with misleading local network permission advice",
+  "userConfirmedLocalNetworkEnabled": true,
+  "previousBuild": "2112359e-5b35-46c6-8289-7e8669b5bcd7",
+  "previousIpaDeclarations": {
+    "NSLocalNetworkUsageDescription": true,
+    "NSAllowsLocalNetworking": true,
+    "NSAllowsArbitraryLoads": false
+  },
+  "underlyingNativeFailureConfirmed": false,
+  "change": "Prefer existing authenticated v2 encrypted transport for iOS, consistently across Expo Go and standalone. No retry/fallback across channels.",
+  "checks": {
+    "mobileTests": 64,
+    "contract": true,
+    "lint": true,
+    "typecheck": true,
+    "realReceiverEncryptedRoundtrip": true,
+    "replayAndTamperRejected": true,
+    "maximumChunkAndResume": true
+  },
+  "nativeSourcesChanged": false,
+  "appConfigChanged": false,
+  "realIphoneRetest": false,
+  "productionBuild": {
+    "status": "pending"
+  }
+}

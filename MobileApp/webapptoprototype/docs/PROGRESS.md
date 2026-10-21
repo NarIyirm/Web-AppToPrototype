@@ -227,3 +227,7 @@ src/AGENTS.md 规定新路由入口与独立 Modal 边界、禁止固定状态�
 证据 docs/verification/2026-10-21-safe-area-check.json 与父 evidence/2026-10-21/MOB-safe-area；本地夹具 node .runtime/check-safe-area.mjs（Windows 沙箱不能启动隐藏 Electron 时需本机执行权限，本轮已获准完成，窗口已关闭）。文档记录官方来源 https://docs.expo.dev/versions/v57.0.0/sdk/safe-area-context/ 。
 
 状态 development_complete_user_verification_pending：用户刷新 Expo Go 检查框选顶部/底部和其他页面，有条件时检查横屏及 Android 系统栏；见 USER-VERIFICATION 最新段。无需新包，没有 SDK/依赖/锁文件/原生模块/app.json/EAS/暂存改动，未构建/提交/推送。真实两端和 Figma 仍由用户验证。
+
+## 2026-10-21 / iPhone 独立包局域网连接
+
+2026-10-21 iPhone 局域网修复：用户确认本地网络开关已开启。原正式包优先走原生固定证书 HTTPS，Expo Go 走 v2 AES-GCM 认证加密通道，且连接失败提示错误地一律建议开启权限。现 iOS 对 v2 二维码统一使用既有加密通道，配对/状态/文件分块保持同一连接；不因失败跨通道重试，保留旧版与 Android 固定证书支持。移动 64 项测试、契约/lint/类型及电脑真实接收器的加密配对/大分块/续传/重放与篡改拒绝/断连测试通过。build3 IPA 已有本地网络用途说明和 NSAllowsLocalNetworking，非缺少声明。具体旧原生链路失败原因尚无手机原始错误证明；新 iOS production 包准备构建，真机复验仍待用户。

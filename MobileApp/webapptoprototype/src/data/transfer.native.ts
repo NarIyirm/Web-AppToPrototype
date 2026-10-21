@@ -1,28 +1,23 @@
 import * as Device from 'expo-device';
 import { File } from 'expo-file-system';
 import { isRunningInExpoGo, requireOptionalNativeModule } from 'expo';
+import { Platform } from 'react-native';
 
 import { parseTransferReceipt, type PairingOffer, type TransferReceipt } from '@/core/pairing';
+import { createPairingWire, type NativeTransfer, type PairingWire } from '@/core/pairing-wire';
 
 import { newId } from './app-state';
 import { fileDigest } from './file-digest';
 import { createLanTransport } from './lan-transport.native';
 
-type Transport = { request(endpoint: string, pin: string, path: string, method: string, token: string, body: string): Promise<string>;
-  chunk(endpoint: string, pin: string, path: string, token: string, uri: string, offset: number, length: number): Promise<string> };
-const native = isRunningInExpoGo() ? null : requireOptionalNativeModule<Transport>('MobileTransfer');
-type Wire = { request(path: string, method: string, token: string, body: string): Promise<string>;
-  chunk(path: string, token: string, uri: string, offset: number, length: number): Promise<string> };
-let session: { offer: PairingOffer; token: string; expiresAt: number; wire: Wire } | null = null;
+const native = isRunningInExpoGo() ? null : requireOptionalNativeModule<NativeTransfer>('MobileTransfer');
+let session: { offer: PairingOffer; token: string; expiresAt: number; wire: PairingWire } | null = null;
 let generation = 0;
 export const transferAvailable = true;
 export async function pairDesktop(offer: PairingOffer): Promise<string> {
   const attempt = ++generation;
   session = null;
-  const wire: Wire = native ? {
-    request: (path, method, token, body) => native.request(offer.endpoint, offer.certificateSha256, path, method, token, body),
-    chunk: (path, token, uri, offset, length) => native.chunk(offer.endpoint, offer.certificateSha256, path, token, uri, offset, length),
-  } : offer.protocol === 'w2p-mobile-2' ? await createLanTransport(offer) : (() => { throw Error('请更新电脑端并重新生成二维码，再用手机扫码连接。'); })();
+  const wire = await createPairingWire(offer, Platform.OS, native, createLanTransport);
   const result = JSON.parse(await wire.request('/mobile/pair', 'POST', '',
     JSON.stringify({ code: offer.code, deviceId: newId('d'), deviceName: (Device.modelName ?? '我的手机').slice(0, 80) }))) as { sessionToken: string; expiresAt: number; chunkBytes: number };
   if (!/^[a-f0-9]{64}$/.test(result.sessionToken) || !Number.isSafeInteger(result.expiresAt) || result.expiresAt <= Date.now()
