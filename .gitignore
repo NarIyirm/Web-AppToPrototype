@@ -1,0 +1,32 @@
+node_modules/
+apps/*/dist/
+.test-build/
+.runtime/
+evidence/**/user-data/
+*.log
+.DS_Store
+Thumbs.db
+
+release/
+__pycache__/
+*.pyc
+
+# Local maintenance backups, captures, and generated evidence
+.local-maintenance/
+evidence/
+/WebToPrototype-*.zip
+/WebToPrototype-*.zip.sha256
+/tests/test[0-9]*.json*
+/tests/capture-*.json*
+
+# Environment files and signing credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.p8
+*.jks
+*.mobileprovision
+*.tsbuildinfo

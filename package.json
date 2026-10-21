@@ -1,0 +1,57 @@
+{
+  "name": "web-to-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local desktop capture and Figma import feasibility probes",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "workspaces": [
+    "apps/desktop",
+    "apps/figma-plugin",
+    "packages/contracts"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.desktop.json && tsc -p tsconfig.plugin.json",
+    "test": "node scripts/test.mjs",
+    "start": "npm run build && electron apps/desktop",
+    "check": "npm run typecheck && npm test && npm run build",
+    "smoke:desktop": "node scripts/smoke-desktop.mjs",
+    "smoke:capture": "node scripts/smoke-capture.mjs",
+    "smoke:selection": "node scripts/smoke-selection.mjs",
+    "smoke:bridge": "node scripts/smoke-bridge.mjs",
+    "smoke:multiselect": "node scripts/smoke-multiselect.mjs",
+    "smoke:full-page": "node scripts/smoke-full-page.mjs",
+    "smoke:visual": "node scripts/smoke-visual.mjs",
+    "smoke:text": "node scripts/smoke-text.mjs",
+    "smoke:layers": "node scripts/smoke-layers.mjs",
+    "smoke:svg": "node scripts/smoke-svg.mjs",
+    "smoke:forms": "node scripts/smoke-forms.mjs",
+    "smoke:shadows": "node scripts/smoke-shadows.mjs",
+    "smoke:public": "node scripts/smoke-public.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "smoke:workflow": "node scripts/smoke-workflow.mjs",
+    "smoke:platform": "node scripts/smoke-platform.mjs",
+    "smoke:layout-changes": "node scripts/smoke-layout-changes.mjs",
+    "smoke:stress": "node scripts/smoke-stress.mjs",
+    "package:windows": "node scripts/package-windows.mjs",
+    "package:mac": "node scripts/package-macos.mjs --arm64",
+    "package:mac:intel": "node scripts/package-macos.mjs --x64",
+    "test:mac-package": "node scripts/test-macos-package.mjs",
+    "archive:source": "node scripts/archive-source.mjs"
+  },
+  "devDependencies": {
+    "@electron/get": "5.1.0",
+    "@figma/plugin-typings": "1.142.0",
+    "@types/node": "24.19.2",
+    "@types/qrcode": "1.5.6",
+    "ajv": "8.20.0",
+    "electron": "44.9.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.64.1",
+    "qrcode": "1.5.4",
+    "selfsigned": "5.5.0",
+    "typescript": "7.0.2"
+  }
+}

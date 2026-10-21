@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactKind": "example",
+  "packageId": "pkg-example-order-flow",
+  "projectId": "project-example",
+  "revision": 1,
+  "createdAt": "2026-10-18T12:00:00+11:00",
+  "producer": {
+    "appVersion": "0.0.0-plan",
+    "converterVersion": "0.0.0-plan",
+    "adapterVersion": "web-0.0.0-plan"
+  },
+  "source": {
+    "kind": "web",
+    "url": "http://localhost:4173/orders",
+    "title": "人工协议样例：订单流程",
+    "pageEpoch": "page-example-1",
+    "captureContext": {
+      "viewport": { "width": 1280, "height": 800 },
+      "devicePixelRatio": 1,
+      "zoomFactor": 1,
+      "scroll": { "x": 0, "y": 0 }
+    }
+  },
+  "screens": [
+    {
+      "id": "screen-list",
+      "captureId": "capture-example-list",
+      "name": "订单列表",
+      "stateKey": "orders-list-default",
+      "selection": {
+        "mode": "element",
+        "sourceNodeIds": ["source-section-list"],
+        "excludedSourceNodeIds": [],
+        "originalRect": { "x": 80, "y": 120, "width": 360, "height": 240 },
+        "boundaryPolicy": "complete_elements",
+        "contentScope": "visible"
+      },
+      "rootNodeId": "list-root",
+      "nodes": [
+        {
+          "id": "list-root", "sourceId": "source-section-list", "name": "Section / 订单列表",
+          "type": "FRAME", "parentId": null, "order": 0,
+          "rect": { "x": 0, "y": 0, "width": 360, "height": 240 },
+          "fidelity": "native", "clipsContent": true, "layout": { "mode": "absolute" },
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 1, "g": 1, "b": 1, "a": 1 } }], "radii": [12, 12, 12, 12] }
+        },
+        {
+          "id": "list-heading", "sourceId": "source-list-heading", "name": "订单列表",
+          "type": "TEXT", "parentId": "list-root", "order": 0,
+          "rect": { "x": 24, "y": 24, "width": 312, "height": 32 },
+          "fidelity": "native",
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 0.12, "g": 0.12, "b": 0.12, "a": 1 } }] },
+          "text": { "characters": "订单列表", "font": { "family": "Microsoft YaHei", "style": "Regular", "weight": 400, "size": 24 }, "lineHeight": 32, "letterSpacing": 0, "align": "left", "runs": [] }
+        },
+        {
+          "id": "list-button", "sourceId": "source-list-button", "name": "Button / 查看订单",
+          "type": "FRAME", "parentId": "list-root", "order": 1,
+          "rect": { "x": 24, "y": 152, "width": 312, "height": 48 },
+          "fidelity": "native", "clipsContent": false, "layout": { "mode": "absolute" },
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 0.1, "g": 0.3, "b": 0.8, "a": 1 } }], "radii": [8, 8, 8, 8] }
+        },
+        {
+          "id": "list-button-label", "sourceId": "source-list-button-text", "name": "查看订单",
+          "type": "TEXT", "parentId": "list-button", "order": 0,
+          "rect": { "x": 16, "y": 12, "width": 280, "height": 24 },
+          "fidelity": "native",
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 1, "g": 1, "b": 1, "a": 1 } }] },
+          "text": { "characters": "查看订单", "font": { "family": "Microsoft YaHei", "style": "Regular", "weight": 400, "size": 16 }, "lineHeight": 24, "letterSpacing": 0, "align": "center", "runs": [] }
+        }
+      ]
+    },
+    {
+      "id": "screen-detail",
+      "captureId": "capture-example-detail",
+      "name": "订单详情",
+      "stateKey": "orders-detail-default",
+      "selection": {
+        "mode": "element",
+        "sourceNodeIds": ["source-section-detail"],
+        "excludedSourceNodeIds": [],
+        "originalRect": { "x": 80, "y": 120, "width": 360, "height": 240 },
+        "boundaryPolicy": "complete_elements",
+        "contentScope": "visible"
+      },
+      "rootNodeId": "detail-root",
+      "nodes": [
+        {
+          "id": "detail-root", "sourceId": "source-section-detail", "name": "Section / 订单详情",
+          "type": "FRAME", "parentId": null, "order": 0,
+          "rect": { "x": 0, "y": 0, "width": 360, "height": 240 },
+          "fidelity": "native", "clipsContent": true, "layout": { "mode": "absolute" },
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 0.96, "g": 0.97, "b": 0.99, "a": 1 } }], "radii": [12, 12, 12, 12] }
+        },
+        {
+          "id": "detail-heading", "sourceId": "source-detail-heading", "name": "订单详情",
+          "type": "TEXT", "parentId": "detail-root", "order": 0,
+          "rect": { "x": 24, "y": 24, "width": 312, "height": 32 },
+          "fidelity": "native",
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 0.12, "g": 0.12, "b": 0.12, "a": 1 } }] },
+          "text": { "characters": "订单详情", "font": { "family": "Microsoft YaHei", "style": "Regular", "weight": 400, "size": 24 }, "lineHeight": 32, "letterSpacing": 0, "align": "left", "runs": [] }
+        },
+        {
+          "id": "detail-button", "sourceId": "source-detail-button", "name": "Button / 返回列表",
+          "type": "FRAME", "parentId": "detail-root", "order": 1,
+          "rect": { "x": 24, "y": 152, "width": 312, "height": 48 },
+          "fidelity": "native", "clipsContent": false, "layout": { "mode": "absolute" },
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 0.1, "g": 0.3, "b": 0.8, "a": 1 } }], "radii": [8, 8, 8, 8] }
+        },
+        {
+          "id": "detail-button-label", "sourceId": "source-detail-button-text", "name": "返回列表",
+          "type": "TEXT", "parentId": "detail-button", "order": 0,
+          "rect": { "x": 16, "y": 12, "width": 280, "height": 24 },
+          "fidelity": "native",
+          "style": { "opacity": 1, "fills": [{ "kind": "solid", "color": { "r": 1, "g": 1, "b": 1, "a": 1 } }] },
+          "text": { "characters": "返回列表", "font": { "family": "Microsoft YaHei", "style": "Regular", "weight": 400, "size": 16 }, "lineHeight": 24, "letterSpacing": 0, "align": "center", "runs": [] }
+        }
+      ]
+    }
+  ],
+  "assets": [],
+  "interactions": [
+    { "id": "interaction-list-detail", "fromScreenId": "screen-list", "triggerNodeId": "list-button", "trigger": "click", "action": "navigate", "toScreenId": "screen-detail", "transition": "instant" },
+    { "id": "interaction-detail-list", "fromScreenId": "screen-detail", "triggerNodeId": "detail-button", "trigger": "click", "action": "navigate", "toScreenId": "screen-list", "transition": "instant" }
+  ],
+  "warnings": [
+    { "code": "W_SYNTHETIC_EXAMPLE", "severity": "info", "message": "人工协议样例，未证明真实采集、字体可用或 Figma 导入成功。", "details": { "synthetic": true }, "fallback": "none" }
+  ]
+}

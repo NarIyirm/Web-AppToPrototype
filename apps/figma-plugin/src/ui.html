@@ -1,0 +1,14 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+body{margin:0;padding:20px;font:13px/1.6 system-ui,"Microsoft YaHei",sans-serif;color:var(--figma-color-text,#222);background:var(--figma-color-bg,#fff)}h1{font-size:20px;margin:0 0 6px}h2{font-size:15px}p{margin:8px 0 16px}button,input{font:inherit}button{padding:9px 12px;border:1px solid #aaa;border-radius:6px;background:var(--figma-color-bg-secondary,#f3f3f3);color:inherit;cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #a0204b;outline-offset:3px}button:disabled{opacity:.5;cursor:wait}.primary{background:#a0204b;color:white;border-color:transparent}.row{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}hr{border:0;border-top:1px solid #ccc;margin:20px 0}pre{font:11px/1.5 ui-monospace,monospace;max-height:140px;overflow:auto;white-space:pre-wrap;word-break:break-all}#status{min-height:24px}label{display:block;margin:12px 0}#pair-code{box-sizing:border-box;width:100%;padding:8px;border:1px solid #aaa;border-radius:5px;background:inherit;color:inherit}#bridge-target{overflow-wrap:anywhere}#bridge-state{font-weight:600}
+</style></head><body>
+<h1>WebToPrototype</h1><h2>连接桌面应用</h2><p>在桌面生成配对码，连接后保持此插件运行，即可接收并自动导入。</p><div id="bridge-target">正在读取当前文件与页面…</div><label for="pair-code">本机配对码</label><input id="pair-code" type="password" autocomplete="off" spellcheck="false"><div class="row"><button id="connect" class="primary" disabled>连接桌面应用</button><button id="disconnect" disabled>断开连接</button></div><p id="bridge-state" role="status" aria-live="polite">尚未连接。</p><hr>
+<h2>文件导入</h2><p>也可直接选择桌面保存的 JSON/ZIP，在当前页创建可编辑图层。</p>
+<label>导入 JSON/ZIP <input type="file" id="file" accept=".json,.zip,application/json,application/zip"></label>
+<details><summary>人工样例与开发验证</summary><button class="primary" id="probe">运行基础验证（人工样例）</button>
+<label><input type="checkbox" id="allow"> 允许导入人工样例</label>
+</details>
+<div class="row"><button id="cancel">取消导入</button><button id="cleanup">清理本插件残留</button></div>
+<div class="row"><button id="health">检测本机连接</button><button id="report">读取上次报告</button><button id="download" disabled>下载报告</button></div>
+<div id="status" role="status" aria-live="polite">请选择验证或导入文件。</div><pre id="output"></pre>
+<script>/*__W2P_UI__*/</script></body></html>
+

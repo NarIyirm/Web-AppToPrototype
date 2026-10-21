@@ -1,0 +1,82 @@
+{
+  "recordedAt": "2026-10-20T11:19:18.952Z",
+  "manifest": {
+    "name": "webapptoprototype",
+    "version": "1.0.0",
+    "main": "expo-router/entry",
+    "dependencies": {
+      "@expo/ui": "~58.0.21",
+      "ajv": "^8.20.0",
+      "expo": "~58.0.16",
+      "expo-camera": "~58.0.11",
+      "expo-constants": "~58.0.12",
+      "expo-crypto": "~58.0.7",
+      "expo-dev-client": "~58.0.14",
+      "expo-device": "~58.0.5",
+      "expo-file-system": "~58.0.10",
+      "expo-font": "~58.0.9",
+      "expo-glass-effect": "~58.0.4",
+      "expo-image": "~58.0.16",
+      "expo-image-manipulator": "~58.0.15",
+      "expo-image-picker": "~58.0.10",
+      "expo-linking": "~58.0.13",
+      "expo-router": "~58.0.24",
+      "expo-sharing": "~58.0.19",
+      "expo-splash-screen": "~58.0.10",
+      "expo-status-bar": "~58.0.3",
+      "expo-symbols": "~58.0.4",
+      "expo-system-ui": "~58.0.6",
+      "expo-web-browser": "~58.0.6",
+      "fflate": "^0.8.3",
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "react-native": "0.88.0",
+      "react-native-gesture-handler": "~3.3.0",
+      "react-native-reanimated": "4.7.1",
+      "react-native-safe-area-context": "~5.10.1",
+      "react-native-screens": "~4.30.0",
+      "react-native-view-shot": "6.1.1",
+      "react-native-web": "~0.21.4",
+      "react-native-webview": "14.0.1",
+      "react-native-worklets": "0.13.0"
+    },
+    "devDependencies": {
+      "@types/node": "24",
+      "@types/react": "~19.3.0",
+      "eslint": "^9.39.5",
+      "eslint-config-expo": "~58.0.4",
+      "typescript": "~6.0.3"
+    },
+    "scripts": {
+      "start": "expo start",
+      "reset-project": "node ./scripts/reset-project.js",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "lint": "expo lint",
+      "typecheck": "tsc --noEmit",
+      "test": "node --test tests/*.test.ts",
+      "check": "npm run lint && npm run typecheck && npm test",
+      "verify": "node scripts/verify.mjs",
+      "baseline": "node scripts/record-baseline.mjs",
+      "contract:build": "node scripts/build-contract.mjs",
+      "inspect:bundle": "node scripts/inspect-bundle.mjs",
+      "contract:check": "node scripts/check-contract.mjs"
+    },
+    "engines": {
+      "node": "^24.3.0"
+    },
+    "private": true
+  },
+  "files": {
+    "app.json": "1f27f0154ae17a1078c12dc452c806749c6c088f4e2e2e4e54919644c139f5fc",
+    "app.config.ts": "937ba97a4b58fb3b54c999c90d3664a9c02547e27c1ae1d9f594af0fc7ff4ba9",
+    "package.json": "e9553f5eabb144e6a3cdffffd7e10bf9bdb6920fdb50879dcffdd6f2d147da68",
+    "package-lock.json": "a38d5439ad9fce897b33abb035d21d239fb376249f4798c5cb9b0e04218671f6",
+    "src/data/media.ts": "e6b4d7608c055d36121f11dffbbbd5700541ad522115ead6fffd0e6e8f790af2",
+    "src/data/web-image.ts": "6793d36cce0e2c971c90ff19bfd9a4401e5db30a7391832d3e51c6dfebdf288f",
+    "src/data/storage.native.ts": "da41d51945c4649677abfbaca5bad738e95d4030c26768469bdefdc99e9a056e",
+    "src/data/transfer.native.ts": "62867334438509476e00ec09ec1e120a9a2589da53777009dc6d5edea7bbcc7e"
+  },
+  "indexSha256": "321891629b4ce7829006b96d0a7231e741f582dcbdd7f38df270549af11b8a6e"
+}

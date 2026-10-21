@@ -1,0 +1,54 @@
+{
+  "recordedAt": "2026-10-20T11:30:52.607Z",
+  "versions": {
+    "expo": "57.0.30",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "expo-router": "57.0.28",
+    "expo-file-system": "57.0.7",
+    "react-native-webview": "13.16.1",
+    "react-native-view-shot": "5.1.0",
+    "eslint-config-expo": "57.0.2",
+    "@types/react": "19.2.18"
+  },
+  "checksPassed": true,
+  "testCount": 40,
+  "appJsonUnchanged": true,
+  "gitIndexUnchanged": true,
+  "lockMatchesManifest": true,
+  "sdk58Packages": [],
+  "iconAliasMatchesConfiguredIcon": true,
+  "bundles": [
+    {
+      "platform": "android",
+      "status": 200
+    },
+    {
+      "platform": "ios",
+      "status": 200
+    },
+    {
+      "platform": "web",
+      "status": 200
+    }
+  ],
+  "assetRequests": [
+    {
+      "path": "/assets/assets/kitchmemo-icon.png",
+      "status": 200,
+      "png": true,
+      "bytes": 799005
+    },
+    {
+      "path": "/assets/assets/images/icon.png",
+      "status": 200,
+      "png": true,
+      "bytes": 799005
+    }
+  ],
+  "doctorPassed": true,
+  "nativeCompilation": "not_run",
+  "cloudBuild": "not_run",
+  "gitCommitOrPush": "not_run"
+}

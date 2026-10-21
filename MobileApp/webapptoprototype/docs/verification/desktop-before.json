@@ -1,0 +1,14 @@
+{
+  "gitStatus": "?? .gitignore\n?? .npmrc\n?? DESIGN.md\n?? MobileApp/\n?? PRODUCT.md\n?? README.md\n?? WebToPrototype-0.1.0-mac-arm64-2026-10-20T03-05-40-044Z.zip\n?? WebToPrototype-0.1.0-win-x64-2026-10-19T16-44-03-047Z.zip\n?? apps/\n?? docs/\n?? evidence/\n?? examples/\n?? package-lock.json\n?? package.json\n?? packages/\n?? scripts/\n?? tests/\n?? tsconfig.desktop.json\n?? tsconfig.plugin.json\n",
+  "indexSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": {
+    "packages/contracts/capture-package.schema.json": "11db87808d85d7480e897ffa484b6e1c9063ad95557db6e0b63320915fc2e5e1",
+    "packages/contracts/src/index.ts": "d31e00053adf348319aba51e38ecfaf37cf26573d5922102364fee2228949c62",
+    "apps/desktop/src/main.ts": "c254852ed4bcbe9562b15f2dc0c6f02129abdb73ba1bfb35cd39196b7f90f27f",
+    "apps/desktop/src/project.ts": "1e975fd651f5b40c6e2bb41712ab924ef8566f6adaa1d64ea7653f51619abaa8",
+    "apps/desktop/src/index.html": "fef8ff417b86b26698c7d04fa82c869ea6fdf56d63dd32cb037ad23ede477174",
+    "apps/desktop/src/renderer.ts": "8af3cd63280a9db595625ff32d0daf87e9c8b2306fe2b03a3d851b743427c1ae",
+    "scripts/generate-validator.mjs": "2356ad8128fb2b99ebcc1ef2d8fd4bd8580ea7d49709054894b68ada82a09379",
+    "tsconfig.desktop.json": "034fe7f8c1daa66af012ce63f95ef57be5824a593b1e52599d1814e94ad473a4"
+  }
+}

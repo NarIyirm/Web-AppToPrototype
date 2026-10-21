@@ -1,0 +1,175 @@
+{
+  "recordedAt": "2026-10-20T06:23:36.817Z",
+  "platform": "win32",
+  "node": "v24.15.0",
+  "package": {
+    "name": "webapptoprototype",
+    "version": "1.0.0",
+    "main": "expo-router/entry",
+    "dependencies": {
+      "@expo/ui": "~58.0.21",
+      "expo": "~58.0.16",
+      "expo-constants": "~58.0.12",
+      "expo-device": "~58.0.5",
+      "expo-font": "~58.0.9",
+      "expo-glass-effect": "~58.0.4",
+      "expo-image": "~58.0.16",
+      "expo-linking": "~58.0.13",
+      "expo-router": "~58.0.24",
+      "expo-splash-screen": "~58.0.10",
+      "expo-status-bar": "~58.0.3",
+      "expo-symbols": "~58.0.4",
+      "expo-system-ui": "~58.0.6",
+      "expo-web-browser": "~58.0.6",
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "react-native": "0.88.0",
+      "react-native-gesture-handler": "~3.3.0",
+      "react-native-reanimated": "4.7.1",
+      "react-native-safe-area-context": "~5.10.1",
+      "react-native-screens": "~4.30.0",
+      "react-native-web": "~0.21.4",
+      "react-native-worklets": "0.13.0"
+    },
+    "devDependencies": {
+      "@types/react": "~19.3.0",
+      "typescript": "~6.0.3"
+    },
+    "scripts": {
+      "start": "expo start",
+      "reset-project": "node ./scripts/reset-project.js",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "lint": "expo lint"
+    },
+    "private": true
+  },
+  "installed": {
+    "expo": "58.0.16",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "typescript": "6.0.3"
+  },
+  "git": {
+    "branch": "master",
+    "origin": "https://github.com/NarIyirm/Web-AppToPrototype.git",
+    "status": "A  .gitignore\nA  .vscode/extensions.json\nA  .vscode/settings.json\nA  AGENTS.md\nA  LICENSE\nAM README.md\nAM app.json\nA  \"assets/expo.icon/Assets/expo-symbol 2.svg\"\nA  assets/expo.icon/Assets/grid.png\nA  assets/expo.icon/icon.json\nA  assets/images/android-icon-background.png\nA  assets/images/android-icon-foreground.png\nA  assets/images/android-icon-monochrome.png\nA  assets/images/expo-badge-white.png\nA  assets/images/expo-badge.png\nA  assets/images/expo-logo.png\nA  assets/images/favicon.png\nA  assets/images/icon.png\nA  assets/images/logo-glow.png\nA  assets/images/react-logo.png\nA  assets/images/react-logo@2x.png\nA  assets/images/react-logo@3x.png\nA  assets/images/splash-icon.png\nA  assets/images/tabIcons/explore.png\nA  assets/images/tabIcons/explore@2x.png\nA  assets/images/tabIcons/explore@3x.png\nA  assets/images/tabIcons/home.png\nA  assets/images/tabIcons/home@2x.png\nA  assets/images/tabIcons/home@3x.png\nA  assets/images/tutorial-web.png\nA  package-lock.json\nA  package.json\nA  scripts/reset-project.js\nA  src/app/_layout.tsx\nA  src/app/explore.tsx\nA  src/app/index.tsx\nA  src/components/animated-icon.module.css\nA  src/components/animated-icon.tsx\nA  src/components/animated-icon.web.tsx\nA  src/components/app-tabs.tsx\nA  src/components/app-tabs.web.tsx\nA  src/components/external-link.tsx\nA  src/components/hint-row.tsx\nA  src/components/themed-text.tsx\nA  src/components/themed-view.tsx\nA  src/components/ui/collapsible.tsx\nA  src/components/web-badge.tsx\nA  src/constants/theme.ts\nA  src/global.css\nA  src/hooks/use-color-scheme.ts\nA  src/hooks/use-color-scheme.web.ts\nA  src/hooks/use-theme.ts\nA  tsconfig.json\n?? docs/\n?? scripts/record-baseline.mjs",
+    "indexEntries": "100644 4b00baf340f593d39d7fc296e02d5e8fe29f21f9 0\t.gitignore\n100644 b7ed83779759a0a1e6cf2d181f45fe6b67be47dc 0\t.vscode/extensions.json\n100644 e2798e4264cbbbf1806ebf8f1ab263c009458ff9 0\t.vscode/settings.json\n100644 be05e778dcf1b258fa9aed2e0e97e4a9ce66bdec 0\tAGENTS.md\n100644 30b20e3b5f0f470947ba9480d90587ba07c137b4 0\tLICENSE\n100644 242934bb5f2316c75370af6412e434495beec968 0\tREADME.md\n100644 188975a5781f51651a84029ac846ded76f172969 0\tapp.json\n100644 51d36767378969c772e973857d8e678f8cf82e3d 0\tassets/expo.icon/Assets/expo-symbol 2.svg\n100644 eefea24246267f9a2446460c389a483577a3adb5 0\tassets/expo.icon/Assets/grid.png\n100644 7a2c33cd0dfb95c0ad80083043563c5d244d70e3 0\tassets/expo.icon/icon.json\n100644 5ffefc5bb57a3d7b39ec6ff4e96979226522cc49 0\tassets/images/android-icon-background.png\n100644 3a9e5016dca4804f37ba410ba49e70055e1ccad2 0\tassets/images/android-icon-foreground.png\n100644 77484ebdbca253297baea4a7d416233aa47a45c0 0\tassets/images/android-icon-monochrome.png\n100644 28630679fd5be26be3eace15c9e3b53dd413617b 0\tassets/images/expo-badge-white.png\n100644 5d5c5bb5cc2d77ec9ce18547d330d5f30540e1a1 0\tassets/images/expo-badge.png\n100644 6b1642a0b70cd2c80d81f959ec130e5bad33489b 0\tassets/images/expo-logo.png\n100644 408bd746615785760b09e6f23fa8378d3e614331 0\tassets/images/favicon.png\n100644 67c777a454236bef606387cbcfade762c0d3190a 0\tassets/images/icon.png\n100644 edc99be1b65ef9ce1bbc04b88d9c2994d74246fc 0\tassets/images/logo-glow.png\n100644 9d72a9ffcbb39d89709073e1a7edd8ba414932c1 0\tassets/images/react-logo.png\n100644 2229b130ad5b73fdef7d59ff544abd4cb2377bef 0\tassets/images/react-logo@2x.png\n100644 a99b2032221d57c88b6c44e7e22d93ddda78e008 0\tassets/images/react-logo@3x.png\n100644 6b1642a0b70cd2c80d81f959ec130e5bad33489b 0\tassets/images/splash-icon.png\n100644 73d8258344a7105d0f371a4eeb25017e9a6d48f3 0\tassets/images/tabIcons/explore.png\n100644 21b9bd26634ab84d284f737916b14294d4f267b9 0\tassets/images/tabIcons/explore@2x.png\n100644 422202d5e195f089679236b712492f760dd7b2a0 0\tassets/images/tabIcons/explore@3x.png\n100644 ad5699c4295db84c342833358bbc47c159882f45 0\tassets/images/tabIcons/home.png\n100644 22a1f2c7442f3ee07b8af0bb511652c7931e4888 0\tassets/images/tabIcons/home@2x.png\n100644 f5d1f9a41eef3a1a3581d3c8a9d4b2a2116e6c00 0\tassets/images/tabIcons/home@3x.png\n100644 e4a8c58f7c433af31a0549fbb3f53eb0d528e682 0\tassets/images/tutorial-web.png\n100644 b93a7cd90a31f8b9a57b9f498f6290f23e53be78 0\tpackage-lock.json\n100644 94fbe6221568c6e1f949e6e3803a921e85dddb8f 0\tpackage.json\n100644 747b7b2ad7916ca57c980196a258e66382e7124c 0\tscripts/reset-project.js\n100644 b3fd50c4070b2998209bd1b78515447a6af8ac69 0\tsrc/app/_layout.tsx\n100644 29340852de992275f6ea74c5bbb516f75d04d008 0\tsrc/app/explore.tsx\n100644 8ec3e6fa46f84f3071a7a2299f759e13e8dfe1b1 0\tsrc/app/index.tsx\n100644 f8156fec7f8d8e7a9bf3292f4d25643c75b257f3 0\tsrc/components/animated-icon.module.css\n100644 c7c2911a9a5e3857229d8c359f35836b9ced3c8a 0\tsrc/components/animated-icon.tsx\n100644 dfbb1fd7de96efba0cc0a92c402bb863bca21a08 0\tsrc/components/animated-icon.web.tsx\n100644 9e9695d3f98bda73951c3d4b05aefdf8be94f7b9 0\tsrc/components/app-tabs.tsx\n100644 96493d1db009cf6aaedf8f9a811be98ff56bed80 0\tsrc/components/app-tabs.web.tsx\n100644 883e515a432a0231ce417c6368b9cea9341c50ba 0\tsrc/components/external-link.tsx\n100644 acf4dc5d8be42e7851348a41db7b04168afef8f4 0\tsrc/components/hint-row.tsx\n100644 538510eb488daa9a02737a709ffa7f69aef4ac65 0\tsrc/components/themed-text.tsx\n100644 c710df9b6195e0779472c007adf34761379f458a 0\tsrc/components/themed-view.tsx\n100644 d0d745b4055b1dc3f8eb0b126528cb00ba8f8a80 0\tsrc/components/ui/collapsible.tsx\n100644 6667898d8b691d6085577fab464082bfdd1fdc34 0\tsrc/components/web-badge.tsx\n100644 ea2a30d2dfce093a7a46183128c55b27cd3a0263 0\tsrc/constants/theme.ts\n100644 c8fe5031ae788d4f4f825cdd9553e524de408f2c 0\tsrc/global.css\n100644 17e3c63e1acfe711d436c1c205d90c4e2fe46131 0\tsrc/hooks/use-color-scheme.ts\n100644 7eb1c1b7071ceedf76252509fabb05c603774ad8 0\tsrc/hooks/use-color-scheme.web.ts\n100644 e67827aacf1ebe3ba83ef74b56877a69d0339399 0\tsrc/hooks/use-theme.ts\n100644 2e9a6695e298985b3c6e60d9bfc0e460c3e28bc0 0\ttsconfig.json",
+    "indexEntriesSha256": "321891629b4ce7829006b96d0a7231e741f582dcbdd7f38df270549af11b8a6e"
+  },
+  "appConfig": {
+    "sha256": "1f27f0154ae17a1078c12dc452c806749c6c088f4e2e2e4e54919644c139f5fc",
+    "expo": {
+      "name": "webapptoprototype",
+      "slug": "webapptoprototype",
+      "version": "1.0.0",
+      "orientation": "portrait",
+      "icon": "./assets/images/icon.png",
+      "scheme": "webapptoprototype",
+      "userInterfaceStyle": "automatic",
+      "ios": {
+        "icon": "./assets/expo.icon"
+      },
+      "android": {
+        "adaptiveIcon": {
+          "backgroundColor": "#E6F4FE",
+          "foregroundImage": "./assets/images/android-icon-foreground.png",
+          "backgroundImage": "./assets/images/android-icon-background.png",
+          "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        },
+        "predictiveBackGestureEnabled": false
+      },
+      "web": {
+        "output": "server",
+        "favicon": "./assets/images/favicon.png"
+      },
+      "plugins": [
+        "expo-router",
+        [
+          "expo-splash-screen",
+          {
+            "backgroundColor": "#208AEF",
+            "image": "./assets/images/splash-icon.png",
+            "imageWidth": 76
+          }
+        ]
+      ],
+      "experiments": {
+        "typedRoutes": true,
+        "reactCompiler": true
+      },
+      "extra": {
+        "router": {
+          "asyncRoutes": {
+            "web": true
+          }
+        },
+        "eas": {
+          "projectId": "9b9900b7-a3e1-446a-9352-94547e2143b6"
+        }
+      },
+      "owner": "gress-26s2"
+    }
+  },
+  "trackedFiles": {
+    ".gitignore": "1044ca3cb6bbe9ef040cdad2c9314bf75d93129778690378f2f9e710e1fe23d2",
+    ".vscode/extensions.json": "f54cd822dce0af53953015f71ce04f91d4fcec4ac02ecb28658d636004c4bbce",
+    ".vscode/settings.json": "c9d2a3300e5453b399d9a092a29aabb67adfc59623abd5b03b1143557386c39c",
+    "AGENTS.md": "b7d381dd55800d242252e8bf89a40b026586d254e34908210931bc35582396a3",
+    "LICENSE": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4",
+    "README.md": "70f69ab69c00e9c69e0642d8714481417fa7a28537dd0de061b4909860c9302c",
+    "app.json": "1f27f0154ae17a1078c12dc452c806749c6c088f4e2e2e4e54919644c139f5fc",
+    "assets/expo.icon/Assets/expo-symbol 2.svg": "ad117d20fd819f4ec71876ce09c0e8b9275b1f20c5ec3c9d7d1914977ceffec6",
+    "assets/expo.icon/Assets/grid.png": "8247d79a2b31328fe4e330a973e6fae16924ed9aebd72c64d464d6856ab18c72",
+    "assets/expo.icon/icon.json": "747c56e178222a6255c6dd61c5de011b286cdc935febe89f04d1b191c3d076fe",
+    "assets/images/android-icon-background.png": "fb139c2dee362ebf2070e23b96da6fc0d43f8492de38b8af1fd7223e19b5861d",
+    "assets/images/android-icon-foreground.png": "9e3d0315a33c6799de601dd34cd8bf8cc3a8d16f3bf75592baec2ceb7240b391",
+    "assets/images/android-icon-monochrome.png": "6371fc2c12e33ad2215a86c281db3d682a81bebe7c957a842c13b8bf00cceb83",
+    "assets/images/expo-badge-white.png": "d9ba28c5e93aea3c2dabd901ee96fea3bb296ad8e648f6f64706dae11a1a62bd",
+    "assets/images/expo-badge.png": "ff353c7efadbd379903923cb604fca11c908cba0d4658cc2bd1f147d98317249",
+    "assets/images/expo-logo.png": "27b060a757a29038c9618586baa0ba3894dbe60d084c6059df497ff429c2d92f",
+    "assets/images/favicon.png": "a4e030697a7571b3e95d31860e4da55d2f98e5e861e2b55e414f45a8556828ba",
+    "assets/images/icon.png": "7a667804bb80a6a424a5daf18a2599c4f32237cf06fe78fc0de45dbb09e0eccf",
+    "assets/images/logo-glow.png": "bbd98a3f3c12d090f4df6065b7462fcdf6bc266209d002b4ef5fe554c245f66c",
+    "assets/images/react-logo.png": "224b7636b15e672801579b5b418077cbc2ca42f0146389062364356b0ecb5c5c",
+    "assets/images/react-logo@2x.png": "fa600be9ad2f869c7a8dbaffc78bb15af741123e1319c948f0be51753a153cde",
+    "assets/images/react-logo@3x.png": "cd84e02a5d542a3e71b7fa10a685c1b9fb51db4aff92aca6c0da6461ce17be16",
+    "assets/images/splash-icon.png": "27b060a757a29038c9618586baa0ba3894dbe60d084c6059df497ff429c2d92f",
+    "assets/images/tabIcons/explore.png": "e2dea1c2d20929d83e8eebd74818e808b1b72e376d3a1f3a03679fff0255d073",
+    "assets/images/tabIcons/explore@2x.png": "1b54913b3a0acc3e1fb72d3b9b79ad04814304b35bbb9d03a533e6130ad6c26a",
+    "assets/images/tabIcons/explore@3x.png": "2f3e43801df70ebe83273b90a7d170bacf5ca74a8a8dc5c154a020c2c8b06609",
+    "assets/images/tabIcons/home.png": "3829632ec7d495225395f5da3d0942935d7d055979b174613d1ade82fe420e76",
+    "assets/images/tabIcons/home@2x.png": "21c5a07df9017d97464a0a8256e265288f2fca0741ca651de05e12b32f32f5ab",
+    "assets/images/tabIcons/home@3x.png": "fe5b397975e7cb70ae7a122472d174ed12ec2ae106f7b49c968225ad37f8b3b8",
+    "assets/images/tutorial-web.png": "e372ec23ad6262e2e0dc2799ce416b495a631a565bcd24f0615d4afc04dac3bd",
+    "package-lock.json": "884c08edf21372bcf096dd116b0936588820ad7368d67e36741508708cd544fa",
+    "package.json": "369cc6d8453bd9d35cef10625539f9980ea671216269d1b164bacfd5d361fa65",
+    "scripts/reset-project.js": "e1989c1ca90f059a21b3319c7428bccd875e165dcb41f7ee3c580f407b21aa1b",
+    "src/app/_layout.tsx": "e593027f51972b6761b99706d873655a3d00ec59fc12d3a23bc58ae1a685bb7d",
+    "src/app/explore.tsx": "7b6d6e452bf6356ac29d10de9532c4be05324f65fce6b0233fdfefc70dfc7bba",
+    "src/app/index.tsx": "02d7e1f59bbd1ec24f259701184bc94802ac1d3f1927eadb996514209ed21dca",
+    "src/components/animated-icon.module.css": "a70d5b1b0561336e53541e4fcca0431fa9e3671fc29dd232a44d546ff488423c",
+    "src/components/animated-icon.tsx": "53772b1cfee876e9e79be0456fc6a4500b76a88e12990c63b3cc96d9ba9842b5",
+    "src/components/animated-icon.web.tsx": "d99b902d487bb7a0c6357b201cc5c5fda1fd1a482e6edea3d896324e949712d2",
+    "src/components/app-tabs.tsx": "69f9558ef4b19a57d6ab124e12a95d778e36d4691df3e2a135ddbc91c5f5ec92",
+    "src/components/app-tabs.web.tsx": "7918e249da6397e4abb5541cc92560e043a361994bcdbccd9fbf8b8fdda5fda9",
+    "src/components/external-link.tsx": "2838582e2dc21877652b710d4aee5f4ba5a795b17fcf63bd7ac9c25a749c8c26",
+    "src/components/hint-row.tsx": "2b5b1bbd4da6d9946e9a267587d7d6279059b0fab01dfeca144cd8cc3653a099",
+    "src/components/themed-text.tsx": "ae907d2b52a6a231963db7882acb5f853e6a08b94c34efc88d89fb1cd5f83264",
+    "src/components/themed-view.tsx": "e13930b2f4dfd4dab093d1a86c1586825a97d56e895ba8cb9c89233e654138c9",
+    "src/components/ui/collapsible.tsx": "73613fbb9c2d64215f7c365683ec790dbf6f04160bea48bc7273cc0a36d4a95b",
+    "src/components/web-badge.tsx": "0af7715337e070c7c476202c8dd77f2fd6a3514255ace1ead9f832ccc8351a7f",
+    "src/constants/theme.ts": "5c524dc8b8c75b01e6f5d10ec0d2efa094f3e4591cb8b2866508573806311a69",
+    "src/global.css": "3d65b4b82fe8112cd874d5058bb78b94743d2679958a421191802f4239cedf56",
+    "src/hooks/use-color-scheme.ts": "33beb965500ae5fdfe5c8699805a6be94c8c126a751fbe2ed7bcae87df394882",
+    "src/hooks/use-color-scheme.web.ts": "84f19b5c1a8e941ab9868d2e83f6e61db11d3d9bf4fa91fac979bcd0fdc8019b",
+    "src/hooks/use-theme.ts": "267508aef2ef836c3267d3ffb52bbd499282a4ea1dab2c36e061e008945d77b8",
+    "tsconfig.json": "2c427a7bc50569dc5167d39425793d8bba22eeffcb213fff05f6274980784508"
+  },
+  "environment": {
+    "androidHomeConfigured": false,
+    "javaHomeConfigured": false,
+    "nativeDirectories": []
+  }
+}

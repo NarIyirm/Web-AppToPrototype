@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-10-20T11:42:38.145Z",
+  "results": [
+    {
+      "platform": "ios",
+      "status": 200,
+      "bytes": 9918507,
+      "guard": true,
+      "notice": true
+    },
+    {
+      "platform": "android",
+      "status": 200,
+      "bytes": 10315923,
+      "guard": true,
+      "notice": true
+    },
+    {
+      "platform": "web",
+      "status": 200,
+      "bytes": 7727015,
+      "guard": true,
+      "notice": true
+    }
+  ]
+}

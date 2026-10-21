@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactKind": "example",
+  "packageId": "pkg-text-m2-5-example",
+  "projectId": "project-example",
+  "revision": 1,
+  "createdAt": "2026-10-18T12:00:00+11:00",
+  "producer": {
+    "appVersion": "0.0.0-plan",
+    "converterVersion": "m2.5",
+    "adapterVersion": "web-0.0.0-plan"
+  },
+  "source": {
+    "kind": "web",
+    "url": "http://localhost:4173/orders",
+    "title": "人工富文本协议样例 / 非网页采集",
+    "pageEpoch": "page-example-1",
+    "captureContext": {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "devicePixelRatio": 1,
+      "zoomFactor": 1,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "screens": [
+    {
+      "id": "text-example",
+      "captureId": "capture-example-list",
+      "name": "人工富文本 / 非网页证据",
+      "stateKey": "orders-list-default",
+      "selection": {
+        "mode": "element",
+        "sourceNodeIds": [
+          "synthetic-text"
+        ],
+        "excludedSourceNodeIds": [],
+        "originalRect": {
+          "x": 0,
+          "y": 0,
+          "width": 500,
+          "height": 150
+        },
+        "boundaryPolicy": "complete_elements",
+        "contentScope": "visible"
+      },
+      "rootNodeId": "text-root",
+      "nodes": [
+        {
+          "id": "text-root",
+          "name": "人工样例",
+          "type": "FRAME",
+          "parentId": null,
+          "order": 0,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 500,
+            "height": 150
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "native"
+        },
+        {
+          "id": "rich-text",
+          "name": "普通 Bold 👩‍💻",
+          "type": "TEXT",
+          "parentId": "text-root",
+          "order": 1,
+          "rect": {
+            "x": 20,
+            "y": 30,
+            "width": 440,
+            "height": 32
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 0.15,
+                  "g": 0.15,
+                  "b": 0.18,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "native",
+          "text": {
+            "characters": "普通 Bold 👩‍💻",
+            "font": {
+              "family": "Arial",
+              "style": "Regular",
+              "weight": 400,
+              "size": 20,
+              "fallbacks": [
+                "Microsoft YaHei",
+                "sans-serif"
+              ]
+            },
+            "lineHeight": 32,
+            "letterSpacing": 0,
+            "align": "left",
+            "runs": [
+              {
+                "start": 0,
+                "end": 3,
+                "font": {
+                  "family": "Arial",
+                  "style": "Regular",
+                  "weight": 400,
+                  "size": 20,
+                  "fallbacks": [
+                    "Microsoft YaHei",
+                    "sans-serif"
+                  ]
+                },
+                "color": {
+                  "r": 0.15,
+                  "g": 0.15,
+                  "b": 0.18,
+                  "a": 1
+                },
+                "letterSpacing": 0,
+                "decoration": "none"
+              },
+              {
+                "start": 3,
+                "end": 8,
+                "font": {
+                  "family": "Arial",
+                  "style": "Bold",
+                  "weight": 700,
+                  "size": 20,
+                  "fallbacks": [
+                    "Microsoft YaHei",
+                    "sans-serif"
+                  ]
+                },
+                "color": {
+                  "r": 0.63,
+                  "g": 0.13,
+                  "b": 0.29,
+                  "a": 1
+                },
+                "letterSpacing": 0,
+                "decoration": "underline"
+              },
+              {
+                "start": 8,
+                "end": 13,
+                "font": {
+                  "family": "Arial",
+                  "style": "Italic",
+                  "weight": 400,
+                  "size": 20,
+                  "fallbacks": [
+                    "Microsoft YaHei",
+                    "sans-serif"
+                  ]
+                },
+                "color": {
+                  "r": 0.14,
+                  "g": 0.31,
+                  "b": 0.59,
+                  "a": 0.8
+                },
+                "letterSpacing": 0,
+                "decoration": "none"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assets": [],
+  "interactions": [],
+  "warnings": [],
+  "requiredCapabilities": [
+    "absolute-layout",
+    "styled-text"
+  ]
+}

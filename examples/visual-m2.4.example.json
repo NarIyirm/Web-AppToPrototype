@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactKind": "example",
+  "packageId": "pkg-visual-m2-4-example",
+  "projectId": "project-example",
+  "revision": 1,
+  "createdAt": "2026-10-18T12:00:00+11:00",
+  "producer": {
+    "appVersion": "0.0.0-plan",
+    "converterVersion": "m2.4",
+    "adapterVersion": "web-0.0.0-plan"
+  },
+  "source": {
+    "kind": "web",
+    "url": "http://localhost:4173/orders",
+    "title": "人工协议样例：订单流程",
+    "pageEpoch": "page-example-1",
+    "captureContext": {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "devicePixelRatio": 1,
+      "zoomFactor": 1,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "screens": [
+    {
+      "id": "visual-example",
+      "captureId": "capture-example-list",
+      "name": "m2.4 人工视觉协议样例",
+      "stateKey": "orders-list-default",
+      "selection": {
+        "mode": "element",
+        "sourceNodeIds": [
+          "synthetic-visual"
+        ],
+        "excludedSourceNodeIds": [],
+        "originalRect": {
+          "x": 0,
+          "y": 0,
+          "width": 500,
+          "height": 240
+        },
+        "boundaryPolicy": "complete_elements",
+        "contentScope": "visible"
+      },
+      "rootNodeId": "visual-root",
+      "nodes": [
+        {
+          "id": "visual-root",
+          "parentId": null,
+          "name": "人工样例 / 非网页证据",
+          "type": "FRAME",
+          "order": 0,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 500,
+            "height": 240
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "clipsContent": true,
+          "fidelity": "native"
+        },
+        {
+          "id": "image-clip",
+          "parentId": "visual-root",
+          "name": "图片裁切",
+          "type": "FRAME",
+          "order": 1,
+          "rect": {
+            "x": 20,
+            "y": 20,
+            "width": 150,
+            "height": 210
+          },
+          "style": {
+            "fills": []
+          },
+          "clipsContent": true,
+          "fidelity": "native"
+        },
+        {
+          "id": "placed-image",
+          "parentId": "image-clip",
+          "name": "cover / 85% 20%",
+          "type": "IMAGE",
+          "order": 2,
+          "rect": {
+            "x": -229.5,
+            "y": 0,
+            "width": 420,
+            "height": 210
+          },
+          "style": {},
+          "assetId": "81fc3acedd962a10771e5289dccd8527116c9d915a5c4acdc7a115332c26f699",
+          "imageSizing": "stretch",
+          "fidelity": "native"
+        },
+        {
+          "id": "gradient",
+          "parentId": "visual-root",
+          "name": "135deg 原生渐变",
+          "type": "SHAPE",
+          "order": 3,
+          "rect": {
+            "x": 210,
+            "y": 20,
+            "width": 260,
+            "height": 140
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "linear_gradient",
+                "angle": 135,
+                "stops": [
+                  {
+                    "position": 0,
+                    "color": {
+                      "r": 0.77,
+                      "g": 0.19,
+                      "b": 0.28,
+                      "a": 0.2
+                    }
+                  },
+                  {
+                    "position": 0.65,
+                    "color": {
+                      "r": 0.18,
+                      "g": 0.33,
+                      "b": 0.75,
+                      "a": 0.8
+                    }
+                  },
+                  {
+                    "position": 1,
+                    "color": {
+                      "r": 0.11,
+                      "g": 0.5,
+                      "b": 0.33,
+                      "a": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "fidelity": "native"
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "assetId": "81fc3acedd962a10771e5289dccd8527116c9d915a5c4acdc7a115332c26f699",
+      "sha256": "81fc3acedd962a10771e5289dccd8527116c9d915a5c4acdc7a115332c26f699",
+      "mime": "image/png",
+      "byteLength": 1015,
+      "width": 320,
+      "height": 160,
+      "inlineBase64": "iVBORw0KGgoAAAANSUhEUgAAAUAAAACgCAYAAAB9o7WcAAADvklEQVR4nO3asYldVxiF0SnEKBE4M7gM50L9qBN1osgtuB65gQcfzGF4c/ZbG1b+J/dLzn378uXrb+7zaM++CW7z9uwDeB8BhHMCeCkBhHMCeCkBhHMCeCkBhHMCeCkBhHMCeCkBhHMCeCkBhHMZwH///odP6NGefdN7/PHjG3wYARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQIITQBHCSA0ARwlgNAEcJQAQhPAUQII7TiAf33/xSf0aM++6T3++/knfBgBHCWA0ARwlABCE8BRAghNAEcJIDQBHCWA0ARwlABCE8BRAghNAEcJIDQBHCWA0ARwlABCE8BRAghNAEcJIDQBHCWA0ARwlABCE8BRAghNAEcJIDQBHCWA0ARwlABCE8BRAghNAEcJIDQBHCWA0DKAD78kM7MXmACa2ctOAM3sZSeAZvayE0Aze9l5Bb7Uoz37pvd49ish2/wGM0oAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGgCOEoAoQngKAGEJoCjBBCaAI4SQGjHAeRzerRn3wS3EcBLCSCcE8BLCSCcE8BLCSCcE8BLCSCcE8BLCSCcE8BLCSCcE8BLCSCc+x/+z1IE8qutqQAAAABJRU5ErkJggg=="
+    }
+  ],
+  "interactions": [],
+  "warnings": [],
+  "requiredCapabilities": [
+    "absolute-layout",
+    "inline-images",
+    "image-placement",
+    "linear-gradients"
+  ]
+}

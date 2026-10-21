@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-20T12:10:13.899Z",
+  "mobilePassed": true,
+  "mobileTests": 44,
+  "desktopTests": 152,
+  "preservation": {
+    "appJsonUnchanged": true,
+    "indexUnchanged": true,
+    "unexpectedChanges": []
+  },
+  "copied": [
+    {
+      "name": "lan-wire.ts",
+      "equal": true,
+      "sha256": "14f112841575a3e32b49916aecfea61980991e550102d8c4d99f1ee67cf8163b"
+    },
+    {
+      "name": "lan-client.ts",
+      "equal": true,
+      "sha256": "e6680c1b7363f0f26e5fe5caa3312422bcea3882bfbcaafb6a7c24bcc573a0d2"
+    }
+  ],
+  "phoneFeedback": "pending",
+  "nativeBuildTriggered": false
+}

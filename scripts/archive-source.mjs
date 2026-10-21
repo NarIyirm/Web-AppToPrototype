@@ -1,0 +1,11 @@
+import {cp,mkdir,readdir,writeFile} from 'node:fs/promises';
+import {createReadStream} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {resolve,join,basename} from 'node:path';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+const stamp=new Date().toISOString().replace(/[.:]/g,'-'),folder=resolve('release',`WebToPrototype-0.1.0-source-${stamp}`);await mkdir(folder,{recursive:true});
+for(const name of ['package.json','package-lock.json','tsconfig.desktop.json','tsconfig.plugin.json','.gitignore','.npmrc','README.md','DESIGN.md','PRODUCT.md','apps','packages','scripts','examples','docs'])await cp(resolve(name),join(folder,name),{recursive:true,filter:path=>!/(?:^|[\\/])(?:node_modules|dist|__pycache__)(?:[\\/]|$)/.test(path)&&!path.endsWith('.pyc')});
+await mkdir(join(folder,'tests'));for(const name of await readdir('tests'))if(name.endsWith('.test.ts'))await cp(resolve('tests',name),join(folder,'tests',name));
+await writeFile(join(folder,'BASELINE.txt'),'WebToPrototype 0.1.0 desktop candidate source baseline\nNo Git commit or tag. Excludes user captures, evidence, runtime data and installed dependencies.\nInstall locked development dependencies with npm ci, then npm run check.\nMac packaging also requires Python 3.10+. Actual evidence is retained separately in the project evidence directory.\n');
+const zip=folder+'.zip';if(process.platform==='darwin')await promisify(execFile)('/usr/bin/ditto',['-c','-k','--keepParent',folder,zip],{timeout:300000});else await promisify(execFile)('powershell.exe',['-NoProfile','-File',resolve('scripts/archive-windows.ps1'),'-Source',folder,'-Destination',zip],{windowsHide:true,timeout:300000});let bytes=0;const hash=createHash('sha256');for await(const chunk of createReadStream(zip)){bytes+=chunk.length;hash.update(chunk);}const sha256=hash.digest('hex');await writeFile(zip+'.sha256',sha256+'  '+basename(zip)+'\n');await writeFile(resolve('release/latest-source.json'),JSON.stringify({folder,zip,bytes,sha256,version:'0.1.0',createdAt:new Date().toISOString(),gitCommit:null},null,2));console.log(JSON.stringify({zip,bytes,sha256},null,2));

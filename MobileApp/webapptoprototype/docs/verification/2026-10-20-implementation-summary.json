@@ -1,0 +1,61 @@
+{
+  "recordedAt": "2026-10-20T07:47:18.614Z",
+  "mobileChecksPassed": true,
+  "mobileTestCount": 37,
+  "desktopTestCount": 151,
+  "desktopTestsFailed": 0,
+  "desktopSchemaV1Unchanged": true,
+  "desktopIndexUnchanged": true,
+  "contractMirror": [
+    {
+      "path": "src/core/project.ts",
+      "match": true
+    },
+    {
+      "path": "src/core/archive.ts",
+      "match": true
+    },
+    {
+      "path": "src/core/mobile-bundle.ts",
+      "match": true
+    },
+    {
+      "path": "contracts/mobile-capture.schema.json",
+      "match": true
+    },
+    {
+      "path": "contracts/snapshot.schema.json",
+      "match": true
+    },
+    {
+      "path": "contracts/generated/validate.cjs",
+      "match": true
+    },
+    {
+      "path": "contracts/generated/validate.d.cts",
+      "match": true
+    }
+  ],
+  "markdownFiles": 11,
+  "localLinks": 37,
+  "brokenLinks": [],
+  "nativeCompilation": "not_run",
+  "nativeDevices": "pending_user_verification",
+  "realFigma": "pending_user_verification",
+  "mobileBuildOrSubmission": "not_run",
+  "gitCommitOrPush": "not_run",
+  "developmentJavaScriptBundles": [
+    {
+      "platform": "android",
+      "status": 200
+    },
+    {
+      "platform": "ios",
+      "status": 200
+    },
+    {
+      "platform": "web",
+      "status": 200
+    }
+  ]
+}

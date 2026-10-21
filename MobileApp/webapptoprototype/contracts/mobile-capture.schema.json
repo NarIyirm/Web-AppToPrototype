@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:w2p:mobile:0.1.0-alpha.1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "artifactKind": {
+      "const": "mobile_capture"
+    },
+    "formatVersion": {
+      "const": "0.1.0-alpha.1"
+    },
+    "packageId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{7,80}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 32,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*(Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "appVersion": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "adapterVersion": {
+          "type": "string",
+          "maxLength": 80
+        }
+      },
+      "required": [
+        "appVersion",
+        "adapterVersion"
+      ]
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{7,80}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "captures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{7,80}$"
+          },
+          "snapshotPath": {
+            "type": "string",
+            "pattern": "^captures/[a-z][a-z0-9_-]{7,80}/snapshot\\.json$"
+          }
+        },
+        "required": [
+          "id",
+          "snapshotPath"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 5
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10485760
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "mediaType": {
+            "const": "image/png"
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^assets/[a-f0-9]{64}\\.png$"
+          }
+        },
+        "required": [
+          "id",
+          "bytes",
+          "width",
+          "height",
+          "mediaType",
+          "path"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 5
+    }
+  },
+  "required": [
+    "artifactKind",
+    "formatVersion",
+    "packageId",
+    "revision",
+    "createdAt",
+    "producer",
+    "project",
+    "captures",
+    "assets"
+  ]
+}

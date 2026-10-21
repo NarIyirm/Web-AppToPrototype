@@ -1,0 +1,70 @@
+import {_electron as electron} from 'playwright';
+import {waitForShell} from './electron-shell.mjs';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+const stamp=new Date().toISOString().replace(/[.:]/g,'-'),folder=resolve('evidence/2026-10-19/M2-full-page',stamp);await mkdir(folder,{recursive:true});
+const env={...process.env,W2P_SMOKE:'1',W2P_DATA_DIR:resolve('.runtime/full-page-smoke',stamp)};delete env.ELECTRON_RUN_AS_NODE;
+let app,shell,target;let stderr='',failure;const checks=[];
+const check=(name,value)=>{checks.push({check:name,ok:!!value});if(!value)throw Error(name);};
+const texts=data=>data.screens.flatMap(s=>s.nodes.filter(n=>n.text).map(n=>n.text.characters)).join('\n');
+try{
+ app=await electron.launch({args:[resolve('apps/desktop')],env,timeout:30000});app.process().stderr.on('data',chunk=>stderr=(stderr+chunk.toString()).slice(-4000));shell=await waitForShell(app);const info=await shell.evaluate(()=>window.w2p.info());
+ target=app.windows().find(page=>page.url().includes('/fixture'));if(!target)target=await app.waitForEvent('window',{predicate:p=>p.url().includes('/fixture')});await target.waitForSelector('#orders');
+ const read=async()=>JSON.parse(await readFile(resolve(info.runtime,'last-capture.json'),'utf8'));
+ const navigate=async path=>{await shell.evaluate(url=>window.w2p.navigate(url),info.fixtureUrl.replace('/fixture',path));await target.waitForLoadState('domcontentloaded');};
+ const waitDone=async()=>{await shell.waitForFunction(()=>document.body.getAttribute('aria-busy')==='false',null,{timeout:90000});};
+ check('expanded-local-fixture-is-a-real-long-document',await target.evaluate(()=>document.documentElement.scrollHeight>innerHeight*4&&!!document.querySelector('#lazy-gallery')&&!!document.querySelector('#long-page-end')));
+ await shell.locator('#send-kind').selectOption('full_page');check('full-page-entry-works-without-selection',await shell.locator('#full-options').isVisible()&&await shell.locator('#capture').isEnabled());
+ await target.evaluate(()=>scrollTo({top:210,behavior:'instant'}));const loaded=await shell.evaluate(()=>window.w2p.capture('full_page','separate',false));await writeFile(resolve(folder,'loaded.json'),JSON.stringify(loaded.data,null,2));
+ check('loaded-document-converts-native-full-page',loaded.data.screens[0].selection.mode==='full_page'&&loaded.data.screens[0].selection.contentScope==='loaded_content'&&loaded.data.screens[0].nodes[0].rect.height>loaded.data.source.captureContext.viewport.height*4&&texts(loaded.data).includes('LONG_PAGE_END'));
+ check('loaded-mode-does-not-trigger-below-fold-appends',!texts(loaded.data).includes('LAZY_APPEND_3')&&loaded.previews.length===1);
+ check('loaded-mode-restores-original-scroll',await target.evaluate(()=>Math.abs(scrollY-210)<2));
+ await navigate('/fixture');await target.locator('#orders img').evaluate(img=>img.decode());await target.evaluate(()=>scrollTo({top:350,behavior:'instant'}));
+ await shell.locator('#full-prepare').check();await shell.locator('#capture').click();await shell.waitForFunction(()=>document.querySelector('#capture-progress').hidden===false);
+ check('full-page-preparation-has-progress-and-cancel',await shell.locator('#capture-meter').isVisible()&&await shell.locator('#capture-cancel').isEnabled());
+ await shell.waitForFunction(()=>document.querySelector('#full-report')?.textContent.includes('全页采集')||document.querySelector('#status').dataset.error==='true',null,{timeout:90000});check('prepared-conversion-completes-without-hidden-error',await shell.locator('#status').getAttribute('data-error')!=='true');await waitDone();const prepared=await read();await writeFile(resolve(folder,'prepared.json'),JSON.stringify(prepared,null,2));
+ const full=texts(prepared),report=prepared.warnings.find(w=>w.code==='I_FULL_PAGE_CAPTURE').details;
+ check('scroll-preparation-includes-appended-tail-and-lazy-images',full.includes('LAZY_APPEND_3')&&full.includes('LONG_PAGE_END')&&[1,2,3,4].every(i=>full.includes('LAZY_IMAGE_'+i))&&prepared.screens[0].nodes.filter(n=>n.type==='IMAGE').length===5&&!prepared.warnings.some(w=>w.code==='E_ASSET_UNAVAILABLE'));
+ check('full-page-native-text-is-not-one-raster-image',prepared.screens[0].nodes.filter(n=>n.type==='TEXT').length>40&&prepared.assets.length===1);
+ check('fixed-and-sticky-elements-export-exactly-once',full.split('FIXED_ONCE').length===2&&full.split('STICKY_ONCE').length===2&&prepared.warnings.filter(w=>w.code==='I_FULL_PAGE_POSITION').length===2);
+ check('prepared-page-reaches-current-document-bottom',report.prepared&&!report.partial&&report.reason==='bottom'&&Math.abs(prepared.screens[0].nodes[0].rect.height-report.documentHeight)<2);
+ check('prepared-mode-restores-scroll-and-unlocks-browsing',await target.evaluate(()=>Math.abs(scrollY-350)<2));
+ check('result-offers-multiple-source-reference-positions',(await shell.locator('#reference-segment option').count())>1&&(await shell.locator('#reference-segment option').count())<=12);
+ await shell.locator('#reference-segment').selectOption({index:1});check('source-reference-caption-explains-overlay-and-position',(await shell.locator('#preview-caption').textContent()).includes('页面 y=')&&(await shell.locator('#preview-caption').textContent()).includes('固定层'));
+ await shell.locator('aside').screenshot({path:resolve(folder,'full-result-panel.png')});
+ const path=resolve(folder,'saved.json');await app.evaluate(({dialog},path)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:path});dialog.showOpenDialog=async()=>({canceled:false,filePaths:[path]});},path);
+ await shell.locator('#save').click();await shell.waitForFunction(()=>document.querySelector('#status').textContent.includes('真实网页转换包已保存'));
+ const metaPath=`${path}.screen-1.segment-2.preview.json`,meta=JSON.parse(await readFile(metaPath,'utf8')),png=await readFile(`${path}.screen-1.segment-2.preview.png`);
+ check('segmented-source-files-have-integrity-and-scope',meta.segmentIndex===2&&meta.segmentCount===report.referenceCount&&meta.documentRect.y>0&&meta.sha256===createHash('sha256').update(png).digest('hex')&&meta.packageId===prepared.packageId);
+ await shell.locator('#reopen').click();await shell.waitForFunction(path=>{try{return JSON.parse(document.querySelector('#capture-output').textContent).cachedAt===path;}catch{return false;}},path);check('reopen-restores-source-segment-selector',(await shell.locator('#reference-segment option').count())===report.referenceCount);
+ await writeFile(metaPath,JSON.stringify({...meta,packageId:'wrong-package'}));await shell.locator('#reopen').click();await shell.waitForFunction(count=>document.querySelectorAll('#reference-segment option').length===count,report.referenceCount-1);check('bad-segment-is-skipped-without-losing-valid-references',await shell.locator('#preview-caption').textContent().then(text=>text.includes('没有匹配')));await writeFile(metaPath,JSON.stringify(meta,null,2));
+ // Cancellation must retain the prior successful capture and restore position.
+ await navigate('/fixture-infinite');await target.evaluate(()=>scrollTo({top:75,behavior:'instant'}));await shell.locator('#tab-selection').click();await shell.locator('#capture').click();await shell.waitForFunction(()=>document.querySelector('#capture-phase').textContent.includes('滚动准备'));
+ await shell.locator('#capture-cancel').click();await waitDone();await shell.waitForFunction(()=>document.querySelector('#status').textContent.includes('E_CANCELLED'));
+ check('cancel-keeps-last-successful-package',(await read()).packageId===prepared.packageId);
+ check('cancel-restores-scroll',await target.evaluate(()=>Math.abs(scrollY-75)<2));await target.mouse.wheel(0,180);await target.waitForFunction(()=>scrollY>75);check('cancel-restores-normal-page-scrolling',true);
+ // A recycled list is refused rather than exporting a misleading full page.
+ await navigate('/fixture-virtual');await shell.locator('#capture').click();await waitDone();await shell.waitForFunction(()=>document.querySelector('#status').textContent.includes('E_FULL_PAGE_VIRTUALIZED'),null,{timeout:15000});
+ check('virtualized-list-refused-and-old-result-preserved',(await read()).packageId===prepared.packageId&&await target.evaluate(()=>scrollY===0));
+ // An infinite page must terminate and disclose a partial extent.
+ await navigate('/fixture-infinite');await target.evaluate(()=>scrollTo({top:65,behavior:'instant'}));const infinite=await shell.evaluate(()=>window.w2p.capture('full_page','separate',true));await writeFile(resolve(folder,'infinite.json'),JSON.stringify(infinite.data,null,2));
+ const partial=infinite.data.warnings.find(w=>w.code==='I_FULL_PAGE_CAPTURE').details;
+ check('infinite-page-terminates-at-bounded-preparation',partial.partial&&['step_limit','time_limit','height_limit'].includes(partial.reason)&&partial.steps<=30&&infinite.data.warnings.some(w=>w.code==='W_FULL_PAGE_PARTIAL'));
+ check('infinite-page-never-claims-unvisited-content',partial.capturedHeight<=partial.documentHeight&&infinite.data.screens[0].nodes[0].rect.height===partial.capturedHeight&&partial.referenceMode==='sampled');
+ check('infinite-page-restores-original-position',await target.evaluate(()=>Math.abs(scrollY-65)<2));
+ await navigate('/fixture-tall');await app.evaluate(({webContents})=>webContents.getAllWebContents().find(c=>c.getURL().endsWith('/fixture-tall')).setZoomFactor(1.25));
+ const tall=await shell.evaluate(()=>window.w2p.capture('full_page','separate',false));await writeFile(resolve(folder,'tall.json'),JSON.stringify(tall.data,null,2));
+ check('height-budget-clips-native-frame-not-whole-page-raster',tall.data.screens[0].nodes[0].rect.height===30000&&texts(tall.data).includes('HEIGHT_INSIDE')&&!texts(tall.data).includes('HEIGHT_OUTSIDE')&&tall.data.warnings.some(w=>w.code==='W_FULL_PAGE_PARTIAL'));
+ check('full-page-zoom-retains-css-geometry',tall.data.source.captureContext.zoomFactor===1.25&&tall.data.screens[0].nodes[0].rect.width===await target.evaluate(()=>document.documentElement.clientWidth));
+ await app.evaluate(({webContents})=>webContents.getAllWebContents().find(c=>c.getURL().endsWith('/fixture-tall')).setZoomFactor(1));
+ await navigate('/fixture');await target.evaluate(()=>scrollTo({top:300,behavior:'instant'}));await shell.locator('#capture').click();await shell.waitForFunction(()=>document.querySelector('#capture-phase').textContent.includes('滚动准备'));await shell.evaluate(url=>window.w2p.navigate(url),info.fixtureUrl.replace('/fixture','/fixture-tall'));await waitDone();
+ await shell.waitForFunction(()=>document.querySelector('#status').textContent.includes('E_TARGET_CHANGED'));
+ check('navigation-aborts-without-restoring-old-scroll-onto-new-document',await target.evaluate(()=>document.title==='高度上限验证'&&scrollY===0));
+ check('navigation-failure-preserves-previous-success',(await read()).packageId===tall.data.packageId);
+ await navigate('/fixture');await shell.locator('#capture').click();await shell.waitForFunction(()=>document.querySelector('#capture-phase').textContent.includes('滚动准备'));await target.evaluate(()=>location.hash='project-plan');await waitDone();const hashPosition=await target.evaluate(()=>scrollY);await target.mouse.wheel(0,160);await target.waitForFunction(y=>scrollY>y,hashPosition);check('same-document-navigation-releases-source-input-lock',(await read()).packageId===tall.data.packageId);
+ await shell.locator('#tab-selection').click();await shell.locator('aside').screenshot({path:resolve(folder,'full-options-panel.png')});
+}catch(error){failure=String(error);if(shell)try{await writeFile(resolve(folder,'failure-state.json'),JSON.stringify(await shell.evaluate(()=>({status:document.querySelector('#status').textContent,phase:document.querySelector('#capture-phase').textContent,busy:document.body.getAttribute('aria-busy')})),null,2));await shell.locator('aside').screenshot({path:resolve(folder,'failure-panel.png')});}catch{}console.error(stderr);throw error;}finally{
+ await writeFile(resolve(folder,'report.json'),JSON.stringify({at:new Date().toISOString(),evidenceKind:'actual_electron_full_page',figmaTested:false,nativeFilePicker:'stubbed; real IPC, integrity and disk operations',failure,checks},null,2));if(app)await app.close();
+}
+console.log(JSON.stringify({folder,checks},null,2));

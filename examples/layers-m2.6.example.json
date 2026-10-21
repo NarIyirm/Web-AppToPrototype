@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactKind": "example",
+  "packageId": "pkg-layers-m2-6-example",
+  "projectId": "project-example",
+  "revision": 1,
+  "createdAt": "2026-10-18T12:00:00+11:00",
+  "producer": {
+    "appVersion": "0.0.0-plan",
+    "converterVersion": "m2.6",
+    "adapterVersion": "web-0.0.0-plan"
+  },
+  "source": {
+    "kind": "web",
+    "url": "http://localhost:4173/orders",
+    "title": "人工层叠裁切样例 / 非网页证据",
+    "pageEpoch": "page-example-1",
+    "captureContext": {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "devicePixelRatio": 1,
+      "zoomFactor": 1,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "screens": [
+    {
+      "id": "layers-example",
+      "captureId": "capture-example-list",
+      "name": "原生层叠裁切人工样例",
+      "stateKey": "orders-list-default",
+      "selection": {
+        "mode": "element",
+        "sourceNodeIds": [
+          "synthetic-layers"
+        ],
+        "excludedSourceNodeIds": [],
+        "originalRect": {
+          "x": 0,
+          "y": 0,
+          "width": 420,
+          "height": 240
+        },
+        "boundaryPolicy": "complete_elements",
+        "contentScope": "visible"
+      },
+      "rootNodeId": "layers-root",
+      "nodes": [
+        {
+          "id": "layers-root",
+          "name": "人工样例",
+          "type": "FRAME",
+          "parentId": null,
+          "order": 0,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 420,
+            "height": 240
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "native",
+          "clipsContent": true
+        },
+        {
+          "id": "normal",
+          "name": "普通祖先背景",
+          "type": "FRAME",
+          "parentId": "layers-root",
+          "order": 1,
+          "rect": {
+            "x": 20,
+            "y": 20,
+            "width": 220,
+            "height": 180
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 0.91,
+                  "g": 0.86,
+                  "b": 0.89,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "native"
+        },
+        {
+          "id": "blue",
+          "name": "较低蓝色层",
+          "type": "SHAPE",
+          "parentId": "layers-root",
+          "order": 2,
+          "rect": {
+            "x": 140,
+            "y": 100,
+            "width": 200,
+            "height": 110
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 0.18,
+                  "g": 0.33,
+                  "b": 0.75,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "native"
+        },
+        {
+          "id": "lifted-clip",
+          "name": "层叠裁切 / 原生Frame",
+          "type": "FRAME",
+          "parentId": "layers-root",
+          "order": 3,
+          "rect": {
+            "x": 35,
+            "y": 35,
+            "width": 210,
+            "height": 150
+          },
+          "style": {
+            "fills": [],
+            "radii": [
+              16,
+              16,
+              16,
+              16
+            ]
+          },
+          "fidelity": "native",
+          "clipsContent": true
+        },
+        {
+          "id": "red",
+          "name": "较高红色层 / 保留裁切",
+          "type": "SHAPE",
+          "parentId": "lifted-clip",
+          "order": 4,
+          "rect": {
+            "x": -20,
+            "y": -20,
+            "width": 270,
+            "height": 190
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 0.77,
+                  "g": 0.19,
+                  "b": 0.28,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "native"
+        }
+      ]
+    }
+  ],
+  "assets": [],
+  "interactions": [],
+  "warnings": [],
+  "requiredCapabilities": [
+    "absolute-layout"
+  ]
+}

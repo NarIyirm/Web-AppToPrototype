@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactKind": "example",
+  "packageId": "pkg-shadows-m2-9-example",
+  "projectId": "project-example",
+  "revision": 1,
+  "createdAt": "2026-10-18T12:00:00+11:00",
+  "producer": {
+    "appVersion": "0.0.0-plan",
+    "converterVersion": "m2.9",
+    "adapterVersion": "web-0.0.0-plan"
+  },
+  "source": {
+    "kind": "web",
+    "url": "http://localhost:4173/orders",
+    "title": "人工外阴影样例 / 非网页证据",
+    "pageEpoch": "page-example-1",
+    "captureContext": {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "devicePixelRatio": 1,
+      "zoomFactor": 1,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "screens": [
+    {
+      "id": "shadow-example",
+      "captureId": "capture-example-list",
+      "name": "原生外阴影人工样例",
+      "stateKey": "orders-list-default",
+      "selection": {
+        "mode": "element",
+        "sourceNodeIds": [
+          "source-section-list"
+        ],
+        "excludedSourceNodeIds": [],
+        "originalRect": {
+          "x": 80,
+          "y": 120,
+          "width": 360,
+          "height": 240
+        },
+        "boundaryPolicy": "complete_elements",
+        "contentScope": "visible"
+      },
+      "rootNodeId": "root",
+      "nodes": [
+        {
+          "id": "root",
+          "name": "人工样例",
+          "type": "FRAME",
+          "parentId": null,
+          "order": 0,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 280,
+            "height": 140
+          },
+          "style": {
+            "fills": []
+          },
+          "fidelity": "native"
+        },
+        {
+          "id": "shadow-plate",
+          "name": "外阴影与底色 / 原生绘制层",
+          "type": "SHAPE",
+          "parentId": "root",
+          "order": 1,
+          "rect": {
+            "x": 20,
+            "y": 30,
+            "width": 240,
+            "height": 44
+          },
+          "style": {
+            "fills": [
+              {
+                "kind": "solid",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radii": [
+              6,
+              6,
+              6,
+              6
+            ],
+            "effects": [
+              {
+                "type": "drop_shadow",
+                "x": 0,
+                "y": 8,
+                "blur": 20,
+                "spread": -4,
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.3
+                }
+              },
+              {
+                "type": "drop_shadow",
+                "x": 0,
+                "y": 0,
+                "blur": 0,
+                "spread": 2,
+                "color": {
+                  "r": 0.6,
+                  "g": 0.1,
+                  "b": 0.3,
+                  "a": 1
+                }
+              }
+            ]
+          },
+          "fidelity": "approximated"
+        }
+      ]
+    }
+  ],
+  "assets": [],
+  "interactions": [],
+  "warnings": [],
+  "requiredCapabilities": [
+    "absolute-layout"
+  ]
+}

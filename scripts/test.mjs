@@ -1,0 +1,10 @@
+import { build } from 'esbuild';
+import { mkdir, readdir } from 'node:fs/promises';
+import { spawn } from 'node:child_process';
+await import('./generate-validator.mjs');
+await mkdir('.test-build', { recursive: true });
+const files = (await readdir('tests')).filter(file => file.endsWith('.test.ts'));
+await Promise.all(files.map(file => build({ entryPoints: [`tests/${file}`], outfile: `.test-build/${file.replace('.ts', '.cjs')}`, bundle: true, platform: 'node', format: 'cjs', external:['esbuild'],logLevel: 'warning' })));
+const child = spawn(process.execPath, ['--test', ...files.map(file => `.test-build/${file.replace('.ts', '.cjs')}`)], { stdio: 'inherit' });
+child.on('exit', code => { process.exitCode = code ?? 1; });
+child.on('error', error => { console.error(error); process.exitCode = 1; });

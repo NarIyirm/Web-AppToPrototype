@@ -1,0 +1,24 @@
+{
+  "recordedAt": "2026-10-20T07:49:08.033Z",
+  "kind": "development_javascript_compilation_only",
+  "results": [
+    {
+      "platform": "android",
+      "status": 200,
+      "bytes": 6807378,
+      "error": null
+    },
+    {
+      "platform": "ios",
+      "status": 200,
+      "bytes": 6031589,
+      "error": null
+    },
+    {
+      "platform": "web",
+      "status": 200,
+      "bytes": 3974305,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+import {downloadArtifact} from '@electron/get';
+import {mkdir,readFile,writeFile,cp} from 'node:fs/promises';
+import {execFile} from 'node:child_process';
+import {createReadStream} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {promisify} from 'node:util';
+import {resolve,join,basename} from 'node:path';
+const run=promisify(execFile),args=process.argv.slice(2),arch=args.includes('--x64')?'x64':'arm64';
+if(args.some(a=>!['--x64','--arm64','--dmg'].includes(a))||args.includes('--x64')&&args.includes('--arm64'))throw Error('Use --arm64 or --x64, optionally --dmg');
+if(args.includes('--dmg')&&process.platform!=='darwin')throw Error('DMG and native signing require macOS; use ZIP cross-build on this host');
+const python=process.env.W2P_PYTHON??(process.platform==='win32'?'python':'python3');await run(python,['--version']);
+await import('./build.mjs');
+const {version}=JSON.parse(await readFile('package.json','utf8')),{version:electronVersion}=JSON.parse(await readFile('node_modules/electron/package.json','utf8')),checksums=JSON.parse(await readFile('node_modules/electron/checksums.json','utf8'));
+const stamp=new Date().toISOString().replace(/[.:]/g,'-'),folder=`WebToPrototype-${version}-mac-${arch}-${stamp}`,stage=resolve('.runtime/mac-package',folder),payload=join(stage,'payload'),app=join(payload,'WebToPrototype.app/Contents/Resources/app');await mkdir(app,{recursive:true});await mkdir('release',{recursive:true});
+const runtime=await downloadArtifact({version:electronVersion,artifactName:'electron',platform:'darwin',arch,checksums,cacheRoot:resolve('.runtime/electron-cache')});
+await writeFile(join(app,'package.json'),JSON.stringify({name:'web-to-prototype',productName:'WebToPrototype',version,main:'apps/desktop/dist/main.cjs',private:true},null,2));
+for(const name of ['apps/desktop/dist','apps/desktop/fixtures','apps/figma-plugin/dist'])await cp(resolve(name),join(app,name),{recursive:true});
+await cp(resolve('apps/figma-plugin/dist'),join(payload,'FigmaPlugin'),{recursive:true});await cp(resolve('docs/22-macos-release-guide.md'),join(payload,'使用说明.md'));await cp(resolve('scripts/mac-tools'),join(payload,'macos-tools'),{recursive:true});await cp(resolve('node_modules/ajv/LICENSE'),join(payload,'AJV-LICENSE.txt'));
+await cp(resolve('scripts/Prepare Mac.command'),join(payload,'Prepare Mac.command'));
+const output=resolve('release',folder+'.zip'),result=join(stage,'result.json'),config={version,electronVersion,arch,host:process.platform,runtime,runtimeSha256:checksums[`electron-v${electronVersion}-darwin-${arch}.zip`],folder,payload,output,result};
+await writeFile(join(stage,'config.json'),JSON.stringify(config,null,2));const built=await run(python,[resolve('scripts/package-macos.py'),'--config',join(stage,'config.json')],{maxBuffer:1024*1024,timeout:300000,windowsHide:true});process.stdout.write(built.stdout);
+const metadata=JSON.parse(await readFile(result,'utf8'));await writeFile(output+'.sha256',metadata.sha256+'  '+basename(output)+'\n');
+const inspection=join(stage,'inspection.json');const inspected=await run(python,[resolve('scripts/inspect-macos-package.py'),output,'--report',inspection,'--project-root',resolve('.')],{maxBuffer:1024*1024,timeout:300000,windowsHide:true});process.stdout.write(inspected.stdout);metadata.archiveInspection=JSON.parse(await readFile(inspection,'utf8'));
+if(args.includes('--dmg')){const dmg=output.replace(/\.zip$/,'.dmg');await run('/bin/bash',[resolve('scripts/mac-tools/make-dmg.sh'),output,dmg],{timeout:300000,maxBuffer:1024*1024});const checksum=createHash('sha256');let bytes=0;for await(const chunk of createReadStream(dmg)){checksum.update(chunk);bytes+=chunk.length;}const sha256=checksum.digest('hex');await writeFile(dmg+'.sha256',sha256+'  '+basename(dmg)+'\n');metadata.dmg={path:dmg,sha256,bytes,signing:process.env.MAC_SIGN_IDENTITY?'configured local identity':'local ad-hoc',signatureVerified:true,notarized:false,macRuntimeTested:false};}
+await writeFile(resolve('release',`latest-macos-${arch}.json`),JSON.stringify(metadata,null,2));

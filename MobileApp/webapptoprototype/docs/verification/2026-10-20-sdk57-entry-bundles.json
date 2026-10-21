@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-10-20T11:28:13.403Z",
+  "sdk": "57.0.30",
+  "kind": "development_compilation_and_asset_requests",
+  "results": [
+    {
+      "platform": "android",
+      "status": 200,
+      "bytes": 6642074,
+      "error": null
+    },
+    {
+      "platform": "ios",
+      "status": 200,
+      "bytes": 5920193,
+      "error": null
+    },
+    {
+      "platform": "web",
+      "status": 200,
+      "bytes": 3919056,
+      "error": null
+    }
+  ],
+  "assets": [
+    {
+      "path": "/assets/assets/kitchmemo-icon.png",
+      "status": 200,
+      "png": true,
+      "bytes": 799005
+    },
+    {
+      "path": "/assets/assets/images/icon.png",
+      "status": 200,
+      "png": true,
+      "bytes": 799005
+    }
+  ]
+}

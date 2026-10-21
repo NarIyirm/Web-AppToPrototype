@@ -1,0 +1,88 @@
+{
+  "createdAt": "2026-10-20T04:42:40.622Z",
+  "status": "planning_complete_implementation_not_started",
+  "markdown": {
+    "files": 41,
+    "localLinks": 296,
+    "errors": []
+  },
+  "mobileDocuments": [
+    "README.md",
+    "APP-PLAN.md",
+    "ROADMAP.md",
+    "PROTOCOL-DRAFT.md",
+    "DESIGN.md",
+    "ACCEPTANCE.md",
+    "HANDOFF.md",
+    "PROGRESS.md"
+  ],
+  "executionTaskCount": 30,
+  "taskIds": [
+    "MOB-BASE-01",
+    "MOB-BASE-02",
+    "MOB-BASE-03",
+    "MOB-BASE-04",
+    "MOB-00a",
+    "MOB-00b",
+    "MOB-00c",
+    "MOB-00d",
+    "MOB-00e",
+    "MOB-01a",
+    "MOB-01b",
+    "MOB-01c",
+    "MOB-02a",
+    "MOB-02b",
+    "MOB-02c",
+    "MOB-03a",
+    "MOB-03b",
+    "MOB-03c",
+    "MOB-04a",
+    "MOB-04b",
+    "MOB-04c",
+    "MOB-05A",
+    "MOB-05I",
+    "MOB-06a",
+    "MOB-06b",
+    "MOB-06c",
+    "MOB-07",
+    "MOB-08a",
+    "MOB-08b",
+    "MOB-08c"
+  ],
+  "sourceFilesUnchanged": 49,
+  "stagedFilesUnchanged": 53,
+  "branchUnchanged": true,
+  "remoteUnchanged": true,
+  "checks": {
+    "typecheck": {
+      "command": "./node_modules/.bin/tsc.cmd --noEmit",
+      "exitCode": 1,
+      "errors": [
+        {
+          "file": "src/components/animated-icon.web.tsx:5",
+          "code": "TS2307"
+        },
+        {
+          "file": "src/components/app-tabs.web.tsx:38",
+          "code": "TS2322"
+        },
+        {
+          "file": "src/constants/theme.ts:6",
+          "code": "TS2882"
+        }
+      ]
+    },
+    "lint": {
+      "command": "npm.cmd run lint",
+      "outcome": "ESLint not configured; declined setup; process terminated after CLI error",
+      "exitCode": -1073741510,
+      "passed": false,
+      "dependenciesInstalled": false
+    }
+  },
+  "mobileRuntimeTested": false,
+  "realDeviceTested": false,
+  "figmaTested": false,
+  "gitCommitted": false,
+  "gitPushed": false
+}

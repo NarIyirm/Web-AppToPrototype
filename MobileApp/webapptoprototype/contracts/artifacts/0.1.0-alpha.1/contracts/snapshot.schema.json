@@ -1,0 +1,277 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:w2p:snapshot:0.1.0-alpha.1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{7,80}$"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{7,80}$"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 32,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*(Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "sourceKind": {
+      "enum": [
+        "web",
+        "imported_image",
+        "android_native",
+        "ios_native"
+      ]
+    },
+    "platform": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "sourceUrl": {
+      "type": "string",
+      "maxLength": 2048
+    },
+    "assetId": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4096
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4096
+    },
+    "logicalWidth": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 30000
+    },
+    "logicalHeight": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 30000
+    },
+    "coordinateSpace": {
+      "enum": [
+        "image_pixels",
+        "css_pixels"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "bounds": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "x": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 30000
+              },
+              "y": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 30000
+              },
+              "width": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 30000
+              },
+              "height": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 30000
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "provenance": {
+            "enum": [
+              "ocr",
+              "dom",
+              "user"
+            ]
+          }
+        },
+        "required": [
+          "text",
+          "bounds",
+          "confidence",
+          "provenance"
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 5000
+    },
+    "webNodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "kind": {
+            "enum": [
+              "text",
+              "shape",
+              "image"
+            ]
+          },
+          "bounds": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "x": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 30000
+              },
+              "y": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 30000
+              },
+              "width": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 30000
+              },
+              "height": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 30000
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "color": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "background": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "fontSize": {
+            "type": "number",
+            "minimum": 0.001,
+            "maximum": 1000
+          },
+          "radius": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 30000
+          },
+          "fontFamily": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "fontWeight": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "lineHeight": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 30000
+          },
+          "textAlign": {
+            "enum": [
+              "left",
+              "center",
+              "right",
+              "justify"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "bounds"
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 5000
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 500
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "redacted": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "projectId",
+    "title",
+    "createdAt",
+    "sourceKind",
+    "platform",
+    "assetId",
+    "width",
+    "height",
+    "logicalWidth",
+    "logicalHeight",
+    "coordinateSpace",
+    "observations",
+    "webNodes",
+    "warnings",
+    "redacted"
+  ]
+}

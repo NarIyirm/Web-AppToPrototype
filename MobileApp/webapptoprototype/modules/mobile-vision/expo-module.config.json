@@ -1,0 +1,5 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": { "modules": ["MobileVisionModule"] },
+  "android": { "modules": ["expo.modules.mobilevision.MobileVisionModule"] }
+}

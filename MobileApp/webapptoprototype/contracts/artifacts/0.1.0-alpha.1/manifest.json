@@ -1,0 +1,45 @@
+{
+  "formatVersion": "0.1.0-alpha.1",
+  "sourceRepository": "https://github.com/NarIyirm/Web-AppToPrototype.git",
+  "commit": null,
+  "runtimeDependencies": {
+    "ajv": "8.20.0"
+  },
+  "files": [
+    {
+      "path": "src/core/project.ts",
+      "bytes": 11001,
+      "sha256": "57dd653592b7918dbe83482b233e278f5d11578b777c738d2dc235539773bb74"
+    },
+    {
+      "path": "src/core/archive.ts",
+      "bytes": 6480,
+      "sha256": "44de5fdb3bc1a0aaf19fa65b4813ddff62763ffb84dd4aa0fe2e90bed8dc3c92"
+    },
+    {
+      "path": "src/core/mobile-bundle.ts",
+      "bytes": 3618,
+      "sha256": "ee9f4438f296099e385d3a2d7f1d2691c3e6c07c3e34776d57f80a47a949acce"
+    },
+    {
+      "path": "contracts/mobile-capture.schema.json",
+      "bytes": 3128,
+      "sha256": "9ae961181815e31a24389fedd513588ad7bd71f576aa2ad8ab19d0a2fd42b435"
+    },
+    {
+      "path": "contracts/snapshot.schema.json",
+      "bytes": 5993,
+      "sha256": "17b8f4b176648e3c208b26dd648b6beacd082cfdb6ccc187530904ad0b03aa41"
+    },
+    {
+      "path": "contracts/generated/validate.cjs",
+      "bytes": 79350,
+      "sha256": "46e62021d1b1a6e94c12f153f1930cc603c808b3ba31f018ac0f8022d3dde164"
+    },
+    {
+      "path": "contracts/generated/validate.d.cts",
+      "bytes": 128,
+      "sha256": "773d375a24aa94da232805fbf0532fd107aa07b1388d1bdae7aecb8193c34354"
+    }
+  ]
+}

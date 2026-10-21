@@ -1,0 +1,16 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.mobilevision'
+version = '0.1.0'
+
+android {
+  namespace 'expo.modules.mobilevision'
+  defaultConfig { minSdkVersion 23 }
+}
+
+dependencies {
+  implementation 'com.google.mlkit:text-recognition-chinese:16.0.1'
+}

@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-20T11:40:07.661Z",
+  "node": "v24.15.0",
+  "passed": true,
+  "preservation": {
+    "appJsonUnchanged": true,
+    "indexUnchanged": true,
+    "unexpectedChanges": []
+  },
+  "results": [
+    {
+      "name": "contract",
+      "command": [
+        "node",
+        "scripts/check-contract.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "Contract 0.1.0-alpha.1: 7 traced files match source and runtime.\n",
+      "stderr": ""
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node",
+        "node_modules/expo/bin/cli",
+        "lint"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "\nE:\\WebToPrototype\\MobileApp\\webapptoprototype\\src\\data\\media.ts\n  5:10  warning  'LIMITS' is defined but never used  @typescript-eslint/no-unused-vars\n\nE:\\WebToPrototype\\MobileApp\\webapptoprototype\\src\\ui\\kit.tsx\n  4:129  warning  'ViewStyle' is defined but never used  @typescript-eslint/no-unused-vars\n\n✖ 2 problems (0 errors, 2 warnings)\n\n",
+      "stderr": ""
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "test",
+      "command": [
+        "node",
+        "--test",
+        "tests/archive.test.ts",
+        "tests/mobile-bundle.test.ts",
+        "tests/native-config.test.ts",
+        "tests/pairing.test.ts",
+        "tests/project.test.ts",
+        "tests/sdk57-compat.test.ts",
+        "tests/startup.test.ts",
+        "tests/web-capture.test.ts",
+        "tests/web-probe.test.ts"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "(node:55960) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/archive.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ store ZIP round trip preserves exact bytes, Unicode and CRC (15.6159ms)\n✔ ZIP writer refuses traversal and duplicate paths (1.1249ms)\n✔ receiver rejects truncated headers, altered content and mismatched local/central metadata (1.7944ms)\n✔ receiver rejects encryption, unsupported compression and ZIP64-style extras (9.1518ms)\n✔ writer bounds output chunks rather than emitting a whole image (29.9299ms)\n✔ entry budgets reject a declared bomb before parsing any content (1.3191ms)\n(node:50576) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/mobile-bundle.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ raw material producer/consumer agree on source kind, dimensions and exact resources (27.7805ms)\n✔ rejects wrong versions, unexpected metadata and missing asset references (117.8976ms)\n✔ requires verified digest and real PNG dimensions (78.6392ms)\n✔ rejects undeclared files and hidden source credentials (77.6025ms)\n✔ snapshot schema rejects cookies and code instead of forwarding them (94.4844ms)\n(node:49848) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/native-config.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ CNG adds exactly one broadcast target with independent entitlements and source membership (12.1292ms)\n(node:54812) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/pairing.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ pairing accepts a bounded private HTTPS offer and rejects identity ambiguity (1.6405ms)\n✔ transport receipts cannot announce conversion or Figma import and cannot exceed confirmed bytes (0.4294ms)\n(node:51508) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/project.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ manifest rejects out-of-frame observations and source-kind URL mismatch (1.6585ms)\n✔ adding and removing captures preserves previous revisions and shared assets (1.6477ms)\n✔ rejects dangling references, wrong dimensions, duplicate IDs and non-finite bounds (0.694ms)\n✔ the twenty-state limit rejects a new capture without mutating successful work (2.8466ms)\n✔ serialization survives reopening and loads the latest complete revision (0.9477ms)\n✔ a corrupt latest slot recovers the last successful snapshot (0.367ms)\n✔ corrupting both slots blocks writes instead of silently replacing saved work (0.515ms)\n✔ failed writes preserve the old state and do not poison the mutation queue (0.6314ms)\n✔ concurrent edits serialize and cannot overwrite each other (0.6945ms)\n✔ project deletion releases capture references without deleting recoverable assets (0.3033ms)\n(node:53920) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/sdk57-compat.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ streamed file digest matches SHA-256 across chunk boundaries without full-file reads (42.0983ms)\n✔ streamed digest handles short reads and rejects truncation, invalid sizes and oversized chunks (0.8017ms)\n✔ SDK 57 image resizing preserves aspect ratio and never grows an already bounded image (0.6724ms)\n(node:48884) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/startup.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ old Expo Go is stopped before Router, storage or animation initialization on both platforms (4.3674ms)\n✔ fixed Expo Go and standalone builds register Router once and do not load the update screen (3.8087ms)\n✔ compatibility policy only restricts the documented SDK 57 Expo Go releases (0.2006ms)\n(node:52036) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/web-capture.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ web observation retains selection-relative CSS geometry (1.1925ms)\n✔ web observation rejects stale pages, wrong requests and native command messages (0.3676ms)\n✔ untrusted webpage attributes are not forwarded into saved nodes (0.2051ms)\n✔ web geometry rejects non-finite, out-of-selection and duplicate nodes (0.2773ms)\n✔ browser entry rejects active/local schemes and credentials; source export strips query and fragment (0.1899ms)\n✔ script identities cannot inject executable code (0.8155ms)\n(node:35160) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///E:/WebToPrototype/MobileApp/webapptoprototype/tests/web-probe.test.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to E:\\WebToPrototype\\MobileApp\\webapptoprototype\\package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ preserves CSS geometry independently from physical density (0.803ms)\n✔ navigation/restart invalidates observations from an older page (0.2081ms)\n✔ rejects malformed, oversized and non-object messages (0.2297ms)\n✔ rejects permission requests and unknown fields rather than dispatching commands (0.187ms)\n✔ rejects missing fields, wrong types and non-finite dimensions (0.2568ms)\n✔ records an unloaded image without inventing successful resource access (0.1647ms)\n✔ allows only the embedded fixture and denies external schemes and lookalikes (0.1389ms)\nℹ tests 43\nℹ suites 0\nℹ pass 43\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 655.6201\n",
+      "stderr": ""
+    }
+  ]
+}

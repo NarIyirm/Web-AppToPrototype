@@ -1,0 +1,15 @@
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+const sample=JSON.parse(await readFile('examples/figma-m0-probe.json','utf8'));
+const folder='examples/acceptance';await mkdir(folder,{recursive:true});
+const save=async(name,mutate)=>{const data=structuredClone(sample);data.packageId=`acceptance-${name}`;mutate?.(data);await writeFile(`${folder}/${name}.json`,JSON.stringify(data,null,2)+'\n');};
+await save('01-native-Chinese-English',data=>{const text=data.screens[0].nodes.find(n=>n.type==='TEXT').text;text.characters='订单列表 / Orders';text.runs=[];});
+await save('02-invalid-sha256',data=>{data.assets[0].sha256='0'.repeat(64);});
+await save('03-invalid-mime',data=>{data.assets[0].mime='image/jpeg';});
+await save('04-invalid-dimensions',data=>{data.assets[0].width=33;});
+await save('05-over-dimension-limit',data=>{data.assets[0].width=4097;});
+await save('06-missing-font',data=>{for(const screen of data.screens)for(const node of screen.nodes)if(node.text){node.text.font.family='W2P Missing Font 2026';node.text.runs=[];}});
+await save('07-cancel-2000-nodes',data=>{const screen=data.screens[0];for(let i=0;i<2000;i++)screen.nodes.push({id:`cancel-${i}`,name:`Cancel test ${i}`,type:'SHAPE',parentId:screen.rootNodeId,order:10+i,rect:{x:(i%20)*12,y:80+Math.floor(i/20)*3,width:8,height:2},style:{fills:[{kind:'solid',color:{r:.6,g:.1,b:.3,a:1}}]},fidelity:'native'});});
+await save('08-over-pixel-budget',data=>{data.assets=Array.from({length:5},(_,i)=>({...data.assets[0],assetId:`pixels-${i}`,width:4096,height:4096}));});
+await save('09-corrupt-png',data=>{const asset=data.assets[0],bytes=Buffer.from(asset.inlineBase64,'base64');bytes[bytes.length-5]^=1;asset.inlineBase64=bytes.toString('base64');asset.sha256=createHash('sha256').update(bytes).digest('hex');});
+console.log(`Created 9 synthetic acceptance files in ${folder}; these are not web captures.`);

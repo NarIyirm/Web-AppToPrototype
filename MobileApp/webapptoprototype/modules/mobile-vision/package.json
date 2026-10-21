@@ -1,0 +1,7 @@
+{
+  "name": "mobile-vision",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local bounded OCR and irreversible image redaction for mobile captures",
+  "license": "MIT"
+}

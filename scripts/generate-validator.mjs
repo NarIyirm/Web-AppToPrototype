@@ -1,0 +1,11 @@
+import Ajv from 'ajv';
+import standaloneModule from 'ajv/dist/standalone/index.js';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+const schema = JSON.parse(await readFile('packages/contracts/capture-package.schema.json', 'utf8'));
+const ajv = new Ajv({ strict: false, allErrors: true, code: { source: true }, validateFormats: false });
+const validate = ajv.compile(schema);
+await mkdir('packages/contracts/generated', { recursive: true });
+await writeFile('packages/contracts/generated/validate.js', standaloneModule(ajv, validate));
+const mobileSchema = JSON.parse(await readFile('packages/contracts/capture-package.v2.schema.json', 'utf8'));
+const validateMobile = ajv.compile(mobileSchema);
+await writeFile('packages/contracts/generated/validate-mobile.js', standaloneModule(ajv, validateMobile));
