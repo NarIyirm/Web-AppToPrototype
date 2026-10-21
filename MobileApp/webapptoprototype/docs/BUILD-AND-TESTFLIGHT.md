@@ -2,6 +2,14 @@
 
 更新：2026-10-21（Australia/Sydney）。移动端命令均在 `E:\WebToPrototype\MobileApp\webapptoprototype` 执行。
 
+## iPhone 扫码连接修复（2026-10-21）
+
+用户确认 WebAppToFigma 的本地网络访问已开启，但同一 Wi-Fi 下 Expo Go 能连接、独立包失败。检查实际 build3 IPA 已包含 NSLocalNetworkUsageDescription 和 NSAllowsLocalNetworking=true，因此不能把旧提示视为权限诊断。此前正式包优先使用原生固定证书 HTTPS，Expo Go 使用 v2 AES-GCM 加密局域网通道；原生失败原因还没有手机原始错误佐证。
+
+新版 iOS 对 v2 二维码统一走既有认证加密通道，配对、状态查询与分块发送保持同一通道，不因失败切换通道。Android 独立包与旧协议继续使用固定证书 HTTPS。错误提示区分超时、安全校验与明确的权限拒绝，不再把普通失败都建议为开启权限。
+
+修复包：iOS production 1.0.0（4），构建 `e638f6f8-c197-4493-8a48-ccd52cb2a542`，云构建已成功。IPA 在根目录 `release/WebAppToFigma-1.0.0-ios-production-4.ipa`，包内版本/权限/内置修复代码核对通过。请按下方提交命令上传这次新构建，并在 TestFlight 选择第 4 版；保留电脑接收窗口，重新生成二维码，扫码并在电脑允许连接。第 3 版不会自动包含修复。
+
 ## 本次应用身份
 
 | 项目 | 值 |
@@ -41,7 +49,7 @@ npx eas-cli@latest credentials:configure-build --platform ios --profile producti
 
 按提示选择正确的 Apple Developer 团队，允许为主应用和 CaptureBroadcast 扩展配置分发证书、描述文件及 App Groups。两者需要各自匹配的 provisioning profile。若账号有多个团队，先确认哪一个团队持有该 App，不随意选择。
 
-用户已于2026-10-21完成主应用和录屏扩展的签名配置，使用 Apple 团队 U57D6BB6H7。当前 [iOS production 构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/2112359e-5b35-46c6-8289-7e8669b5bcd7)，版本1.0.0、构建号3，已成功完成云构建。IPA 保存在根目录 `release/WebAppToFigma-1.0.0-ios-production-3.ipa`；主应用与扩展的ID/版本/描述文件/App Group/内置JS包核对通过，未执行真机安装。
+用户已于2026-10-21完成主应用和录屏扩展的签名配置，使用 Apple 团队 U57D6BB6H7。首次成功的 [iOS production 构建](https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/2112359e-5b35-46c6-8289-7e8669b5bcd7)，版本1.0.0、构建号3，已成功完成云构建。IPA 保存在根目录 `release/WebAppToFigma-1.0.0-ios-production-3.ipa`；主应用与扩展的ID/版本/描述文件/App Group/内置JS包核对通过，未执行真机安装。
 
 上次 iOS 构建 b81f8c83 的主应用编译发现 UIKit 视图注册缺少闭包，导致选择了 SwiftUI 重载；已按 SDK57 的 ViewFactories.swift 改为 `View(BroadcastPicker.self) {}` 后重试。录屏扩展在上次已编译和签名通过。
 
@@ -69,7 +77,7 @@ production 使用 App Store 分发签名，产物为真机 IPA。IPA 需要经�
 App 记录创建且 production 构建成功后，在移动端目录执行：
 
 ```powershell
-npx eas-cli@latest submit --platform ios --profile production --id 2112359e-5b35-46c6-8289-7e8669b5bcd7
+npx eas-cli@latest submit --platform ios --profile production --id e638f6f8-c197-4493-8a48-ccd52cb2a542
 ```
 
 选择本次成功的 production 构建，按提示关联正确 Apple 团队和刚创建的 App；可使用 EAS 支持的 App Store Connect API Key 方式认证。若有多个构建，按构建 ID 选择，避免上传旧版本。API 私钥和密码不提交 Git。
@@ -91,6 +99,8 @@ npx eas-cli@latest submit --platform ios --profile production --id 2112359e-5b35
 Mac ZIP 已做结构、CPU、链接及文件摘要校验，但跨构建环境没有执行真实 Mac 应用；本包没有 Developer ID 签名/Apple 公证。详细说明见根 docs/22-macos-release-guide.md。Intel Mac 需另用根目录 `npm run package:mac:intel` 生成。
 
 ## 本次最终结果
+
+后续 iPhone 连接修复已生成 iOS production 1.0.0（4），替代第 3 版用于下一轮 TestFlight 验证；Android 与桌面包继续使用本次已有产物。最新文件由 release/latest-mobile-builds.json 指向。
 
 Windows x64、Mac ARM64、iOS production 1.0.0（3）与 Android preview 1.0.0（1）均已生成。四类文件均在根 release 目录，SHA-256 校验文件随包保留。手机云构建均为 FINISHED；App Store Connect 上传与TestFlight分发由用户按上文执行，本轮没有自动提交或正式上架。
 

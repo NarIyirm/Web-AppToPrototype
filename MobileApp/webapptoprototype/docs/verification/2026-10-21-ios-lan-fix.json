@@ -23,6 +23,43 @@
   "appConfigChanged": false,
   "realIphoneRetest": false,
   "productionBuild": {
-    "status": "pending"
-  }
+    "id": "e638f6f8-c197-4493-8a48-ccd52cb2a542",
+    "status": "FINISHED",
+    "version": "1.0.0",
+    "buildNumber": "4",
+    "gitCommitHash": "848e157457ca671e0dcf0e86e04b12b3e3c4ff5d",
+    "buildPage": "https://expo.dev/accounts/gress-26s2/projects/webapptoprototype/builds/e638f6f8-c197-4493-8a48-ccd52cb2a542",
+    "completedAt": "2026-10-21T10:52:37.257Z",
+    "artifact": {
+      "platform": "IOS",
+      "profile": "production",
+      "id": "e638f6f8-c197-4493-8a48-ccd52cb2a542",
+      "version": "1.0.0",
+      "buildNumber": "4",
+      "applicationIdentifier": "com.nariyirm.webapptofigma",
+      "status": "FINISHED",
+      "url": "https://expo.dev/artifacts/eas/JPt1OoyapXELv-5ixhkj4XMUmcn6GXq7ELmJv8_V2vo.ipa",
+      "path": "E:\\WebToPrototype\\release\\WebAppToFigma-1.0.0-ios-production-4.ipa",
+      "bytes": 22670724,
+      "sha256": "13c96e4ddc23f270fd0dc076b8fb771419a7e8e844c041090edb53dfdbd1fa16"
+    },
+    "inspection": {
+      "platform": "ios",
+      "version": "1.0.0",
+      "buildNumber": "4",
+      "bundleIdentifier": "com.nariyirm.webapptofigma",
+      "extensionIdentifier": "com.nariyirm.webapptofigma.capture-broadcast",
+      "mainAndExtensionVersionsMatch": true,
+      "appGroupMatchesProfiles": true,
+      "storeProfilesWithoutDeviceList": true,
+      "debuggingDisabledInProfiles": true,
+      "localNetworkUsageDescriptionIncluded": true,
+      "allowsLocalNetworking": true,
+      "allowsArbitraryLoads": false,
+      "javascriptBundleIncluded": true,
+      "pairingWireFunctionNameIncluded": true,
+      "nativeDeviceExecutionTested": false
+    }
+  },
+  "appStoreConnectSubmissionPerformed": false
 }

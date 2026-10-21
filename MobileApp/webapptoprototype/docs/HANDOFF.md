@@ -1,6 +1,6 @@
 # 移动项目续接
 
-2026-10-21 iPhone 局域网修复：用户确认本地网络开关已开启。原正式包优先走原生固定证书 HTTPS，Expo Go 走 v2 AES-GCM 认证加密通道，且连接失败提示错误地一律建议开启权限。现 iOS 对 v2 二维码统一使用既有加密通道，配对/状态/文件分块保持同一连接；不因失败跨通道重试，保留旧版与 Android 固定证书支持。移动 64 项测试、契约/lint/类型及电脑真实接收器的加密配对/大分块/续传/重放与篡改拒绝/断连测试通过。build3 IPA 已有本地网络用途说明和 NSAllowsLocalNetworking，非缺少声明。具体旧原生链路失败原因尚无手机原始错误证明；新 iOS production 包准备构建，真机复验仍待用户。
+2026-10-21 iPhone 局域网修复：用户确认本地网络开关已开启。原正式包优先走原生固定证书 HTTPS，Expo Go 走 v2 AES-GCM 认证加密通道，且连接失败提示错误地一律建议开启权限。现 iOS 对 v2 二维码统一使用既有加密通道，配对/状态/文件分块保持同一连接；不因失败跨通道重试，保留旧版与 Android 固定证书支持。移动 64 项测试、契约/lint/类型及电脑真实接收器的加密配对/大分块/续传/重放与篡改拒绝/断连测试通过。build3 IPA 已有本地网络用途说明和 NSAllowsLocalNetworking，非缺少声明。具体旧原生链路失败原因尚无手机原始错误证明；修复包 iOS production 1.0.0（4）构建 e638f6f8-c197-4493-8a48-ccd52cb2a542 已 FINISHED，已下载至 release/WebAppToFigma-1.0.0-ios-production-4.ipa；IPA CRC、双目标版本/标识/App Group/分发描述文件、内置修复函数与本地网络声明核对通过。未自动提交 App Store Connect，真机复验仍待用户。
 
 2026-10-21 最终打包结果：Windows x64与Mac ARM64包生成；iOS production 1.0.0（3）构建2112359e、Android preview 1.0.0（1）构建e7eeae3b均FINISHED并下载至根release。Windows打包版30流程、Mac归档/6项Python/9项路径、移动59测试/契约/lint/类型、IPA双目标版本与AppGroup/分发profile、APK内置JS/3本地模块/4架构/签名区块检查通过。真实手机安装、Mac本机及本轮Figma未执行；未上传App Store Connect或发布TestFlight。新增构建说明与验证记录；首次native构建暴露的Gradle版本字段、Kotlin列表泛型、Swift UIKit View注册均已修复。
 
