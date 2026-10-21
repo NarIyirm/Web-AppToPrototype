@@ -90,7 +90,7 @@ export async function importMobileBundle(bytes:Uint8Array,recognize?:(bytes:Uint
  const first=bundle.state.captures[0];
  const data=parseCapturePackage({schemaVersion:'2.0.0',artifactKind:'capture',packageId:`mobile-${bundle.meta.packageId}`,projectId:bundle.meta.project.id,revision:bundle.meta.revision,createdAt:bundle.meta.createdAt,
   mobileSource:{formatVersion:'0.1.0-alpha.1',bundleIds:[bundle.meta.packageId]},requiredCapabilities:['absolute-layout','inline-images','styled-text','mobile-sources'],
-  producer:{appVersion:'0.1.0',converterVersion:'mobile-desktop-2',adapterVersion:bundle.meta.producer.adapterVersion},
+  producer:{appVersion:'0.1.1',converterVersion:'mobile-desktop-2',adapterVersion:bundle.meta.producer.adapterVersion},
   source:{kind:first.sourceKind,platform:platform(first.platform),...first.sourceUrl?{url:first.sourceUrl}:{},title:bundle.meta.project.name,pageEpoch:first.id,captureContext:context(first)},screens,assets,interactions:[],warnings});
  return {data,bundle};
 }
