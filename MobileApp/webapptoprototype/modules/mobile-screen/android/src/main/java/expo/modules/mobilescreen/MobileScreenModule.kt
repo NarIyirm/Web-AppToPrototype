@@ -54,7 +54,7 @@ class MobileScreenModule : Module() {
     AsyncFunction("frames") {
       val folder = File(requireNotNull(appContext.reactContext).filesDir, "system-frames")
       folder.listFiles()?.filter { it.name.matches(Regex("frame-[a-f0-9-]+\\.png")) && it.length() in 1..(10L * 1024 * 1024) }
-        ?.sortedBy { it.lastModified() }?.take(20)?.map { mapOf("id" to it.name, "uri" to Uri.fromFile(it).toString(), "createdAt" to it.lastModified()) } ?: emptyList()
+        ?.sortedBy { it.lastModified() }?.take(20)?.map { mapOf<String, Any>("id" to it.name, "uri" to Uri.fromFile(it).toString(), "createdAt" to it.lastModified()) } ?: emptyList<Map<String, Any>>()
     }
     AsyncFunction("removeFrame") { id: String ->
       require(id.matches(Regex("frame-[a-f0-9-]+\\.png")))
