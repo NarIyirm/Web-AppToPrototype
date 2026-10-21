@@ -45,24 +45,41 @@ export function sampleTextInk(image:Pixels,bounds:{x:number;y:number;width:numbe
   const key=`${r>>4},${g>>4},${b>>4}`,v=groups.get(key)??{count:0,r:0,g:0,b:0};v.count++;v.r+=r;v.g+=g;v.b+=b;groups.set(key,v);}
  const ink=[...groups.values()].sort((a,b)=>b.count-a.count)[0];return ink?{r:ink.r/ink.count/255,g:ink.g/ink.count/255,b:ink.b/ink.count/255,a:1}:{r:0,g:0,b:0,a:1};
 }
-/** Accept only an opaque, nearly uniform ring. Anything uncertain remains an image. */
+/** JPEG/antialiasing can perturb a flat background. Require a dominant opaque
+ * ring and a mostly two-tone interior, rather than 99% exact perimeter pixels
+ * and 70% empty glyph boxes (which rejects ordinary dense Chinese text). */
 export function clearReliableText(image:Pixels,bounds:{x:number;y:number;width:number;height:number}):boolean{
  const left=Math.floor(bounds.x)-2,top=Math.floor(bounds.y)-2,right=Math.ceil(bounds.x+bounds.width)+2,bottom=Math.ceil(bounds.y+bounds.height)+2;
  if(left<1||top<1||right>=image.width-1||bottom>=image.height-1||right<=left||bottom<=top)return false;
  const sample=(x:number,y:number)=>Array.from(image.rgba.subarray((y*image.width+x)*4,(y*image.width+x)*4+4));
- const base=sample(left-1,top-1);if(base[3]!==255)return false;
- let matches=0,total=0;
- const check=(x:number,y:number)=>{const color=sample(x,y);total++;if(color[3]===255&&color.every((value,i)=>Math.abs(value-base[i])<=3))matches++;};
+ const ring:number[][]=[];
+ const check=(x:number,y:number)=>ring.push(sample(x,y));
  for(let x=left-1;x<=right;x++){check(x,top-1);check(x,bottom);}
  for(let y=top;y<bottom;y++){check(left-1,y);check(right,y);}
- if(matches/total<0.99)return false;
+ const candidates=new Map<string,number[][]>();
+ for(const pixel of ring){if(pixel[3]<250)continue;const key=pixel.slice(0,3).map(v=>Math.round(v/16)).join(',');const list=candidates.get(key)??[];list.push(pixel);candidates.set(key,list);}
+ const common=[...candidates.values()].sort((a,b)=>b.length-a.length)[0];if(!common)return false;
+ const base=[0,1,2].map(i=>Math.round(common.reduce((sum,p)=>sum+p[i],0)/common.length));base.push(255);
+ const distance=(pixel:number[])=>Math.max(...pixel.slice(0,3).map((v,i)=>Math.abs(v-base[i])));
+ if(ring.filter(p=>p[3]>=250&&distance(p)<=14).length/ring.length<0.9)return false;
  // A plain ring alone can surround a photo or control. Require a dominant plain
  // background inside the OCR box as well, otherwise keep the original pixels.
- let plain=0,inside=0;
+ let plain=0,inside=0;const ink:number[][]=[];
  for(let y=top;y<bottom;y++)for(let x=left;x<right;x++){
-  const pixel=sample(x,y);inside++;if(pixel.every((v,i)=>Math.abs(v-base[i])<=3))plain++;
+  const pixel=sample(x,y);if(pixel[3]<250)return false;inside++;if(distance(pixel)<=14)plain++;else ink.push(pixel);
  }
- if(plain/inside<0.7)return false;
+ if(plain/inside<0.3)return false;
+ // Text antialiasing lies on the line between one ink color and its background.
+ // Multi-coloured/photographic interiors must not be erased just because OCR
+ // reported a word there. Use the most distant ink sample as the endpoint.
+ const furthest=ink.reduce((best,pixel)=>Math.max(best,distance(pixel)),0),inkGroups=new Map<string,{sum:number[];count:number}>();
+ for(const pixel of ink){if(distance(pixel)<furthest*.7)continue;const key=pixel.slice(0,3).map(v=>Math.round(v/16)).join(',');const value=inkGroups.get(key)??{sum:[0,0,0],count:0};value.count++;for(let i=0;i<3;i++)value.sum[i]+=pixel[i];inkGroups.set(key,value);}
+ const commonInk=[...inkGroups.values()].sort((a,b)=>b.count-a.count)[0];
+ const foreground=commonInk?commonInk.sum.map(v=>v/commonInk.count):undefined;
+ if(foreground){const delta=foreground.slice(0,3).map((v,i)=>v-base[i]),length=delta.reduce((s,v)=>s+v*v,0);
+  const textLike=ink.filter(pixel=>{const t=Math.max(0,Math.min(1,pixel.slice(0,3).reduce((s,v,i)=>s+(v-base[i])*delta[i],0)/length));return pixel.slice(0,3).every((v,i)=>Math.abs(v-(base[i]+delta[i]*t))<=30);}).length;
+  if(textLike/ink.length<0.9)return false;
+ }
  for(let y=top;y<bottom;y++)for(let x=left;x<right;x++)image.rgba.set(base,(y*image.width+x)*4);
  return true;
 }

@@ -11,7 +11,7 @@ import { normalizeImage, pickImage } from '@/data/media';
 import { storage } from '@/data/storage';
 import { ExampleApp, exampleAppNames, examplePageName, type ExampleAppKind, type ExamplePage } from '@/features/capture/example-app';
 import { ImageRegionPicker } from '@/features/capture/image-region-picker';
-import { Button, Label, Notice, Screen, Section, ui, useTask } from '@/ui/kit';
+import { Button, Disclosure, Label, Notice, Screen, Section, Steps, ui, useTask } from '@/ui/kit';
 
 type Draft = { asset: Asset; uri: string; title: string; example: boolean };
 export default function CaptureDemoScreen() {
@@ -76,10 +76,11 @@ export default function CaptureDemoScreen() {
     });
   }
 
-  return <Screen title="体验 App 采集流程" subtitle="先用内置示例试操作，满意后再决定是否打包。" back>
-    <View style={ui.row}>{['开始指引', '浏览示例 App', '预览并发送'].map((label, index) => <Label key={label} size={13}
-      muted={step !== index + 1} weight={step === index + 1 ? '600' : '400'}>{index + 1}. {label}</Label>)}</View>
-    <Notice message="流程演示：不会打开或读取手机里的其他 App。预览、裁切、保存和发送是真实操作。" />
+  return <Screen title="体验 App 采集" subtitle="用内置示例，走一遍采集到发送的流程。" back
+    footer={stage === 'review' && draft ? <><Button icon="send" label={existing ? '发送到电脑转换' : '确认并发送'} busy={task.busy} disabled={free < 1 && !existing} onPress={() => void save(true)} />
+      <Button label={existing ? '已保存到项目' : '先保存到项目'} quiet small disabled={task.busy || !!existing || free < 1} onPress={() => void save(false)} /></> : undefined}>
+    <Steps labels={['选择示例', '浏览采集', '预览发送']} current={step - 1} />
+    <Notice message="当前为内置示例。裁切、保存和发送均为真实操作。" />
     <Notice error message={task.error} /><Notice message={message} />
     {stage === 'intro' ? <>
       <Section title="选择一个示例 App">
@@ -87,15 +88,15 @@ export default function CaptureDemoScreen() {
         <View style={ui.row}>{(['shop', 'tasks'] as const).map(value => <Button key={value} label={exampleAppNames[value]} quiet={kind !== value}
           disabled={task.busy} onPress={() => setKind(value)} />)}</View>
       </Section>
-      <Section title="正式采集时怎么操作">
-        <Label>1. 允许系统共享画面。</Label>
-        <Label>2. 打开目标 App，定位到需要的页面。</Label>
-        <Label>3. {Platform.OS === 'android' ? '点击悬浮采集按钮，返回应用预览。' : '在目标页面停留约 3 秒，通过系统录屏入口停止，再返回应用。'}</Label>
-        <Label size={14} muted>这次体验不申请系统录屏权限，直接使用内置示例。</Label>
+      <View style={ui.stack}>
         <Button label={`打开${exampleAppNames[kind]}`} disabled={task.busy} onPress={() => {
           setPage('home'); setReady(false); setMessage(null); setStage('browsing');
         }} />
-      </Section>
+        <Disclosure title="正式版本如何采集其他 App？"><Label size={14}>1. 允许系统共享画面。</Label>
+          <Label size={14}>2. 打开目标 App，定位到需要的页面。</Label>
+          <Label size={14}>3. {Platform.OS === 'android' ? '点击悬浮采集按钮，返回应用预览。' : '在目标页面停留约 3 秒，通过系统录屏入口停止，再返回应用。'}</Label>
+        </Disclosure>
+      </View>
     </> : null}
     {stage === 'browsing' ? <Section title={`正在浏览 · ${examplePageName(kind, page)}`}>
       <Label muted>点示例中的列表项目进入详情。找到需要的画面后，使用下方按钮返回预览。</Label>
@@ -110,8 +111,6 @@ export default function CaptureDemoScreen() {
     {stage === 'review' && draft ? <Section title={existing ? '画面已保存，可以发送' : '确认要转换的画面'}>
       <Label size={14} muted>{draft.example ? '当前是内置示例画面，发送后会在电脑真实转换。' : '当前是你选择的截图，可在电脑真实转换。'}</Label>
       <ImageRegionPicker key={draft.asset.id} uri={draft.uri} width={draft.asset.width} height={draft.asset.height} region={region} onChange={setRegion} disabled={task.busy} />
-      <Button label={existing ? '发送到电脑转换' : '确认并发送到电脑转换'} busy={task.busy} disabled={free < 1 && !existing} onPress={() => void save(true)} />
-      <Button label={existing ? '已保存到项目' : '先保存到项目'} quiet disabled={task.busy || !!existing || free < 1} onPress={() => void save(false)} />
       <Button label="再体验一个页面" quiet disabled={task.busy} onPress={() => { setMessage(null); setStage('intro'); }} />
     </Section> : null}
     {stage !== 'browsing' ? <Button label="换成我自己的 App 截图" quiet disabled={task.busy} onPress={() => void chooseOwnScreenshot()} /> : null}

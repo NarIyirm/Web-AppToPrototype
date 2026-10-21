@@ -5,16 +5,44 @@ import {build} from 'esbuild';
 import {readFile} from 'node:fs/promises';
 import type {BridgeDelivery,BridgeTarget,ImportReport} from '../packages/contracts/src/bridge';
 import {importMobileBundle} from '../apps/desktop/src/mobile-import';
+import {inspectImage} from '../packages/contracts/src/resources';
+import {encodeMobilePng} from '../apps/desktop/src/mobile-png';
+import {writeMobileZip} from '../packages/mobile-contracts/0.1.0-alpha.1/src/core/archive';
+import {createHash} from 'node:crypto';
 const source=build({entryPoints:['apps/figma-plugin/src/main.ts'],bundle:true,write:false,platform:'browser',format:'iife',target:'es2020',define:{__html__:'""'}}).then(result=>result.outputFiles[0].text);
 test('synthetic Figma host: mobile v2 material imports through the same preflight without claiming a web source',async()=>{
  const f=await fixture(),{data}=await importMobileBundle(await readFile('examples/mobile-material.w2pm.zip'));
  f.delivery.data=data;f.delivery.job.packageId=data.packageId;f.delivery.job.revision=data.revision;
  f.figma.base64Decode=(value:string)=>new Uint8Array(Buffer.from(value,'base64'));
- f.figma.createImage=()=>({hash:'mobile-synthetic-image',async getSizeAsync(){return {width:data.assets[0].width,height:data.assets[0].height};}});
+ f.figma.createImage=(bytes:Uint8Array)=>({hash:'mobile-synthetic-image',async getSizeAsync(){const {width,height}=inspectImage(bytes);return {width,height};}});
  await f.figma.ui.onmessage({type:'bridge-import',data:f.delivery});
  const result=f.messages.find(m=>m.type==='bridge-result')!.data;
  assert.ok(result.report,result.error);assert.equal(result.report.versions.schema,'2.0.0');
  assert.equal(result.report.counts.screens,1);assert.equal(data.source.kind,'imported_image');assert.equal(data.source.url,undefined);
+});
+
+test('synthetic Figma host: an App screenshot produces editable Text and Rectangle objects with no full-screen image',async()=>{
+ const width=160,height=100,rgba=new Uint8Array(width*height*4).fill(255);
+ for(let y=15;y<40;y++)for(let x=20;x<140;x++)rgba.set([8,96,200,255],(y*width+x)*4);
+ for(let y=65;y<73;y++)for(let x=35;x<55;x++)rgba.set([0,0,0,255],(y*width+x)*4);
+ const png=encodeMobilePng({width,height,rgba}),id=createHash('sha256').update(png).digest('hex'),now=new Date().toISOString();
+ const capture={id:'c-editable01',projectId:'p-editable01',title:'App layer test',createdAt:now,sourceKind:'imported_image',platform:'ios',assetId:id,
+  width,height,logicalWidth:width,logicalHeight:height,coordinateSpace:'image_pixels',observations:[],webNodes:[],warnings:[],redacted:false};
+ const meta={artifactKind:'mobile_capture',formatVersion:'0.1.0-alpha.1',packageId:'b-editable01',revision:1,createdAt:now,producer:{appVersion:'1.0.0',adapterVersion:'mobile-1'},
+  project:{id:capture.projectId,name:'Editable App'},captures:[{id:capture.id,snapshotPath:`captures/${capture.id}/snapshot.json`}],assets:[{id,bytes:png.length,width,height,mediaType:'image/png',path:`assets/${id}.png`}]};
+ const encode=(value:unknown)=>new TextEncoder().encode(JSON.stringify(value));
+ async function* entries(){yield{name:'mobile.json',bytes:encode(meta)};yield{name:meta.captures[0].snapshotPath,bytes:encode(capture)};yield{name:meta.assets[0].path,bytes:png};}
+ const chunks:Uint8Array[]=[];await writeMobileZip(entries(),{write(bytes){chunks.push(bytes.slice());}});
+ const {data}=await importMobileBundle(Buffer.concat(chunks),async()=>[{text:'可编辑文字',bounds:{x:30,y:60,width:70,height:20},confidence:.95,provenance:'ocr'}]);
+ const f=await fixture();f.delivery.data=data;f.delivery.job.packageId=data.packageId;f.delivery.job.revision=data.revision;
+ f.figma.createImage=()=>{throw Error('This flat UI should not need an image layer');};
+ await f.figma.ui.onmessage({type:'bridge-import',data:f.delivery});
+ const result=f.messages.find(m=>m.type==='bridge-result')!.data;assert.ok(result.report,result.error);
+ const mapped=(type:string)=>{const source=data.screens[0].nodes.find(n=>n.type===type)!;return f.nodes.get(result.report.nodeMap.find((entry:any)=>entry.sceneNodeId===source.id).figmaNodeId);};
+ const text=mapped('TEXT'),shape=mapped('SHAPE');
+ assert.equal(text.type,'TEXT');assert.equal(text.characters,'可编辑文字');text.characters='修改后的文字';assert.equal(text.characters,'修改后的文字');
+ assert.equal(shape.type,'RECTANGLE');assert.equal(shape.fills[0].type,'SOLID');shape.fills=[{type:'SOLID',color:{r:1,g:0,b:0}}];assert.equal(shape.fills[0].color.r,1);
+ assert.equal(data.screens[0].nodes.filter(n=>n.type==='IMAGE').length,0);
 });
 async function fixture(){
   const store=new Map<string,unknown>(),nodes=new Map<string,any>(),events=new Map<string,()=>void>(),messages:Array<{type:string;data:any}>=[];

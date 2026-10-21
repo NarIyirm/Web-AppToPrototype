@@ -9,7 +9,7 @@ import { useAppState } from '@/data/app-state';
 import { prepareBundle } from '@/data/export-bundle';
 import { directSendRequests } from '@/data/direct-send';
 import { checkDesktopConnection, connectedDesktop, disconnectDesktop, pairDesktop, transferAvailable, transferBundle } from '@/data/transfer';
-import { AssetImage, Button, Empty, Field, Label, Notice, Screen, Section, ui, usePalette, useTask } from '@/ui/kit';
+import { AssetImage, Badge, Button, Empty, Field, Icon, Label, Notice, Screen, Section, SelectionMark, Surface, ui, usePalette, useTask } from '@/ui/kit';
 
 export default function ConnectScreen() {
   const params = useLocalSearchParams<{ projectId?: string; captureIds?: string; selectionKey?: string }>();
@@ -91,13 +91,26 @@ function ConnectContent({ initialProject, initialIds, sendRequest }: { initialPr
     });
     return () => { disposed = true; };
   }, [directRequested, focused, computer, task.busy, validSelected.length, selectionMatches, sendRequest, initialProject, initialIds]);
-  return <Screen title="发送到电脑" subtitle="连接同一 Wi-Fi，扫码后直接发送画面。">
+  return <Screen title="发送到电脑" subtitle="手机收集画面，电脑继续转换。"
+    footer={computer && captures.length ? <>
+      {task.busy ? <View style={{ gap: 8 }}><View style={ui.spread}><Label size={13} muted>{phase}</Label><Label size={13}>{Math.round(progress * 100)}%</Label></View>
+        <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: 100, now: Math.round(progress * 100) }} style={{ height: 4, borderRadius: 2, backgroundColor: palette.line, overflow: 'hidden' }}>
+          <View style={{ height: '100%', width: `${Math.max(0, Math.min(100, progress * 100))}%`, backgroundColor: palette.accent }} /></View></View> : <Label size={13} muted>{validSelected.length ? `已选 ${validSelected.length} 个画面 · 每次最多 5 个` : '选择画面后即可发送'}</Label>}
+      <Button icon="send" label={prepared ? '重试发送' : `发送${validSelected.length ? ` ${validSelected.length} 个画面` : '到电脑'}`}
+        busy={task.busy} disabled={!prepared && !validSelected.length} onPress={() => void send()} />
+      {task.busy ? <Button label="暂停发送" quiet small onPress={() => { cancel.current = true; }} /> : null}
+      {prepared && !task.busy ? <Button label="取消本次发送" quiet small onPress={() => { setPrepared(null); setProgress(0); }} /> : null}
+    </> : undefined}>
     <Notice error message={task.error} /><Notice message={message} />
     {directRequested && !computer && validSelected.length ? <Notice message={`已选好 ${validSelected.length} 个画面。确认连接电脑后，会继续发送这批画面。`} /> : null}
-    {!computer ? <Section title="1. 连接电脑">
+    {!computer ? <Section title="连接你的电脑">
       {!offer && !scanning ? <>
-        <Label muted>在电脑打开 WebToPrototype → 手机收件箱 → 生成手机配对码。</Label>
-        <Button label="扫描电脑二维码" disabled={!transferAvailable} busy={task.busy} onPress={() => void run(async () => {
+        <Surface><View style={{ alignItems: 'center', paddingVertical: 20, gap: 14 }}><View style={{ width: 76, height: 76, borderRadius: 22, backgroundColor: palette.accentSurface, alignItems: 'center', justifyContent: 'center' }}><Icon name="computer" color={palette.accent} size={36} /></View>
+          <Label size={20} weight="600">从扫码开始</Label><Label size={14} muted style={{ textAlign: 'center' }}>手机和电脑连接同一 Wi-Fi</Label></View>
+          {['打开电脑端 WebToPrototype', '进入“手机收件箱”，生成配对码', '用手机扫码，在电脑确认连接'].map((step, index) => <View key={step} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 6 }}>
+            <View style={{ width: 26, height: 26, borderRadius: 13, backgroundColor: palette.subtle, alignItems: 'center', justifyContent: 'center' }}><Label size={12} muted weight="600">{index + 1}</Label></View><Label size={14} style={{ flex: 1 }}>{step}</Label></View>)}
+        </Surface>
+        <Button icon="qr" label="扫描电脑二维码" disabled={!transferAvailable} busy={task.busy} onPress={() => void run(async () => {
           const result = permission?.granted ? permission : await requestPermission();
           if (!result.granted) throw Error('请允许相机权限，或使用下方“粘贴配对信息”。');
           scanLock.current = false; setScanning(true); setMessage(null);
@@ -128,36 +141,33 @@ function ConnectContent({ initialProject, initialIds, sendRequest }: { initialPr
       {!transferAvailable ? <Label muted>请在手机 App 中打开此页面，浏览器暂不支持局域网发送。</Label> : null}
       <Notice message={connectionNote} />
     </Section> : <>
-      <View style={[ui.spread, { paddingBottom: 18, borderBottomWidth: 1, borderColor: palette.line }]}>
-        <View style={{ flex: 1, gap: 4 }}><Label size={18} weight="600">{computer}</Label><Label size={14} muted>{connectionNote ? '连接中断' : '已连接'}</Label></View>
-        <Button label="断开" quiet disabled={task.busy} onPress={() => { setComputer(null); setConnectionNote(''); void disconnectDesktop(); }} />
-      </View>
+      <Surface><View style={ui.spread}><Icon name="computer" color={palette.accent} size={28} />
+        <View style={{ flex: 1, gap: 6 }}><Label size={17} weight="600" numberOfLines={2}>{computer}</Label><Badge label={connectionNote ? '请检查连接' : '已连接'} success={!connectionNote} /></View>
+        <Button label="断开" quiet small disabled={task.busy} onPress={() => { setComputer(null); setConnectionNote(''); void disconnectDesktop(); }} />
+      </View></Surface>
       <Notice message={connectionNote} />
       {connectionNote ? <Button label="重新扫码连接" quiet disabled={task.busy} onPress={() => { setComputer(null); setConnectionNote(''); void disconnectDesktop(); }} /> : null}
-      <Section title="2. 选择要发送的画面">
+      <Section title="选择画面">
         {project ? <>
           <View style={ui.spread}><Label weight="600" style={{ flex: 1 }}>{project.name}</Label>
             {state.projects.length > 1 ? <Button label="更换项目" quiet disabled={task.busy || prepared !== null} onPress={() => setChoosingProject((value) => !value)} /> : null}</View>
           {choosingProject ? <View style={ui.stack}>{state.projects.map((item) => <Button key={item.id} label={item.name} quiet={project?.id !== item.id} disabled={task.busy || prepared !== null}
             onPress={() => { setProjectId(item.id); setSelected(item.captureIds.slice(0, 5)); setChoosingProject(false); }} />)}</View> : null}
           {captures.length ? <>
-            <Label size={14} muted>每次最多发送 5 个画面。</Label>
+            <Label size={13} muted>已选 {validSelected.length} / 5 · 点击画面勾选</Label>
             {captures.map((capture) => {
               const checked = selected.includes(capture.id);
               return <Pressable key={capture.id} accessibilityRole="checkbox" accessibilityLabel={capture.title}
-                accessibilityState={{ checked, disabled: task.busy || prepared !== null }} disabled={task.busy || prepared !== null || !checked && validSelected.length >= 5}
+                aria-checked={checked}
+                accessibilityState={{ checked, disabled: task.busy || prepared !== null || !checked && validSelected.length >= 5 }} disabled={task.busy || prepared !== null || !checked && validSelected.length >= 5}
                 onPress={() => setSelected((current) => current.includes(capture.id) ? current.filter((id) => id !== capture.id) : [...current, capture.id])}
-                style={[ui.row, { paddingVertical: 10, borderBottomWidth: 1, borderColor: palette.line }]}>
-                <Label size={24} style={{ color: checked ? palette.accent : palette.muted }}>{checked ? '☑' : '☐'}</Label>
+                style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, borderRadius: 14,
+                  backgroundColor: pressed ? palette.subtle : checked ? palette.accentSurface : palette.surface, opacity: !checked && validSelected.length >= 5 ? 0.5 : 1 })}>
+                <SelectionMark checked={checked} />
                 <View style={{ width: 64 }}><AssetImage id={capture.assetId} ratio={1} /></View>
-                <View style={{ flex: 1, gap: 4 }}><Label weight="600">{capture.title}</Label><Label size={13} muted>{capture.width} × {capture.height}</Label></View>
+                <View style={{ flex: 1, gap: 4 }}><Label size={15} weight="600" numberOfLines={2}>{capture.title}</Label><Label size={12} muted>{capture.width} × {capture.height}</Label></View>
               </Pressable>;
             })}
-            <Button label={prepared ? '重试发送' : `发送到电脑${validSelected.length ? `（${validSelected.length} 个画面）` : ''}`}
-              busy={task.busy} disabled={!prepared && !validSelected.length} onPress={() => void send()} />
-            {task.busy ? <><Label>{phase} {progress > 0 ? `${Math.round(progress * 100)}%` : ''}</Label>
-              <Button label="暂停发送" quiet onPress={() => { cancel.current = true; }} /></> : null}
-            {prepared && !task.busy ? <Button label="取消本次发送" quiet onPress={() => { setPrepared(null); setProgress(0); }} /> : null}
           </> : <Empty title="还没有画面" description="先添加一张截图，或保存一个网页。"><Button label="添加画面" onPress={() => router.push('/capture')} /></Empty>}
         </> : <Empty title="先添加一个画面" description="截图或网页保存后，就可以在这里发送。"><Button label="添加画面" onPress={() => router.push('/capture')} /></Empty>}
       </Section>

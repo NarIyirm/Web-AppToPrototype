@@ -5,15 +5,27 @@ import UIKit
 import Darwin
 
 final class BroadcastPicker: ExpoView {
-  private let picker = RPSystemBroadcastPickerView(frame: .zero)
+  // ReplayKit builds its button during initialization. A zero-sized initial
+  // frame can leave that button invisible even after the outer Expo view grows.
+  private let picker = RPSystemBroadcastPickerView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
     picker.preferredExtension = Bundle.main.object(forInfoDictionaryKey: "MobileBroadcastExtension") as? String
     picker.showsMicrophoneButton = false
+    picker.tintColor = .systemBlue
     picker.accessibilityLabel = "开始或停止系统界面采集"
+    picker.accessibilityHint = "打开系统广播面板，选择界面采集，然后开始广播"
     addSubview(picker)
   }
-  override func layoutSubviews() { super.layoutSubviews(); picker.frame = bounds }
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    // Keep the public system control at its intended touch size, including
+    // the first Fabric layout pass; do not simulate taps on private subviews.
+    picker.bounds = CGRect(x: 0, y: 0, width: 64, height: 64)
+    picker.center = CGPoint(x: bounds.midX, y: bounds.midY)
+    picker.setNeedsLayout()
+    picker.layoutIfNeeded()
+  }
 }
 public final class MobileScreenModule: Module {
   private static func broadcastAlive(_ folder: URL) -> Bool? {

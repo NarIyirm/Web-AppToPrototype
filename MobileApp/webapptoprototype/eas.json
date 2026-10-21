@@ -8,6 +8,7 @@
       "distribution": "internal",
       "developmentClient": false,
       "environment": "preview",
+      "autoIncrement": true,
       "node": "24.15.0",
       "android": {
         "buildType": "apk"
@@ -25,6 +26,11 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "6825243915",
+        "appleTeamId": "U57D6BB6H7"
+      }
+    }
   }
 }

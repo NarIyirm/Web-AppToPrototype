@@ -1,5 +1,9 @@
 # 当前进度
 
+2026-10-21 新版发布已获授权：用户要求先同步 GitHub，再发布桌面及移动端，并选择自动上传 iOS 至现有 App Store Connect/TestFlight。桌面版本0.1.1，移动版本1.0.1；Windows包改读取根版本，Android preview自动递增构建号，iOS submit指定现有App 6825243915与团队U57D6BB6H7。此授权覆盖前一轮仅本地验证/暂不推送限制。类型/166桌面测试/构建、移动lint/类型/64测试已通过；正在同步源码和生成四平台产物，结果见docs/33-release-0.1.1-mobile-1.0.1.md。
+
+2026-10-21 移动 UI 本地待验收：用户已确认上一轮采集/拆层验证通过；本轮按用户要求统一蓝色/系统字体/原生符号、三入口说明、项目缩略图/勾选、设备状态与底部固定发送/进度，预览工具及帮助按需展开，保留全部既有传输/采集流程。新增键盘避让，沿用独立安全区与裁切弹窗。lint/类型/64业务测试、7页面多视口浅深色受控UI、9安全区/裁切回归、3采集控件检查及双平台本地JS导出通过；原生键盘/大字体/真实图标仍待手机验证。未留启动服务，用户自行 npm run start:go；未打安装包、云构建、提交或推送，必须等本轮确认。详见移动 DESIGN.md、docs/USER-VERIFICATION.md、docs/verification/2026-10-21-mobile-ui-local-check.json。
+
 2026-10-21 最终打包结果：Windows x64与Mac ARM64包生成；iOS production 1.0.0（3）构建2112359e、Android preview 1.0.0（1）构建e7eeae3b均FINISHED并下载至根release。Windows打包版30流程、Mac归档/6项Python/9项路径、移动59测试/契约/lint/类型、IPA双目标版本与AppGroup/分发profile、APK内置JS/3本地模块/4架构/签名区块检查通过。真实手机安装、Mac本机及本轮Figma未执行；未上传App Store Connect或发布TestFlight。新增构建说明与验证记录；首次native构建暴露的Gradle版本字段、Kotlin列表泛型、Swift UIKit View注册均已修复。
 
 2026-10-21 本次打包：Windows x64与Mac ARM64最新ZIP已生成，路径见release/latest-*.json。Windows真实打包EXE的30项流程、Mac归档结构及准备脚本检查通过；移动应用命名WebAppToFigma，新logo与EAS profile已接入，用户已授权并执行云构建。手机包进度与ASC/TestFlight步骤见[移动构建说明](../MobileApp/webapptoprototype/docs/BUILD-AND-TESTFLIGHT.md)。真实Mac/手机/Figma结果仍需实际设备验证。
@@ -562,3 +566,7 @@ Mac归档后收尾：源码基线 E:\WebToPrototype\release\WebToPrototype-0.1.0
 ## 2026-10-21 / iPhone 独立包局域网连接
 
 2026-10-21 iPhone 局域网修复：用户确认本地网络开关已开启。原正式包优先走原生固定证书 HTTPS，Expo Go 走 v2 AES-GCM 认证加密通道，且连接失败提示错误地一律建议开启权限。现 iOS 对 v2 二维码统一使用既有加密通道，配对/状态/文件分块保持同一连接；不因失败跨通道重试，保留旧版与 Android 固定证书支持。移动 64 项测试、契约/lint/类型及电脑真实接收器的加密配对/大分块/续传/重放与篡改拒绝/断连测试通过。build3 IPA 已有本地网络用途说明和 NSAllowsLocalNetworking，非缺少声明。具体旧原生链路失败原因尚无手机原始错误证明；修复包 iOS production 1.0.0（4）构建 e638f6f8-c197-4493-8a48-ccd52cb2a542 已 FINISHED，已下载至 release/WebAppToFigma-1.0.0-ios-production-4.ipa；IPA CRC、双目标版本/标识/App Group/分发描述文件、内置修复函数与本地网络声明核对通过。未自动提交 App Store Connect，真机复验仍待用户。
+
+## 2026-10-21 / App 采集入口及可编辑拆层，本地验收
+
+2026-10-21 本地待用户验收：用户已确认 iPhone build4 局域网连接恢复，反馈系统采集按钮空白、App 转 Figma 只有整图。ReplayKit 控件改非零 64 点初始化/布局、明确入口和控制中心指引；Go 明确不能真实跨 App 录屏。桌面新增截图重建：可靠 OCR 文本、原生背景/基础控件、局部图案及透明度保留。实际反馈图按电脑 2000px OCR 流程，旧版 0 Text/1整图，新版20 Text/36局部图像；字体/内容需校对，非原组件树恢复。166桌面测试/类型/构建、64移动测试/契约/lint/类型、JS入口3项、合成Figma宿主原生Text/Rectangle可修改检查通过。UIKit/真实Figma待用户。用户明确要求先 Expo Go 本地验证，未打包/云构建/提交/推送，后续必须等用户确认。Metro 8082、本地新版桌面使用独立 .runtime/local-user-test-2026-10-21 测试目录；旧安装包已正常退出，原项目数据未修改。详见 docs/32-mobile-app-editable-local-test.md 和移动 verification/2026-10-21-app-capture-layers-local-check.json。

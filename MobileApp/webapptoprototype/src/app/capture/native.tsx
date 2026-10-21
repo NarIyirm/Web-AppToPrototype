@@ -11,9 +11,10 @@ import { requestDirectSend } from '@/data/direct-send';
 import { normalizeImage, pickAppImages } from '@/data/media';
 import { storage } from '@/data/storage';
 import { getSystemStatus, listSystemFrames, removeSystemFrame, requestCaptureOverlay, startSystemCapture, stopSystemCapture,
-  systemCaptureAvailable, SystemBroadcastPicker, type SystemCaptureStatus, type SystemFrame } from '@/data/system-capture';
+  systemCaptureAvailable, type SystemCaptureStatus, type SystemFrame } from '@/data/system-capture';
 import { ImageRegionPicker } from '@/features/capture/image-region-picker';
-import { Button, Label, Notice, Screen, Section, ui, usePalette, useTask } from '@/ui/kit';
+import { SystemBroadcastControl } from '@/features/capture/system-broadcast-control';
+import { Button, Label, Notice, Screen, Section, Steps, Surface, ui, usePalette, useTask } from '@/ui/kit';
 
 type Draft = { asset: Asset; uri: string; frameId?: string; sourceKind: SourceKind; title: string };
 // Two stacked instances (for example a notification deep link) may briefly overlap.
@@ -191,9 +192,12 @@ export default function NativeCaptureScreen() {
     });
   }
   const step = status.running ? 2 : draft && !preparing ? 3 : 1;
-  return <Screen title="转换 App 画面" subtitle="打开目标 App，采集需要的页面，回来预览并发送。" back>
-    <View style={ui.row}>{['开始采集', '打开目标 App', '预览并发送'].map((text, index) => <Label key={text} size={13}
-      weight={step === index + 1 ? '600' : '400'} muted={step !== index + 1}>{index + 1}. {text}</Label>)}</View>
+  return <Screen title="转换 App 画面" subtitle="采集一个页面，预览后发送到电脑。" back
+    footer={!status.running && !preparing && draft ? <>
+      <Button icon="send" label={existing ? '发送到电脑转换' : '确认并发送'} busy={task.busy} disabled={previewLoading || free < 1 && !existing} onPress={() => void saveDraft(true)} />
+      <Button label={existing ? '已保存到项目' : '先保存到项目'} quiet small disabled={locked || !!existing || free < 1} onPress={() => void saveDraft(false)} />
+    </> : undefined}>
+    <Steps labels={['开始采集', '打开 App', '预览发送']} current={step - 1} />
     <Notice error message={task.error ?? readError ?? previewError} /><Notice message={progress ?? (starting ? '系统正在启动采集，请稍候…' : notice)} />
     {previewError ? <Button label="重试读取画面" quiet disabled={task.busy} onPress={() => setPreviewAttempt(value => value + 1)} /> : null}
     {status.running ? <Section title={Platform.OS === 'ios' ? returned ? '已返回，请先停止系统采集' : '正在采集，请打开目标 App'
@@ -206,25 +210,22 @@ export default function NativeCaptureScreen() {
       <Label size={14} muted>{Platform.OS === 'ios' ? '返回本应用后不会继续写入本应用的画面。请先停止系统采集，再发送转换。' : '悬浮按钮可拖动；采集时自动隐藏，保存一张后结束共享。'}</Label>
       <Notice message={status.message} />
       {Platform.OS === 'android' ? <Button label="停止本次采集" quiet disabled={task.busy} onPress={() => void task.run(async () => { await stopSystemCapture(); await refresh(); })} />
-        : <View style={ui.row}><SystemBroadcastPicker /><Label size={14} muted>也可点系统按钮打开广播面板，停止采集。</Label></View>}
+        : <SystemBroadcastControl running disabled={task.busy} />}
     </Section> : null}
     {!status.running && !preparing && draft ? <Section title={existing ? '画面已保存，可以发送' : '确认要转换的画面'}>
       {previewLoading ? <Label muted>正在读取画面…</Label> : <ImageRegionPicker uri={draft.uri} width={draft.asset.width} height={draft.asset.height}
         region={region} onChange={setRegion} disabled={task.busy} />}
-      <Button label={existing ? '发送到电脑转换' : '确认并发送到电脑转换'} busy={task.busy} disabled={previewLoading || free < 1 && !existing} onPress={() => void saveDraft(true)} />
-      <Button label={existing ? '已保存到项目' : '先保存到项目'} quiet disabled={locked || !!existing || free < 1} onPress={() => void saveDraft(false)} />
     </Section> : null}
     {!status.running ? <Section title={draft && !preparing ? '继续采集' : preparing ? '开始前请看这三步' : '采集一个 App 页面'}>
       {!loaded ? <Label muted>正在读取采集状态…</Label> : guided ? <>
         {!preparing ? <Button label={draft ? '采集下一个页面' : '开始采集'} disabled={locked || free < 1 || frames.length >= 20}
           onPress={() => { setPreparing(true); setReturned(false); setNotice(null); }} /> : <>
-          <Label>1. 允许系统共享画面。</Label>
-          <Label>2. {Platform.OS === 'ios' ? '打开目标 App，在需要的页面停留约 3 秒。' : '打开目标 App，定位需要转换的页面。'}</Label>
-          <Label>3. {Platform.OS === 'ios' ? '从顶部录屏状态或控制中心停止，返回这里。' : '点击悬浮按钮“采集当前页”，再返回这里。'}</Label>
-          <Label size={14} muted>每次最长 60 秒。打开 App 和页面由你操作，部分受保护内容可能无法采集。</Label>
+          <Surface><Label size={14}>1. {Platform.OS === 'ios' ? '点下方录屏按钮，选择“界面采集”，再点“开始广播”。' : '允许系统共享画面。'}</Label>
+          <Label size={14}>2. {Platform.OS === 'ios' ? '打开目标 App，在需要的页面停留约 3 秒。' : '打开目标 App，定位需要转换的页面。'}</Label>
+          <Label size={14}>3. {Platform.OS === 'ios' ? '从顶部录屏状态或控制中心停止，返回这里。' : '点击悬浮按钮“采集当前页”，再返回这里。'}</Label></Surface>
+          <Label size={13} muted>每次最长 60 秒，部分受保护内容可能无法采集。</Label>
           {Platform.OS === 'android' ? <Label size={14} muted>系统支持时可选择“单个 App”并选中目标 App；否则共享屏幕后手动打开。</Label> : null}
-          {Platform.OS === 'ios' ? <View style={ui.row}><View pointerEvents={task.busy ? 'none' : 'auto'} accessibilityElementsHidden={task.busy}><SystemBroadcastPicker /></View><View style={{ flex: 1, gap: 4 }}>
-            <Label weight="600">点击系统按钮开始采集</Label><Label size={14} muted>选择“界面采集”，再点“开始广播”。</Label></View></View>
+          {Platform.OS === 'ios' ? <SystemBroadcastControl disabled={task.busy} />
             : status.overlayGranted ? <Button label="授权并开始采集" busy={task.busy || starting} onPress={() => void task.run(async () => {
               const accepted = await startSystemCapture();
               if (!accepted) { setNotice('已取消系统授权，可以重新开始。'); return; }
@@ -238,8 +239,8 @@ export default function NativeCaptureScreen() {
         </>}
         {status.phase === 'failed' || status.phase === 'stopped' && !activeFrames.length ? <Notice message={status.message} /> : null}
       </> : <>
-        <Label muted>{!systemCaptureAvailable ? '可先用内置示例体验采集和转换。实际跨 App 采集需要包含采集模块的安装包。'
-          : !status.configured ? status.message : '此安装包使用旧版定时采集。请更新安装包后使用引导采集，已有画面仍可选择。'}</Label>
+        <Notice message={!systemCaptureAvailable ? '当前为 Expo Go：可导入截图或体验示例。跨 App 录屏需要独立安装包。'
+          : !status.configured ? status.message : '此安装包使用旧版定时采集。请更新安装包后使用引导采集，已有画面仍可选择。'} />
         <Button label="体验采集流程（无需打包）" disabled={task.busy} onPress={() => router.push({ pathname: '/capture/demo', params: { projectId: project?.id ?? '' } })} />
       </>}
       {frames.length >= 20 ? <Notice message="待整理画面已满，请先保存或丢弃下方画面，再开始采集。" /> : null}

@@ -7,7 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppStateProvider, useAppState } from '@/data/app-state';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Button, Label, Notice, Screen } from '@/ui/kit';
+import { Button, Label, Notice, Screen, usePalette } from '@/ui/kit';
 
 void SplashScreen.preventAutoHideAsync().catch(() => undefined);
 function Routes() {
@@ -27,8 +27,12 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 }
 export default function RootLayout() {
   const dark = useColorScheme() === 'dark';
+  const palette = usePalette();
+  const base = dark ? DarkTheme : DefaultTheme;
+  const theme = { ...base, colors: { ...base.colors, background: palette.bg, card: palette.surface,
+    primary: palette.accent, text: palette.text, border: palette.line } };
   return <GestureHandlerRootView style={{ flex: 1 }}>
-    <ThemeProvider value={dark ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={theme}>
       <AppStateProvider><StatusBar style={dark ? 'light' : 'dark'} /><Routes /></AppStateProvider>
     </ThemeProvider>
   </GestureHandlerRootView>;

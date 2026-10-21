@@ -4,6 +4,7 @@ import type { ConfigContext } from 'expo/config';
 export default ({ config }: ConfigContext) => ({
   ...config,
   name: 'WebAppToFigma',
+  version: '1.0.1',
   icon: './assets/webapptofigma-icon.png',
   ios: { ...config.ios,
     bundleIdentifier: 'com.nariyirm.webapptofigma',

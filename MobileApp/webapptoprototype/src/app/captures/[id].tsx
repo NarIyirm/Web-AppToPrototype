@@ -62,16 +62,16 @@ function CaptureEditor({ id }: { id: string }) {
       setTextDrafts([]); setNotice('遮挡已写入画面，旧的文字观察已清除。');
     });
   }
-  return <Screen title={current.title} subtitle="已保存在手机，可直接发送到电脑。" back>
+  return <Screen title={current.title} subtitle="画面预览" back footer={<Button icon="send" label="发送到电脑转换" disabled={task.busy}
+    onPress={() => router.push({ pathname: '/connect', params: { projectId: current.projectId, captureIds: id, selectionKey: String(Date.now()) } })} />}>
     <Notice error message={task.error} /><Notice message={notice} />
     <AssetImage id={current.assetId} ratio={current.width / current.height} contain />
     <Label size={13} muted>{current.width} × {current.height} px · {current.sourceKind === 'web' ? '网页采集' : '导入画面'} · 手机已保存</Label>
-    <Button label="发送到电脑转换" onPress={() => router.push({ pathname: '/connect', params: { projectId: current.projectId, captureIds: id, selectionKey: String(Date.now()) } })} />
     {current.sourceKind !== 'web' ? <Label size={13} muted>{current.observations.length ? `已有 ${current.observations.length} 行识别文字，发送前可校对。` : '电脑转换时会尝试离线识别文字；可靠区域可编辑，其余保留图片。'}</Label> : null}
     <View style={ui.row}>
-      <Button label={renameOpen ? '收起名称' : '修改名称'} quiet onPress={() => setRenameOpen((value) => !value)} />
-      <Button label={toolsOpen ? '收起编辑' : '裁切与旋转'} quiet onPress={() => setToolsOpen((value) => !value)} />
-      {visionAvailable || current.observations.length ? <Button label={textOpen ? '收起文字' : '识别与校对文字'} quiet onPress={() => setTextOpen((value) => !value)} /> : null}
+      <Button label={renameOpen ? '收起' : '名称'} icon="edit" secondary small onPress={() => setRenameOpen((value) => !value)} />
+      <Button label={toolsOpen ? '收起' : '裁切 / 旋转'} icon="crop" secondary small onPress={() => setToolsOpen((value) => !value)} />
+      {visionAvailable || current.observations.length ? <Button label={textOpen ? '收起' : '文字'} icon="text" secondary small onPress={() => setTextOpen((value) => !value)} /> : null}
     </View>
     {renameOpen ? <Section title="画面名称"><Field label="名称" value={title} maxLength={80} onChangeText={setTitle} />
       <Button label="保存名称" quiet busy={task.busy} disabled={!title.trim() || title === current.title}

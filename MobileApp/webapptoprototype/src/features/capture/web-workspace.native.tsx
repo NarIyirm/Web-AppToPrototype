@@ -107,9 +107,9 @@ export function WebWorkspace({ url, projectId }: { url: string; projectId: strin
   }
   if (!allowedWebUrl(url)) return <Screen title="网页地址无效" back><Label>请返回重新输入网页地址。</Label></Screen>;
   return <SafeAreaSurface style={{ backgroundColor: palette.bg }}>
-    <View style={s.header}><View style={ui.spread}><Button label="‹ 返回" quiet disabled={task.busy} onPress={() => router.back()} />
-      <View style={ui.row}><Button label="后退" quiet disabled={!canBack || task.busy} onPress={() => web.current?.goBack()} />
-        <Button label="前进" quiet disabled={!canForward || task.busy} onPress={() => web.current?.goForward()} /></View></View>
+    <View style={s.header}><View style={ui.spread}><Button small icon="back" label="返回" quiet disabled={task.busy} onPress={() => router.back()} />
+      <View style={ui.row}><Button small label="后退" quiet disabled={!canBack || task.busy} onPress={() => web.current?.goBack()} />
+        <Button small label="前进" quiet disabled={!canForward || task.busy} onPress={() => web.current?.goForward()} /></View></View>
       <Label size={12} muted numberOfLines={1}>{address}</Label>
     </View>
     <View ref={frame} collapsable={false} pointerEvents={task.busy ? 'none' : 'auto'} style={{ flex: 1 }} onLayout={({ nativeEvent }) => {
@@ -143,22 +143,22 @@ export function WebWorkspace({ url, projectId }: { url: string; projectId: strin
       javaScriptCanOpenWindowsAutomatically={false} setSupportMultipleWindows={false} mixedContentMode="never"
       thirdPartyCookiesEnabled={false} sharedCookiesEnabled={false} geolocationEnabled={false} incognito />
     </View>
-    <View style={[s.tools, { borderTopColor: palette.line }]}>
+    <View style={[s.tools, { borderTopColor: palette.line, backgroundColor: palette.surface }]}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.toolRow}>
-        {([['browse', '浏览'], ['element', '选元素'], ['rectangle', '画矩形']] as const).map(([key, label]) => <Button key={key} label={label} quiet={mode !== key} disabled={task.busy || loading} onPress={() => { setMode(key); setMessage(key === 'browse' ? '可正常滚动与操作网页。' : key === 'element' ? '点选内容；需要更大范围可点“选父级”。' : '拖出需要保存的矩形。'); }} />)}
+        {([['browse', '浏览'], ['element', '选元素'], ['rectangle', '画矩形']] as const).map(([key, label]) => <Button small key={key} label={label} secondary={mode === key} quiet={mode !== key} disabled={task.busy || loading} onPress={() => { setMode(key); setMessage(key === 'browse' ? '可正常滚动与操作网页。' : key === 'element' ? '点选内容；需要更大范围可点“选父级”。' : '拖出需要保存的矩形。'); }} />)}
       </ScrollView>
       <ScrollView horizontal accessibilityLabel="选择工具，可左右滑动查看更多" contentContainerStyle={s.toolRow}>
-        <Button label={multiple ? '多选：开' : '多选：关'} quiet disabled={task.busy || mode !== 'element'} onPress={() => setMultiple((value) => !value)} />
-        <Button label="选父级" quiet disabled={task.busy || !selection.canParent || mode === 'browse'} onPress={() => command({ action: 'parent' })} />
-        <Button label="排除" quiet={mode !== 'exclude'} disabled={task.busy || !selection.canExclude || mode === 'browse'} onPress={() => { setMode(mode === 'exclude' ? 'element' : 'exclude'); setMessage('点选已选区块内部的内容，红框内容不生成图层。'); }} />
-        <Button label="撤销" quiet disabled={task.busy || !selection.canUndo} onPress={() => command({ action: 'undo' })} />
-        <Button label="清空" quiet disabled={task.busy || !selection.count} onPress={() => command({ action: 'clear' })} />
+        <Button small label={multiple ? '多选：开' : '多选：关'} quiet disabled={task.busy || mode !== 'element'} onPress={() => setMultiple((value) => !value)} />
+        <Button small label="选父级" quiet disabled={task.busy || !selection.canParent || mode === 'browse'} onPress={() => command({ action: 'parent' })} />
+        <Button small label="排除" quiet={mode !== 'exclude'} disabled={task.busy || !selection.canExclude || mode === 'browse'} onPress={() => { setMode(mode === 'exclude' ? 'element' : 'exclude'); setMessage('点选已选区块内部的内容，红框内容不生成图层。'); }} />
+        <Button small label="撤销" quiet disabled={task.busy || !selection.canUndo} onPress={() => command({ action: 'undo' })} />
+        <Button small label="清空" quiet disabled={task.busy || !selection.count} onPress={() => command({ action: 'clear' })} />
       </ScrollView>
       <View style={s.feedback}><Label size={12} muted numberOfLines={2}>{task.error ?? (task.busy ? message : mode !== 'browse' && selection.count ? `已选 ${selection.count} 处 · 排除 ${selection.excluded} 处 · ${Math.round(selection.width)} × ${Math.round(selection.height)}` : message)}</Label></View>
-      <View style={s.toolRow}><View style={{ flex: 1 }}><Button label={mode === 'browse' ? '保存当前视口' : '保存所选范围'} busy={task.busy} disabled={loading || (mode !== 'browse' && (!selection.count || !selection.width || !selection.height))} onPress={() => void capture()} /></View>
-        {task.busy ? <Button label="取消" quiet onPress={() => { cancelled.current = true; setMessage('正在取消…'); }} /> : <Button label="一键转换整页" quiet disabled={loading} onPress={() => void capture(true)} />}
+      <View style={s.toolRow}><View style={{ flex: 1 }}><Button small label={mode === 'browse' ? '保存当前视口' : '保存所选范围'} busy={task.busy} disabled={loading || (mode !== 'browse' && (!selection.count || !selection.width || !selection.height))} onPress={() => void capture()} /></View>
+        {task.busy ? <Button small label="取消" quiet onPress={() => { cancelled.current = true; setMessage('正在取消…'); }} /> : <Button small label="一键转换整页" quiet disabled={loading} onPress={() => void capture(true)} />}
       </View>
     </View>
   </SafeAreaSurface>;
 }
-const s = StyleSheet.create({ header: { paddingHorizontal: 12, paddingBottom: 6 }, tools: { padding: 8, gap: 2, borderTopWidth: 1 }, toolRow: { flexDirection: 'row', alignItems: 'center', gap: 4 }, feedback: { height: 38, paddingHorizontal: 8, justifyContent: 'center' } });
+const s = StyleSheet.create({ header: { paddingHorizontal: 12, paddingBottom: 6 }, tools: { padding: 8, gap: 2, borderTopWidth: 1 }, toolRow: { flexDirection: 'row', alignItems: 'center', gap: 4 }, feedback: { minHeight: 38, paddingVertical: 4, paddingHorizontal: 8, justifyContent: 'center' } });
