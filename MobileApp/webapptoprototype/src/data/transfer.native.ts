@@ -5,30 +5,29 @@ import { Platform } from 'react-native';
 
 import { parseTransferReceipt, type PairingOffer, type TransferReceipt } from '@/core/pairing';
 import { createPairingWire, type NativeTransfer, type PairingWire } from '@/core/pairing-wire';
+import { establishPairingSession } from '@/core/pairing-session';
 
 import { newId } from './app-state';
 import { fileDigest } from './file-digest';
 import { createLanTransport } from './lan-transport.native';
 
 const native = isRunningInExpoGo() ? null : requireOptionalNativeModule<NativeTransfer>('MobileTransfer');
-let session: { offer: PairingOffer; token: string; expiresAt: number; wire: PairingWire } | null = null;
+let session: { offer: PairingOffer; token: string; expiresAt: number; localExpiresAt: number; wire: PairingWire } | null = null;
 let generation = 0;
 export const transferAvailable = true;
 export async function pairDesktop(offer: PairingOffer): Promise<string> {
   const attempt = ++generation;
   session = null;
   const wire = await createPairingWire(offer, Platform.OS, native, createLanTransport);
-  const result = JSON.parse(await wire.request('/mobile/pair', 'POST', '',
-    JSON.stringify({ code: offer.code, deviceId: newId('d'), deviceName: (Device.modelName ?? '我的手机').slice(0, 80) }))) as { sessionToken: string; expiresAt: number; chunkBytes: number };
-  if (!/^[a-f0-9]{64}$/.test(result.sessionToken) || !Number.isSafeInteger(result.expiresAt) || result.expiresAt <= Date.now()
-    || result.expiresAt > Date.now() + 15 * 60_000 || result.chunkBytes !== 262144) throw new Error('配对回执无效。');
-  if (attempt !== generation) throw Error('连接操作已取消。');
-  session = { offer, token: result.sessionToken, expiresAt: result.expiresAt, wire };
+  const result = await establishPairingSession(wire,
+    JSON.stringify({ code: offer.code, deviceId: newId('d'), deviceName: (Device.modelName ?? '我的手机').slice(0, 80) }),
+    () => attempt === generation);
+  session = { offer, ...result, wire };
   return offer.desktopName;
 }
 export async function transferBundle(bundle: { uri: string; packageId: string }, progress: (value: number) => void, cancelled: () => boolean): Promise<TransferReceipt> {
   const selected = session;
-  if (!selected || selected.expiresAt <= Date.now()) throw new Error('电脑连接已过期，请重新扫码配对。');
+  if (!selected || selected.localExpiresAt <= Date.now()) throw new Error('电脑连接已过期，请重新扫码配对。');
   const file = new File(bundle.uri), bytes = file.size, hash = await fileDigest(file);
   if (!file.exists || bytes < 1 || bytes > 64 * 1024 * 1024) throw new Error('素材包缺失或超过 64 MiB。');
   const { wire, token } = selected;
@@ -59,10 +58,10 @@ export async function disconnectDesktop() {
   const previous = session; session = null; generation++;
   if (previous) { try { await previous.wire.request('/mobile/disconnect', 'POST', previous.token, '{}'); } catch { /* Local disconnect must work while offline. */ } }
 }
-export function connectedDesktop() { return session && session.expiresAt > Date.now() ? session.offer.desktopName : null; }
+export function connectedDesktop() { return session && session.localExpiresAt > Date.now() ? session.offer.desktopName : null; }
 export async function checkDesktopConnection(): Promise<boolean> {
   const selected = session;
-  if (!selected || selected.expiresAt <= Date.now()) { if (session === selected) session = null; return false; }
+  if (!selected || selected.localExpiresAt <= Date.now()) { if (session === selected) session = null; return false; }
   try {
     const value = JSON.parse(await selected.wire.request('/mobile/session', 'GET', selected.token, ''));
     if (value.connected !== true || value.expiresAt !== selected.expiresAt) throw Error('M_SESSION_REQUIRED');

@@ -13,7 +13,7 @@ const MAX=64*1024*1024,CHUNK=256*1024,hash=(v:Uint8Array|string)=>createHash('sh
 const same=(a:string,b:string)=>timingSafeEqual(Buffer.from(hash(a),'hex'),Buffer.from(hash(b),'hex'));
 export function privateIPv4(value:string){const p=value.split('.').map(Number);return p.length===4&&p.every((n,i)=>Number.isInteger(n)&&n>=0&&n<=255&&String(n)===value.split('.')[i])&&(p[0]===10||p[0]===192&&p[1]===168||p[0]===172&&p[1]>=16&&p[1]<=31);}
 type Upload={sha:string;bytes:number;packageId:string;offset:number;busy:boolean;committed:boolean};
-type Session={token:string;deviceId:string;deviceName:string;expires:number};
+type Session={token:string;deviceId:string;deviceName:string;expires:number;confirmed:boolean;confirmBy:number};
 export class MobileReceiver {
  private server?:Server;private code='';private codeExpires=0;private pairing=false;private session?:Session;
  private uploads=new Map<string,Upload>();private attempts=0;private attemptWindow=0;private pin='';private addresses:string[]=[];
@@ -49,7 +49,7 @@ export class MobileReceiver {
   return {offers,expiresAt:this.codeExpires};
  }
  async stop(){const server=this.server;this.server=undefined;this.code='';this.session=undefined;this.uploads.clear();const encrypted=this.encrypted;this.encrypted=undefined;await encrypted?.stop();if(server){server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}}
- status(){const session=this.session&&this.now()<this.session.expires?this.session:undefined;return {active:!!this.server,connected:!!session,deviceName:session?.deviceName,expiresAt:session?.expires};}
+ status(){const session=this.session?.confirmed&&this.now()<this.session.expires?this.session:undefined;return {active:!!this.server,connected:!!session,deviceName:session?.deviceName,expiresAt:session?.expires};}
  async list(){
   await mkdir(this.folder,{recursive:true});const rows=[];
   for(const name of await readdir(this.folder)){if(!/^[a-f0-9]{64}\.w2pm\.zip$/.test(name))continue;const info=await stat(join(this.folder,name));rows.push({id:name.slice(0,64),bytes:info.size,at:info.mtimeMs});}
@@ -76,14 +76,17 @@ export class MobileReceiver {
     try{
      if(!await this.confirm(value.deviceName.replace(/[\x00-\x1f]/g,'')))return this.json(res,403,{error:'M_PAIR_REJECTED'});
      if(!this.server||this.now()>this.codeExpires||!same(this.code,pairingCode))return this.json(res,401,{error:'M_PAIR_EXPIRED'});
-     this.code='';this.session={token:randomBytes(32).toString('hex'),deviceId:value.deviceId,deviceName:value.deviceName.replace(/[\x00-\x1f]/g,''),expires:this.now()+15*60_000};
-     return this.json(res,200,{sessionToken:this.session.token,expiresAt:this.session.expires,chunkBytes:CHUNK});
+     const serverTime=this.now();
+     this.code='';this.session={token:randomBytes(32).toString('hex'),deviceId:value.deviceId,deviceName:value.deviceName.replace(/[\x00-\x1f]/g,''),expires:serverTime+15*60_000,confirmed:false,confirmBy:serverTime+30_000};
+     return this.json(res,200,{sessionToken:this.session.token,expiresAt:this.session.expires,chunkBytes:CHUNK,serverTime});
     }finally{this.pairing=false;}
    }
    const bearer=req.headers.authorization??'';
-   if(!this.session||this.now()>this.session.expires||!same(bearer,`Bearer ${this.session.token}`))return this.json(res,401,{error:'M_SESSION_REQUIRED'});
-   if(req.method==='GET'&&req.url==='/mobile/session')return this.json(res,200,{connected:true,expiresAt:this.session.expires});
+   if(!this.session||this.now()>=this.session.expires||(!this.session.confirmed&&this.now()>=this.session.confirmBy)||!same(bearer,`Bearer ${this.session.token}`))return this.json(res,401,{error:'M_SESSION_REQUIRED'});
+   if(req.method==='GET'&&req.url==='/mobile/session'){this.session.confirmed=true;return this.json(res,200,{connected:true,expiresAt:this.session.expires});}
    if(req.method==='POST'&&req.url==='/mobile/disconnect'){this.session=undefined;return this.json(res,200,{disconnected:true});}
+   // An authenticated upload also confirms receipt for older mobile clients.
+   if(req.method==='POST'&&req.url==='/mobile/uploads')this.session.confirmed=true;
    if(req.method==='POST'&&req.url==='/mobile/uploads'){
     if(this.creating)return this.json(res,409,{error:'M_UPLOAD_BUSY'});
     this.creating=true;

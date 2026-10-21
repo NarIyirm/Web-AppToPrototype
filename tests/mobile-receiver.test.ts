@@ -6,6 +6,7 @@ import {createHash,X509Certificate,randomUUID} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {MobileReceiver,privateIPv4} from '../apps/desktop/src/mobile-receiver';
+import {parsePairingReceipt,establishPairingSession} from '../MobileApp/webapptoprototype/src/core/pairing-session';
 const hash=(v:Uint8Array)=>createHash('sha256').update(v).digest('hex');
 async function trustedCertificate(endpoint:string,pin:string){
  const url=new URL(endpoint);
@@ -41,6 +42,13 @@ test('mobile receiver: TLS pin, one-time pair, resumable chunk SHA, durable inbo
   const pairing=JSON.stringify({code:offer.code,deviceId:'d-device0001',deviceName:'测试手机'});
   assert.equal((await api('/mobile/pair','POST','',pairing,'https://example.com')).status,403);
   const session=await api('/mobile/pair','POST','',pairing);assert.equal(session.status,200);assert.equal(confirmations,1);
+  assert.equal(receiver.status().connected,false);
+  assert.equal(session.body.expiresAt-session.body.serverTime,15*60_000);
+  assert.equal(parsePairingReceipt(session.body,session.body.serverTime-1000,session.body.serverTime-950).token,session.body.sessionToken);
+  assert.equal((await api('/mobile/session','GET','0'.repeat(64))).status,401);
+  assert.equal(receiver.status().connected,false);
+  assert.equal((await api('/mobile/session','GET',session.body.sessionToken)).body.connected,true);
+  assert.equal(receiver.status().connected,true);
   assert.equal((await api('/mobile/pair','POST','',pairing)).status,401);
   const token=session.body.sessionToken,bytes=await readFile('examples/mobile-material.w2pm.zip'),sha=hash(bytes);
   const packageId='b-05492ef9-ccb7-41b9-9455-49bfcc5741ab';
@@ -60,5 +68,39 @@ test('mobile receiver: TLS pin, one-time pair, resumable chunk SHA, durable inbo
   await assert.rejects(receiver.path('../outside'));
   await receiver.stop();const restarted=new MobileReceiver(folder,async()=>true);
   assert.equal((await restarted.list()).length,1);assert.deepEqual(await readFile(await restarted.path(sha)),bytes);
+ }finally{await receiver.stop();}
+});
+
+test('mobile receiver: a phone rejecting its receipt revokes the real HTTPS session',async()=>{
+ const receiver=new MobileReceiver(resolve('.runtime/mobile-receiver',randomUUID()),async()=>true);
+ let token='';
+ try{
+  const {offers}=await receiver.start('127.0.0.1'),offer=JSON.parse(offers[0].payload),ca=await trustedCertificate(offer.endpoint,offer.certificateSha256);
+  const wire={
+   async request(path:string,method:string,bearer:string,body:string){
+    const reply=await call(offer.endpoint,ca,offer.certificateSha256,path,method,bearer,body);
+    if(reply.status!==200)throw Error(reply.body.error);
+    if(path==='/mobile/pair'){token=reply.body.sessionToken;reply.body.chunkBytes=1;}
+    return JSON.stringify(reply.body);
+   },
+   async chunk(){throw Error('unused');},
+  };
+  await assert.rejects(establishPairingSession(wire,JSON.stringify({code:offer.code,deviceId:'d-device0001',deviceName:'Android APK'}),()=>true),/M_PAIR_RECEIPT_CHUNK/);
+  assert.match(token,/^[a-f0-9]{64}$/);
+  assert.equal(receiver.status().connected,false);
+  assert.equal((await call(offer.endpoint,ca,offer.certificateSha256,'/mobile/session','GET',token)).status,401);
+ }finally{await receiver.stop();}
+});
+
+test('mobile receiver: an unconfirmed session cannot connect after the acknowledgement deadline',async()=>{
+ let now=Date.now();
+ const receiver=new MobileReceiver(resolve('.runtime/mobile-receiver',randomUUID()),async()=>true,()=>now);
+ try{
+  const {offers}=await receiver.start('127.0.0.1'),offer=JSON.parse(offers[0].payload),ca=await trustedCertificate(offer.endpoint,offer.certificateSha256);
+  const session=await call(offer.endpoint,ca,offer.certificateSha256,'/mobile/pair','POST','',JSON.stringify({code:offer.code,deviceId:'d-device0001',deviceName:'Android APK'}));
+  assert.equal(session.status,200);
+  now+=30_000;
+  assert.equal(receiver.status().connected,false);
+  assert.equal((await call(offer.endpoint,ca,offer.certificateSha256,'/mobile/session','GET',session.body.sessionToken)).status,401);
  }finally{await receiver.stop();}
 });

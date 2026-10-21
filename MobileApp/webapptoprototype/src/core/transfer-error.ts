@@ -1,5 +1,11 @@
 export function transferError(cause: unknown): string {
   const message = cause instanceof Error ? cause.message : '';
+  if (/M_PAIR_RECEIPT_CLOCK/.test(message)) return '配对回执的时间校验未通过。请同步手机和电脑的自动时间，或更新电脑端后重新扫码（M_PAIR_RECEIPT_CLOCK）。';
+  if (/M_PAIR_RECEIPT_TOKEN/.test(message)) return '电脑返回的配对凭证格式不正确。请更新两端后重新扫码（M_PAIR_RECEIPT_TOKEN）。';
+  if (/M_PAIR_RECEIPT_CHUNK/.test(message)) return '两端的文件分块规格不一致。请更新两端后重新扫码（M_PAIR_RECEIPT_CHUNK）。';
+  if (/M_PAIR_RECEIPT_LIFETIME/.test(message)) return '配对会话有效期异常或确认超时。请在电脑重新生成二维码后重试（M_PAIR_RECEIPT_LIFETIME）。';
+  if (/M_PAIR_RECEIPT_FORMAT/.test(message)) return '电脑返回的配对回执格式不正确。请更新两端后重新扫码（M_PAIR_RECEIPT_FORMAT）。';
+  if (/M_PAIR_CONFIRMATION/.test(message)) return '手机未能确认电脑会话。请在电脑重新生成二维码后重试（M_PAIR_CONFIRMATION）。';
   if (/M_PAIR_EXPIRED/.test(message)) return '二维码已过期或已使用。请在电脑重新生成，再扫码连接。';
   if (/M_PAIR_REJECTED/.test(message)) return '电脑拒绝了连接。请重新生成二维码并在电脑点击“允许连接”。';
   if (/M_SESSION_REQUIRED/.test(message)) return '连接已结束，请重新扫码连接电脑。';

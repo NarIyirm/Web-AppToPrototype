@@ -32,7 +32,11 @@ sourceKind为web/imported_image/android_native/ios_native；web必须有移除�
 
 QR字段：protocol=w2p-mobile-1、endpoint（私网IPv4 HTTPS动态端口）、certificateSha256（叶证书DER的SHA-256）、code（32随机字节hex）、expiresAt、desktopName。有效2分钟、单次使用。手机先核对电脑，再由电脑确认手机；成功会话15分钟。令牌只在内存，原生客户端逐连接核对证书与主机，禁止重定向，不设全局TLS例外。
 
-当前电脑生成protocol=w2p-mobile-2，保留上述HTTPS字段，新增lan={endpoint,key,id}。lan.endpoint必须为与TLS端点相同私网IPv4的HTTP动态端口；key为32随机字节hex，id为16随机字节hex。Expo Go走加密LAN路径，包含MobileTransfer的安装包走原HTTPS路径。不修改app.json、不安装证书、不关闭TLS校验或增加全局明文网络例外。
+当前电脑生成protocol=w2p-mobile-2，保留上述HTTPS字段，新增lan={endpoint,key,id}。lan.endpoint必须为与TLS端点相同私网IPv4的HTTP动态端口；key为32随机字节hex，id为16随机字节hex。Expo Go和iOS安装包走加密LAN路径；包含MobileTransfer的Android安装包走原HTTPS路径。旧v1码仍要求原生HTTPS模块。不安装证书、不关闭TLS校验或增加全局明文网络例外。
+
+配对回执新增serverTime，手机校验expiresAt-serverTime为正且不超过15分钟，以请求开始时间加该时长建立本地到期时间，避免将两台设备的绝对时间直接比较。原始expiresAt仍用于核对电脑会话；电脑独立执行会话过期检查。旧电脑缺少serverTime时，手机允许上限额外2分钟的小时钟偏差，本地会话仍不超过15分钟。二维码有效期及原生TLS证书有效期仍有各自的绝对时间检查，本改动不保证任意时钟偏差都能完成扫码或TLS连接。
+
+电脑允许配对后先建立未确认会话，30秒内手机须携带令牌GET /mobile/session，或由旧客户端发起授权的POST /mobile/uploads，电脑才显示已连接。新版手机校验回执并确认会话后才保存本地连接；回执不合法、确认失败或连接取消时，若已取得合法令牌则尽力POST /mobile/disconnect撤销。未确认会话超过30秒不可激活。错误按凭证格式、到期时间格式、分块规格、时间差、有效时长及会话确认分别提供有界错误码，不展示令牌。APK上的具体失败字段尚待重新构建后的真机复测，不能仅由iPhone成功推断Android原生HTTPS故障。
 
 LAN只接受POST /mobile/secure，HTTP载荷始终是加密信封{id,body}，不是直接发送JSON素材/令牌。密钥用HKDF-SHA-256从QR key与lan.id派生，request/response的info分别为w2p-mobile-2/request、w2p-mobile-2/response。AES-256-GCM采用12字节随机IV和16字节tag；AAD为w2p-mobile-2/<direction>/<lan.id>/<requestId>；combined为IV|ciphertext|tag，外层base64。请求ID为16随机字节hex，服务器在本接收会话内拒绝重复ID，最多8192条。手机使用SDK自带expo-crypto，电脑使用Node crypto，未自写密码算法。二维码携带连接密钥，应只展示给自己的手机；接收关闭后会清理密钥。
 
@@ -46,8 +50,8 @@ LAN wire/client源在移动src/core/lan-{wire,client}.ts，桌面消费packages/
 
 | 方法/路径 | 语义 |
 |---|---|
-| POST /mobile/pair | JSON：code/deviceId/deviceName；电脑确认后返回sessionToken/expiresAt/chunkBytes |
-| GET /mobile/session | 查询当前会话是否仍有效及到期时间 |
+| POST /mobile/pair | JSON：code/deviceId/deviceName；电脑允许后返回sessionToken/expiresAt/chunkBytes/serverTime，等待手机确认 |
+| GET /mobile/session | 确认或查询当前会话及原始到期时间 |
 | POST /mobile/disconnect | 使当前会话失效 |
 | POST /mobile/uploads | JSON：packageId/sha256/bytes；创建或查询同一摘要上传 |
 | GET /mobile/uploads/<sha> | 查询nextOffset/bytes/status |

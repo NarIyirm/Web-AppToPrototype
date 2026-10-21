@@ -36,6 +36,8 @@ test('LAN: mobile client pairs, sends encrypted chunks, resumes, commits and dis
     const call = (path: string, method = 'GET', token = '', body = '') => client.request(path, method, token, new TextEncoder().encode(body));
     const session = JSON.parse(await call('/mobile/pair', 'POST', '', JSON.stringify({ code: offer.code, deviceId: 'd-device0001', deviceName: '我的 iPhone' })));
     assert.match(session.sessionToken, /^[a-f0-9]{64}$/);
+    assert.equal(receiver.status().connected, false);
+    assert.equal(session.expiresAt - session.serverTime, 15 * 60_000);
     assert.ok(!savedRequest.includes(offer.code) && !savedRequest.includes('我的 iPhone'));
     const replay = await fetch(`${offer.lan.endpoint}/mobile/secure`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: savedRequest });
     assert.equal(replay.status, 400);
@@ -44,6 +46,7 @@ test('LAN: mobile client pairs, sends encrypted chunks, resumes, commits and dis
     assert.equal((await fetch(`${offer.lan.endpoint}/mobile/secure`, { method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://example.com' }, body: savedRequest })).status, 403);
     const token = session.sessionToken;
     assert.equal(JSON.parse(await call('/mobile/session', 'GET', token)).connected, true);
+    assert.equal(receiver.status().connected, true);
     // Exercise the largest actual mobile chunk (nested base64 stays below the
     // wire budget), not only the small ZIP fixture used for final conversion.
     const large = Buffer.alloc(LAN_CHUNK + 17, 0x37), largeSha = createHash('sha256').update(large).digest('hex');
